@@ -1,0 +1,65 @@
+% Document style
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}   % Czech
+\usepackage[pdftex]{graphicx}  % images
+\usepackage[czech]{babel}
+\usepackage{enumerate}
+\usepackage{hyperref}
+
+% Begin
+\begin{document}
+\begin{titlepage}
+
+% FI logo
+\begin{center}
+	\includegraphics[keepaspectratio]{fi-logo}
+\end{center}
+
+\vfill % vertical center
+	\begin{center}
+		\LARGE{Návrh na zadání diplomové práce}\\
+		\vfill
+		\bf{Organizace lidí v internetovém prostředí napříč různými komunikačními kanály}
+	\end{center}
+\vfill
+
+% Author
+\noindent
+Autor: {\bf Jan Javorek} ({\tt 208013})\\
+Datum: \today \\
+Fakulta Informatiky\\
+Masarykova Univerzita
+
+\end{titlepage}
+
+% TOC
+%\tableofcontents
+%\newpage
+
+% Introduction
+%\section{Úvod}
+%Úvod.
+%\newpage
+
+% Contents
+\section{Motivace}
+Potřebujeme-li organizovat lidi, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se totiž neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook, několik jednotlivců přes e-maily a zbytek snad
+přes Google Kalendář.
+
+Pořadateli by v tomto případě jiste přišla vhod služba, která by u\-mož\-ňo\-va\-la komunikovat s lidmi uceleně přes několik kanálů. Služba centralizující organizaci, ale zachovávající svobodu jednotlivců rozhodnout se pro takový komunikační kanál, jenž vyhovuje jim. Organizátor by přes zmíněný {\it velín} mohl psát svým kontaktům zprávy a udržovat jejich historii, vytvářet jednoduché stránky se souhrnem dohodnutých informací, činit rozhodnutí na anketách, nebo zakládat {\it události}, u nichž by lidé mohli potvrdit či zamítnout účast.
+
+Přitom běžný účastník domluvy by používal nástroje, na jaké je zvyklý a do organizační služby by se nemusel nijak registrovat nebo přihlašovat. Jestliže má účet na Facebooku, mohl by s organizátorem komunikovat pro\-střed\-nic\-tvím tohoto kanálu, pokud mu vyhovuje Google se svým kalendářem nebo prosté e-maily, mohl by je použít zrovna tak.
+
+\section{Návrh zadání}
+Internet je fragmentovaný a decentralizovaný i dnes, v době velkých sociálních sítí typu Facebook. Málokdy se lidé při společné domluvě sejdou na stejné platformě a proto se často uchylují k primitivním řešením jako je e-mail. Tím se však připravují o pohodlí, o možnost využít anket, událostí apod. Je možné vytvořit aplikaci, která by pomohla lidi efektivněji a pohodlněji organizovat, ale přitom jim nevnucovala žádnou konkrétní službu či nové uživatelské účty?
+
+\begin{itemize}
+    \item Prostudujte problematiku běžné organizace malých skupin lidí přes internet. Zjistěte, jaké nástroje nebo služby lidé již využívají pro komunikaci a vzájemnou organizaci (e-mail, instant messaging, sociální sítě). Proveďte průzkum ve svém okolí, např. sledováním chování zástupců různých druhů uživatelů nebo dotazníkem.
+    \item Navrhněte řešení, jak propojit používané služby tak, aby mezi sebou lidé mohli komunikovat a sdílet organizační informace i bez toho, že by používali stejné komunikační platformy. Navrhněte jak řešit sdílení
+    zpráv, dohodnutých rozhodnutí, anket, událostí s možností zadávat RSVP ({\it répondez s'il vous plaît}), apod. Podrobně rozpracujte každý z těchto případů a snažte se o nalezení takového východiska, které bude brát vždy největší ohledy na přirozenost a zřejmost používání (zvažte např. možnosti udržování vláken diskusí napříč všemi systémy apod.). Vysvětlete, proč jsou některé tyto problémy nerealizovatelné, narazíte-li na nějaké takové.
+    \item Realizujte ukázkovou webovou aplikaci uvedených vlastností.
+    \item Zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
+\end{itemize}
+
+% End
+\end{document}
