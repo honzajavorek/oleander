@@ -1,0 +1,3 @@
+[submodule "doc/fithesis"]
+	path = doc/fithesis
+	url = git@github.com:Littlemaple/fithesis2b-maple.git
