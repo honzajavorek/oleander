@@ -1,1 +1,0 @@
-/home/honza/workspace/edu/oleander/doc/fithesis/fithesis2.cls
