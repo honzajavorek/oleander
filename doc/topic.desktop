@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=firefox
+Name[en_US]=topic
+Exec=firefox "https://is.muni.cz/auth/rozpis/tema.pl?fakulta=1433;obdobi=5364;studium=560309;balik=58;tema=133878"
+Name=Topic
+Icon=firefox
