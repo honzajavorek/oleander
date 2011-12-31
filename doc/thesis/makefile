@@ -1,16 +1,19 @@
 DOCUMENT=thesis
-TEXINPUTS=.:../fithesis/:${TEXINPUTS:-:}
+CLASS_DIR=../fithesis
 
 all: $(DOCUMENT).pdf
 
 pdf: $(DOCUMENT).pdf
 
 $(DOCUMENT).pdf: clean
-	export TEXINPUTS
-	pdflatex $(DOCUMENT)
-	# bibtex $(DOCUMENT)
-	pdflatex $(DOCUMENT)
-	pdflatex $(DOCUMENT)
+	( \
+		TEXINPUTS=.:${CLASS_DIR}:${TEXINPUTS:-:} && \
+		export TEXINPUTS && \
+	 	pdflatex $(DOCUMENT) && \
+	 	# bibtex $(DOCUMENT) && \
+	 	pdflatex $(DOCUMENT) && \
+	 	pdflatex $(DOCUMENT) \
+	)
 	-rm -f *.log $(DOCUMENT).blg $(DOCUMENT).bbl $(DOCUMENT).toc *.aux $(DOCUMENT).out $(DOCUMENT).lof
 	-rm -f *~
 
