@@ -13,7 +13,7 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 ## Motivace
 
-Potřebujeme-li organizovat lidi, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se totiž neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook, několik jednotlivců přes e-maily a zbytek snad
+Potřebujeme-li organizovat lidi, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná - lidé se totiž neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook, několik jednotlivců přes e-maily a zbytek snad
 přes Google Kalendář.
 
 Pořadateli by v tomto případě jiste přišla vhod služba, která by umožňovala komunikovat s lidmi uceleně přes několik kanálů. Služba centralizující organizaci, ale zachovávající svobodu jednotlivců rozhodnout se pro takový komunikační kanál, jenž vyhovuje jim. Organizátor by přes zmíněný _velín_ mohl psát svým kontaktům zprávy a udržovat jejich historii, vytvářet jednoduché stránky se souhrnem dohodnutých informací, činit rozhodnutí na anketách, nebo zakládat _události_, u nichž by lidé mohli potvrdit či zamítnout účast.
