@@ -1,4 +1,4 @@
-\documentclass[12pt,oneside,draft]{fithesis2}
+\documentclass[12pt,oneside,final]{fithesis2}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -8,9 +8,9 @@
 
 
 
-\thesistitle{Diplomka}
+\thesistitle{Organizace lidí v internetovém prostředí napříč různými komunikačními kanály}
 \thesissubtitle{Diplomová práce}
-\thesisstudent{Jan Javorek}
+\thesisstudent{Bc. Jan Javorek}
 \thesiswoman{false}
 \thesisfaculty{fi}
 \thesisyear{jaro 2012}
@@ -32,31 +32,21 @@
 
 
 
-\begin{ThesisThanks}
-I would like to thank my supervisor...
-\end{ThesisThanks}
+%\begin{ThesisThanks}
+%I would like to thank my supervisor...
+%\end{ThesisThanks}
 
 
 
-\begin{ThesisAbstract}
-The aim of the bachelor work is to provide...
-\end{ThesisAbstract}
+%\begin{ThesisAbstract}
+%The aim of the bachelor work is to provide...
+%\end{ThesisAbstract}
 
 
 
-\begin{ThesisKeyWords}
-keyword1, keyword2, etc.
-\end{ThesisKeyWords}
-
-
-
-\MainMatter
-
-\chapter{Introduction}
-This is the first chapter of the thesis.
-
-\chapter{Another chapter}
-...
+%\begin{ThesisKeyWords}
+%keyword1, keyword2, etc.
+%\end{ThesisKeyWords}
 
 
 
@@ -64,9 +54,68 @@ This is the first chapter of the thesis.
 
 
 
-\chapter{Introduction}
-...
+\MainMatter
 
+\chapter{Úvod}
+Jak píše docent Adam Herout:
+\begin{itemize}
+    \item \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/}
+    \item \url{http://www.herout.net/blog/2011/12/dve-poznamky-k-semestralnim-projektum-jakoz-i-diplomkam/}
+\end{itemize}
+
+Úvod v diplomce je úvod do vašeho textu, ne úvod do problematiky. Čtenář se má dozvědět, jaký je účel a cíl vaší práce, s čím má přistoupit k textu, co má a nemá očekávat.
+
+Není to úvod do problematiky, kde by se čtenář dozvěděl, kde se vzaly technologie a techniky, které používáte, to přijde později, to je právě ta tzv. teoretická část.
+
+Úvod se má vejít maximálně na jednu stranu, spíš na půl. Ještě jsem neviděl dobře napsaný úvod, který by mělo smysl strukturovat do podkapitol – pouze do odstavců.
+
+Opakuji: Úvod je úvod k textu diplomky, ne úvod do problematiky.
+
+Z úvodu má čtenář zjistit, co se v práci dozví a jakým způsobem, ale ještě se nic z toho nemá dozvědět. Úvod se tedy má vejít na 1/2 – 1 stranu, nemá být strukturován do podkapitol, pouze odstavců a má dát velice stručně tyto informace: Čím se práce zabývá a proč je to důležité, co všechno se člověk čtením textu dozví a jaká je struktura práce.
+
+Terminologie, shrnutí použité teorie a tyto věci už patří do kapitoly po úvodu. Recenzent čte úvod hned na začátku a je jím tedy naladěn na práci – těší se, nebo je předem naštván; nechte si na úvodu záležet! Máločím své práci ublížíte tak účinně, jako úvodem, který sestává z nicneříkající vaty, nepodložených siláckých tvrzení, něčeho jakože vtipného a podobně.
+
+\chapter{Motivace}
+Shrnutí důvodů pro práci na takovéto téma. Uvedení do problematiky, popis současné situace. Upozornění na roztříštěnost komunikačních a organizačních nástrojů, stručná minulost a nastínění možné budoucnosti.
+
+Přečíst:
+\begin{itemize}
+    \item \url{http://www.amazon.com/Designing-Social-Web-ebook/dp/B0015DWIQ0/ref=tmm_kin_title_0?ie=UTF8&m=A2M9W3KSQUCQTK}
+    \item \url{http://is.muni.cz/th/143212/fi_m/}
+\end{itemize}
+
+\chapter{Analýza způsobů organizace lidí přes internet}
+Kapitola má za úkol analyzovat způsoby, jakými lidé přes internet běžně
+organizují malé skupiny lidí (e-mail, instant messaging, sociální sítě,
+VoIP, atd.). Výčet způsobů by měl být podložen průzkumem či výsledky dotazníku mezi lidmi.
+
+\chapter{Identifikace elementárních prvků komunikace}
+Kapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
+prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
+integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
+
+\chapter{Specifikace požadavků a rámcový návrh řešení}
+Cílem této části je shrnout výzkum předešlých dvou kapitol a rámcově navrhnout řešení aplikace. Výsledkem této kapitoly by měla být především specifikace zadání, jeho doplnění, konkretizace toho co přesně bude implementováno v aplikaci a proč právě to (cílení projektu, realizovatelnost, apod.).
+
+\chapter{Použité technologie}
+Zde by mělo být popsáno a rozebráno jaké nástroje a služby budou použity pro implementaci aplikace. U každého nástroje či služby by mělo být stručně vysvětleno k čemu slouží a z jakého důvodu došlo k výběru.
+
+\chapter{Návrh systému}
+Přesný popis návrhu systému. Struktura, uživatelské rozhraní, model, atd.
+
+\chapter{Implementace}
+Popis výsledné implementace. Část kapitoly by se měla zaměřit na výběr zajímavých problémů, na které se při implementaci narazilo, spolu s jejich řešeními.
+
+\chapter{Vývoj a testování}
+Zpráva o tom jak probíhal vývoj aplikace (systém správy verzí, aj.) a jak byla testována (na kterých prohlížečích, platformách, co bylo testováno, co testováno nebylo a proč, unit testy, apod.).
+
+\chapter{Zkušenosti z provozu}
+Pokud dojde na včasné spuštění služby, bylo by možno napsat kapitolu o zkušenostech z jejího provozu. Systém může být skvěle naprogramovaný, ale nakonec se např. přijde na to, že lidé stejně mají nějaké zábrany jej z určitých důvodů používat (viz Google Wave). V takovém případě lze v této části navrhnout nějaké změny, které by mohly kladnému přijetí pomoci.
+
+\chapter{Závěr}
+Jak píše docent Adam Herout: \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/}
+
+Se závěrem se to má podobně jako s úvodem: má se vejít na 1/2 – 1 stranu, nemá být strukturovaný a má práci shrnout, uzavřít, zhodnotit. U školní práce je rozumné v závěru reagovat na zadání a shrnout bod po bodu, že byl splněn a kterou kapitolou práce (ovšem nenásilně – nikoli například odrážkami). Recenzent čte závěr na konci a závěr tedy z velké části utváří dojem zanechaný prací pro hodnocení – nechte si na něm záležet.
 
 
 % \bibliographystyle{plain}
