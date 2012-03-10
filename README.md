@@ -1,7 +1,6 @@
-
 # Projekt Oleander
 
-Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavorek) diplomovou práci na téma _Organizace lidí v internetovém prostředí napříč různými komunikačními kanály_, k nalezení [zde](Organizace lidí v internetovém prostředí napříč různými komunikačními kanály) (neveřejné, IS MUNI).
+Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavorek) diplomovou práci na téma _Organizace lidí v internetovém prostředí napříč různými komunikačními kanály_, k nalezení [zde](https://is.muni.cz/auth/rozpis/tema.pl?fakulta=1433;obdobi=5364;studium=560309;balik=58;tema=133878) (neveřejné, IS MUNI).
 
 ## Zadání
 
