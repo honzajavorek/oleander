@@ -14,15 +14,13 @@ VIRTUALENV_RCFILE=`tempfile`
 cat $RCFILE >> $VIRTUALENV_RCFILE
 echo ". $PROJECT_DIR/env/bin/activate" >> $VIRTUALENV_RCFILE
 
-
 DEV_SERVER_RCFILE=`tempfile`
 cat $VIRTUALENV_RCFILE >> $DEV_SERVER_RCFILE
-echo "until $PROJECT_DIR/env/bin/python $PROJECT_DIR/app.py; do
+echo "until python $PROJECT_DIR/manage.py runserver; do
     echo 'Server crashed with exit code $?. Respawning...' >&2
     sleep 5
 done
 " >> $DEV_SERVER_RCFILE
-
 
 SHELL_RCFILE=`tempfile`
 cat $VIRTUALENV_RCFILE >> $SHELL_RCFILE
