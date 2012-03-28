@@ -26,7 +26,9 @@ done
 
 SHELL_RCFILE=`tempfile`
 cat $VIRTUALENV_RCFILE >> $SHELL_RCFILE
-echo "cd $PROJECT_DIR" >> $SHELL_RCFILE
+echo "export OLEANDER_SETTINGS=$PROJECT_DIR/settings/lisa.py
+cd $PROJECT_DIR
+" >> $SHELL_RCFILE
 
 
 if which gnome-terminal &> /dev/null; then
