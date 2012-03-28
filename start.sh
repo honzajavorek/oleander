@@ -17,7 +17,7 @@ echo ". $PROJECT_DIR/env/bin/activate" >> $VIRTUALENV_RCFILE
 
 DEV_SERVER_RCFILE=`tempfile`
 cat $VIRTUALENV_RCFILE >> $DEV_SERVER_RCFILE
-echo "export OLEANDER_SETTINGS=$PROJECT_DIR/lisa_settings.py
+echo "export OLEANDER_SETTINGS=$PROJECT_DIR/settings/lisa.py
 until python $PROJECT_DIR/manage.py runserver; do
     echo 'Server crashed with exit code $?. Respawning...' >&2
     sleep 5

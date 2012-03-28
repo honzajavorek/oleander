@@ -1,5 +1,5 @@
 *.pyo
 *.pyc
 env
-*_settings.py
-!oleander/default_settings.py
+settings/*
+!settings/lisa.py
