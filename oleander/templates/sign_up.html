@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<h2>Welcome!</h2>
+
+{% with errors = form.errors %}
+    {% if errors %}
+    <div class="flash errors">
+        <h3>Sorry, something isn't all right</h3>
+        <ol>
+            {% for field_name, field_errors in errors.items() %}
+                {% if field_name == 'csrf' %}
+                    <li><strong>Safety check</strong> It seems you didn't use button to submit the form.</li>
+                {% elif field_name in form %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ form[field_name].label }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ field_name.capitalize() }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </div>
+    {% endif %}
+{% endwith %}
+
+<form method="post" action="">
+    <fieldset>
+        <legend>Who are you?</legend>
+        <table>
+            <tr>
+                <th><label>{{ form.name.label }}</label></th>
+                <td>{{ form.name(size=20) }} (e.g. <em>Johnny</em>)</td>
+            </tr>
+            <tr>
+                <th><label>{{ form.email.label }}</label></th>
+                <td>{{ form.email(size=20) }}</td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>Let's share a secret</legend>
+        <table>
+            <tr>
+                <th><label>{{ form.password.label }}</label></th>
+                <td>{{ form.password(size=20) }}</td>
+            </tr>
+            <tr>
+                <th><label>{{ form.password_check.label }}</label></th>
+                <td>{{ form.password_check(size=20) }} (protection against typos)</td>
+            </tr>
+        </table>
+    </fieldset>
+
+    {{ form.csrf_token }}
+    <button type="submit">Create account</button> or <a href="{{ url_for('index') }}">Cancel</a>
+</form>
+
+{% endblock %}
