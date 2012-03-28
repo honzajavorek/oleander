@@ -2,6 +2,7 @@ Flask
 Flask-Script
 Flask-SQLAlchemy
 Flask-WTF
+Flask-Login
 psycopg
 nose
 pytz

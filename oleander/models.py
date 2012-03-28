@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 
 
-from oleander import app, db
+from oleander import app, db, login_manager
+from flask.ext.login import UserMixin
 import hashlib
 import uuid
 
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    """User loader used by sign-in process."""
+    return User.query.filter_by(id=user_id).first()
+
+
+class User(db.Model, UserMixin):
     """User model class."""
 
     id = db.Column(db.Integer, primary_key=True)

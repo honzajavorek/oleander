@@ -13,6 +13,20 @@
         {% endif %}
     {% endwith %}
 
+    {% if current_user.is_authenticated() %}
+        <p>{{ current_user.name }} (<a href="{{ url_for('sign_out') }}">Sign out</a>)</p>
+
+        <p>
+            <a href="{{ url_for('index') }}">Index</a>
+            &middot;
+            <a href="">Groups</a>
+            &middot;
+            <a href="">Contacts</a>
+            &middot;
+            <a href="{{ url_for('settings') }}">Settings</a>
+        </p>
+    {% endif %}
+
     {% block content %}{% endblock %}
     </div>
 </body>

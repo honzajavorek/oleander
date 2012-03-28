@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<h2>Sign up</h2>
+<h2>Sign in</h2>
 
 {% with errors = form.errors %}
     {% if errors %}
@@ -28,36 +28,36 @@
 {% endwith %}
 
 <form method="post" action="">
-    <fieldset>
-        <legend>Who are you?</legend>
-        <table>
-            <tr>
-                <th><label>{{ form.name.label }}</label></th>
-                <td>{{ form.name(size=20) }} (e.g. <em>Johnny</em>)</td>
-            </tr>
-            <tr>
-                <th><label>{{ form.email.label }}</label></th>
-                <td>{{ form.email(size=20) }}</td>
-            </tr>
-        </table>
-    </fieldset>
-
-    <fieldset>
-        <legend>Let's share a secret</legend>
-        <table>
-            <tr>
-                <th><label>{{ form.password.label }}</label></th>
-                <td>{{ form.password(size=20) }}</td>
-            </tr>
-            <tr>
-                <th><label>{{ form.password_check.label }}</label></th>
-                <td>{{ form.password_check(size=20) }} (protection against typos)</td>
-            </tr>
-        </table>
-    </fieldset>
+    <table>
+        <tr>
+            <th><label>{{ form.email.label }}</label></th>
+            <td>{{ form.email(size=20) }}</td>
+        </tr>
+        <tr>
+            <th><label>{{ form.password.label }}</label></th>
+            <td>{{ form.password(size=20) }}</td>
+        </tr>
+    </table>
 
     {{ form.csrf_token }}
-    <button type="submit">Create account</button> or <a href="{{ url_for('sign_in') }}">Cancel</a>
+    <button type="submit">Go</button>
 </form>
 
+<p><a href="{{ url_for('sign_up') }}">Sign up</a></p>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
