@@ -4,50 +4,69 @@
 {% block content %}
 <h2>Settings</h2>
 
-<form>
+{% with errors = form.errors %}
+    {% if errors %}
+    <div class="flash errors">
+        <h3>Sorry, something isn't all right</h3>
+        <ol>
+            {% for field_name, field_errors in errors.items() %}
+                {% if field_name == 'csrf' %}
+                    <li><strong>Safety check</strong> It seems you didn't use button to submit the form.</li>
+                {% elif field_name in form %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ form[field_name].label }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ field_name.capitalize() }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </div>
+    {% endif %}
+{% endwith %}
+
+<form method="post" action="">
     <fieldset>
         <legend>Basic info</legend>
         <table>
             <tr>
-                <th><label>Name</label></th>
-                <td><input size="20" value="Honza"> (e.g. <em>Johnny</em>)</td>
+                <th>{{ form.name.label }}</th>
+                <td>{{ form.name(size=20) }} (e.g. <em>Johnny</em>)</td>
             </tr>
             <tr>
-                <th><label>E-mail</label></th>
-                <td><input size="20" value="honza@javorek.net"></td>
+                <th>{{ form.email.label }}</th>
+                <td>{{ form.email(size=20) }}</td>
             </tr>
         </table>
     </fieldset>
 
     <fieldset>
         <legend>Change password</legend>
-        <table>
+        {#<table>
             <tr>
-                <th><label>New password</label></th>
-                <td><input type="password" size="20"></td>
+                <th>{{ form.password.label }}</th>
+                <td>{{ form.password(size=20) }}</td>
             </tr>
             <tr>
-                <th><label>Once more</label></th>
-                <td><input type="password" size="20"> (protection against typos)</td>
+                <th>{{ form.password_check.label }}</th>
+                <td>{{ form.password_check(size=20) }} (protection against typos)</td>
             </tr>
-        </table>
+        </table>#}
     </fieldset>
 
     <fieldset>
         <legend>Preferences</legend>
         <table>
             <tr>
-                <th><label>My timezone is</label></th>
-                <td>
-                    <select>
-                        <option>16:00 &ndash; Prague, Europe</option>
-                        <option>07:00 &ndash; Catamarca, Argentina, America</option>
-                    </select>
-                </td>
+                <th>{{ form.timezone.label }}</th>
+                <td>{{ form.timezone }}</td>
             </tr>
         </table>
     </fieldset>
 
+    {{ form.csrf_token }}
     <button type="submit">Save changes</button> or <a href="{{ url_for('index') }}">Cancel</a>
 </form>
 {% endblock %}

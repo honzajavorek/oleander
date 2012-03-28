@@ -2,6 +2,7 @@
 
 
 from flask.ext import wtf
+from models import tz_choices
 
 
 class Form(wtf.Form):
@@ -43,5 +44,28 @@ class SignInForm(Form):
         wtf.Length(max=100),
     ])
     password = wtf.PasswordField('Password', validators=[
+        wtf.Required(),
+    ])
+
+
+class SettingsForm(Form):
+    """Simple settings form."""
+
+    name = wtf.TextField('Name', validators=[
+        wtf.Required(),
+        wtf.Length(max=100),
+    ])
+    email = wtf.TextField('E-mail', validators=[
+        wtf.Required(),
+        wtf.Email(),
+        wtf.Length(max=100),
+    ])
+    # password = wtf.PasswordField('New password', validators=[
+    #     wtf.Required(),
+    # ])
+    # password_check = wtf.PasswordField('Password once more', validators=[
+    #     wtf.EqualTo('password', message='Passwords must match'),
+    # ])
+    timezone = wtf.SelectField('My timezone is', choices=tz_choices(), validators=[
         wtf.Required(),
     ])

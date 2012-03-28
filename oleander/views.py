@@ -2,9 +2,9 @@
 
 
 from flask import render_template, redirect, url_for, flash, request
-from flask.ext.login import login_required, fresh_login_required, login_user, logout_user
+from flask.ext.login import login_required, fresh_login_required, login_user, logout_user, current_user
 from oleander import app, db
-from oleander.forms import SignUpForm, SignInForm
+from oleander.forms import SignUpForm, SignInForm, SettingsForm
 from oleander.models import User
 
 
@@ -53,8 +53,13 @@ def sign_out():
     return redirect(url_for('sign_in'))
 
 
-@app.route('/settings/')
+@app.route('/settings/', methods=('GET', 'POST'))
 @fresh_login_required
 def settings():
     """Minimalist settings page."""
-    return render_template('settings.html')
+    form = SettingsForm(obj=current_user)
+    if form.validate_on_submit():
+        with db.transaction:
+            form.populate_obj(current_user)
+        return redirect(url_for('settings'))
+    return render_template('settings.html', form=form)
