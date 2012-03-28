@@ -2,7 +2,7 @@
 
 
 from flask import render_template
-from oleander import app
+from oleander import app, db
 
 
 @app.route('/')
