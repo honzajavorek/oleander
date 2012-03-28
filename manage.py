@@ -2,7 +2,7 @@
 
 
 from flask.ext.script import Server, Manager, Shell
-from app import app
+from oleander import app
 import nose
 
 

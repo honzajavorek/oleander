@@ -4,6 +4,7 @@
 # - launches Flask development server
 # - opens terminal at project directory with virtualenv activated
 
+
 PROJECT_DIR=`dirname $0`
 
 
@@ -16,7 +17,8 @@ echo ". $PROJECT_DIR/env/bin/activate" >> $VIRTUALENV_RCFILE
 
 DEV_SERVER_RCFILE=`tempfile`
 cat $VIRTUALENV_RCFILE >> $DEV_SERVER_RCFILE
-echo "until python $PROJECT_DIR/manage.py runserver; do
+echo "export OLEANDER_SETTINGS=$PROJECT_DIR/lisa_settings.py
+until python $PROJECT_DIR/manage.py runserver; do
     echo 'Server crashed with exit code $?. Respawning...' >&2
     sleep 5
 done
