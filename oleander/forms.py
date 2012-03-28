@@ -60,12 +60,20 @@ class SettingsForm(Form):
         wtf.Email(),
         wtf.Length(max=100),
     ])
-    # password = wtf.PasswordField('New password', validators=[
-    #     wtf.Required(),
-    # ])
-    # password_check = wtf.PasswordField('Password once more', validators=[
-    #     wtf.EqualTo('password', message='Passwords must match'),
-    # ])
     timezone = wtf.SelectField('My timezone is', choices=tz_choices(), validators=[
         wtf.Required(),
+    ])
+
+
+class PasswordForm(Form):
+    """Password changing form."""
+
+    old_password = wtf.PasswordField('Old password', validators=[
+        wtf.Required(),
+    ])
+    new_password = wtf.PasswordField('New password', validators=[
+        wtf.Required(),
+    ])
+    password_check = wtf.PasswordField('New password once more', validators=[
+        wtf.EqualTo('new_password', message='Passwords must match'),
     ])

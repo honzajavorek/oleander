@@ -4,7 +4,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, fresh_login_required, login_user, logout_user, current_user
 from oleander import app, db
-from oleander.forms import SignUpForm, SignInForm, SettingsForm
+from oleander.forms import SignUpForm, SignInForm, SettingsForm, PasswordForm
 from oleander.models import User
 
 
@@ -63,3 +63,20 @@ def settings():
             form.populate_obj(current_user)
         return redirect(url_for('settings'))
     return render_template('settings.html', form=form)
+
+
+@app.route('/change-password/', methods=('GET', 'POST'))
+@fresh_login_required
+def change_password():
+    """Password changing."""
+    form = PasswordForm()
+    if form.validate_on_submit():
+
+        if not current_user.check_password(form.old_password.data):
+            form.add_error('old_password', 'Old password is invalid.')
+        else:
+            with db.transaction:
+                current_user.password = form.new_password.data
+            return redirect(request.args.get('next') or url_for('settings'))
+
+    return render_template('change_password.html', form=form)
