@@ -7,3 +7,4 @@ psycopg
 nose
 pytz
 times
+fixture
