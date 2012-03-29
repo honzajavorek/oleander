@@ -3,6 +3,7 @@ Flask-Script
 Flask-SQLAlchemy
 Flask-WTF
 Flask-Login
+Flask-Gravatar
 psycopg
 nose
 pytz

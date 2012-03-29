@@ -3,6 +3,7 @@
 
 from flask import render_template
 from flask.ext.login import login_required
+from flask.ext.gravatar import Gravatar
 from oleander import app, db
 
 
