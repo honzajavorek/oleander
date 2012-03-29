@@ -3,4 +3,7 @@
 env
 doc
 start.sh
-html_wireframes
+manage.py
+fixtures.py
+settings/*
+!settings/epio.py
