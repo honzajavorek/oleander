@@ -18,14 +18,14 @@ class UserData(DataSet):
 
     class honza:
         name = 'Honza'
-        email = 'honza@javorek.net'
+        email = 'honza@example.com'
         password_hash = '8358b0f41a589539c6f8d5f36089c82a437f014c'
         password_salt = 'ig9iEWdO3p'
         timezone = 'UTC'
 
     class zuzejk:
         name = 'Zuzejk'
-        email = 'perdas@seznam.cz'
+        email = 'perdas@example.com'
         password_hash = '39c4e794f8aaba7fb388dd6691050de3f06f9e5b'
         password_salt = 'aYf2Ju3uNV'
         timezone = 'Europe/Prague'
