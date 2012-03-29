@@ -91,3 +91,17 @@ class PasswordForm(Form):
     password_check = wtf.PasswordField('New password once more', validators=[
         wtf.EqualTo('new_password', message='Passwords must match'),
     ])
+
+
+class EmailContactForm(Form):
+    """Basic email contact creation form."""
+
+    name = wtf.TextField('Name', validators=[
+        wtf.Required(),
+        wtf.Length(max=100),
+    ])
+    email = wtf.TextField('E-mail', validators=[
+        wtf.Required(),
+        wtf.Email(),
+        wtf.Length(max=100),
+    ])
