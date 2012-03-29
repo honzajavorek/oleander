@@ -12,10 +12,12 @@ from oleander.forms import SettingsForm, PasswordForm
 def settings():
     """Minimalist settings page."""
     form = SettingsForm(obj=current_user)
+
     if form.validate_on_submit():
         with db.transaction:
             form.populate_obj(current_user)
         return redirect(url_for('settings'))
+
     return render_template('settings.html', form=form)
 
 
@@ -24,8 +26,8 @@ def settings():
 def change_password():
     """Password changing."""
     form = PasswordForm()
-    if form.validate_on_submit():
 
+    if form.validate_on_submit():
         if not current_user.check_password(form.old_password.data):
             form.add_error('old_password', 'Old password is invalid.')
         else:

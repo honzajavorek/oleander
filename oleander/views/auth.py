@@ -18,12 +18,14 @@ def load_user(user_id):
 def sign_up():
     """Registration form."""
     form = SignUpForm()
+
     if form.validate_on_submit():
         user = User()
         with db.transaction as session:
             form.populate_obj(user)
             session.add(user)
         return redirect(url_for('sign_in'))
+
     return render_template('sign_up.html', form=form)
 
 
@@ -31,9 +33,9 @@ def sign_up():
 def sign_in():
     """Sign in view."""
     form = SignInForm()
+
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-
         if not user:
             form.add_error('email', 'There is no such user.')
         elif not user.check_password(form.password.data):

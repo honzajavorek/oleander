@@ -4,7 +4,6 @@
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
-
 from oleander.database import Transaction
 
 
