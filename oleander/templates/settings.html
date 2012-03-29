@@ -43,8 +43,8 @@
     </fieldset>
 
     <fieldset>
-        <legend>Change password</legend>
-        <p><a href="{{ url_for('change_password') }}">I wish to change my password.</a></p>
+        <legend>Password</legend>
+        <p><a href="{{ url_for('change_password') }}">Change my password</a></p>
     </fieldset>
 
     <fieldset>
@@ -58,6 +58,6 @@
     </fieldset>
 
     {{ form.csrf_token }}
-    <button type="submit">Save changes</button> or <a href="{{ url_for('index') }}">Cancel</a>
+    <button type="submit">Save changes</button> or <a href="{{ url_for('settings') }}">Cancel</a>
 </form>
 {% endblock %}

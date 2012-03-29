@@ -2,7 +2,7 @@
 
 
 from flask import render_template, redirect, url_for, request
-from flask.ext.login import fresh_login_required
+from flask.ext.login import fresh_login_required, current_user
 from oleander import app, db
 from oleander.forms import SettingsForm, PasswordForm
 
