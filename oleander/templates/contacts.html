@@ -1,4 +1,5 @@
-{% extends 'layout.html' %}
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors %}
 
 
 {% block content %}
@@ -38,16 +39,20 @@
 
 <div class="block">
     <h3>Add contacts</h3>
-    <table>
-        <tr>
-            <th><label>Name</label></th>
-            <td><input size="20"></td>
-        </tr>
-        <tr>
-            <th><label>E-mail</label></th>
-            <td><input size="20"></td>
-        </tr>
-    </table>
+    <form method="post" action="">
+        {{ form_errors(form) }}
+        <table>
+            <tr>
+                <th><label>Name</label></th>
+                <td><input size="20"></td>
+            </tr>
+            <tr>
+                <th><label>E-mail</label></th>
+                <td><input size="20"></td>
+            </tr>
+        </table>
+    </form>
+
     <button type="submit">Add contact</button> or <a href="">I'm done adding contacts</a>
 </div>
 

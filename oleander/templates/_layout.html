@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Oleander</title>
+    </head>
+<body>
+    <div id="content">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if current_user.is_authenticated() %}
+        <p>{{ current_user.name }} (<a href="{{ url_for('sign_out') }}">Sign out</a>)</p>
+
+        <p>
+            <a href="{{ url_for('index') }}">Index</a>
+            &middot;
+            <a href="">Groups</a>
+            &middot;
+            <a href="{{ url_for('contacts') }}">Contacts</a>
+            &middot;
+            <a href="{{ url_for('settings') }}">Settings</a>
+        </p>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+    </div>
+</body>
+
+{% macro form_errors(form) %}
+    {% with errors = form.errors %}
+        {% if errors %}
+        <h3>Sorry, something isn't all right</h3>
+        <ol>
+            {% for field_name, field_errors in errors.items() %}
+                {% if field_name == 'csrf' %}
+                    <li><strong>Safety check</strong> It seems you didn't use button to submit the form.</li>
+                {% elif field_name in form %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ form[field_name].label }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ field_name.capitalize() }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ol>
+        {% endif %}
+    {% endwith %}
+{% endmacro %}
