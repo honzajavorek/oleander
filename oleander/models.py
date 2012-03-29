@@ -3,8 +3,14 @@
 
 from oleander import app, db
 from flask.ext.login import UserMixin
+from random import choice
 import hashlib
-import uuid
+import string
+
+
+def salt_generator(length=10, chars=string.letters + string.digits):
+    """Generates random alphanumeric string of specified length."""
+    return ''.join([choice(chars) for i in range(length)])
 
 
 class User(db.Model, UserMixin):
@@ -14,7 +20,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     password_hash = db.Column(db.String(40), nullable=False)
-    password_salt = db.Column(db.String(36), nullable=False)
+    password_salt = db.Column(db.String(10), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default=app.config['DEFAULT_TIMEZONE'])
 
     def set_password(self, password):
@@ -22,7 +28,7 @@ class User(db.Model, UserMixin):
         if isinstance(password, unicode):
             password = password.encode('utf-8')
 
-        salt = str(uuid.uuid4())
+        salt = salt_generator()
         hash = hashlib.sha1(password + salt).hexdigest()
 
         self.password_hash = hash

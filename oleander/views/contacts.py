@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask.ext.login import login_required
 from oleander import app, db
 from oleander.forms import EmailContactForm
-from oleander.models import Contact
+from oleander.models import EmailContact
 
 
 @app.route('/contacts/', methods=('GET', 'POST'))
@@ -16,7 +16,7 @@ def contacts():
 
     if form.validate_on_submit():
         with db.transaction as session:
-            contact = Contact()
+            contact = EmailContact()
             form.populate_obj(contact)
             session.add(contact)
         return redirect(url_for('contacts'))
