@@ -2,7 +2,21 @@
 
 
 from flask.ext import wtf
-from models import tz_choices
+from pytz import common_timezones
+import times
+
+
+def tz_choices():
+    """Prepares timezone choices for use in forms."""
+    choices = []
+    for tz in common_timezones:
+        places = tz.split('/')
+        places.reverse()
+        label = ', '.join(places).replace('_', ' ')
+        time = times.format(times.now(), tz, '%H:%M')
+        choices.append((tz, time + u' – ' + label))
+
+    return sorted(choices, key=lambda choice: choice[1])
 
 
 class Form(wtf.Form):

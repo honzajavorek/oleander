@@ -1,30 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-from oleander import app, db, login_manager
+from oleander import app, db
 from flask.ext.login import UserMixin
-from pytz import common_timezones
 import hashlib
 import uuid
-import times
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    """User loader used by sign-in process."""
-    return User.query.filter_by(id=user_id).first()
-
-
-def tz_choices():
-    choices = []
-    for tz in common_timezones:
-        places = tz.split('/')
-        places.reverse()
-        label = ', '.join(places).replace('_', ' ')
-        time = times.format(times.now(), tz, '%H:%M')
-        choices.append((tz, time + u' – ' + label))
-
-    return sorted(choices, key=lambda choice: choice[1])
 
 
 class User(db.Model, UserMixin):
