@@ -139,3 +139,19 @@ class GoogleContact(GravatarMixin, Contact):
     def identifier(self):
         return self.email
 
+
+grouping = db.Table('grouping',
+    db.Column('group_id', db.Integer, db.ForeignKey('group.id')),
+    db.Column('contact_id', db.Integer, db.ForeignKey('contact.id'))
+)
+
+
+class Group(db.Model):
+    """Group of contacts."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
+    user = db.relationship('User', backref=db.backref('groups', cascade='all', lazy='dynamic'))
+    contacts = db.relationship('Contact', secondary=grouping, backref=db.backref('groups', lazy='dynamic'))
+
