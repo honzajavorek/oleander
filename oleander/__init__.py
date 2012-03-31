@@ -23,3 +23,4 @@ login_manager.needs_refresh = 'sign_in'
 
 
 import oleander.views
+import oleander.templating
