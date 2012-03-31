@@ -3,6 +3,7 @@
 
 from oleander import app, db
 from flask.ext.login import UserMixin
+from sqlalchemy.ext.associationproxy import association_proxy
 from random import choice
 import hashlib
 import string
@@ -154,4 +155,17 @@ class Group(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('groups', cascade='all', lazy='dynamic'))
     contacts = db.relationship('Contact', secondary=grouping, backref=db.backref('groups', lazy='dynamic'))
+    contact_ids = association_proxy('contacts', 'id')
 
+    __mapper_args__ = {
+        'order_by': name,
+    }
+
+    @property
+    def contact_ids_str(self):
+        return ','.join(self.contact_ids)
+
+    @contact_ids_str.setter
+    def contact_ids_str(self, ids_str):
+        ids = map(int, set(filter(None, ids_str.split(','))))
+        self.contact_ids = ids

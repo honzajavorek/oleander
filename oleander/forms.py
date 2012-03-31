@@ -105,3 +105,13 @@ class EmailContactForm(Form):
         wtf.Email(),
         wtf.Length(max=100),
     ])
+
+
+class GroupForm(Form):
+    """Form to create or edit a group."""
+
+    name = wtf.TextField('Group name', validators=[
+        wtf.Required(),
+        wtf.Length(max=200),
+    ])
+    contact_ids_str = wtf.HiddenField()
