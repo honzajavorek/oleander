@@ -7,33 +7,15 @@
 
 <div class="block">
     <ul>
-        <li><a href="">A</a></li>
-        <li>B</li>
-        <li>C</li>
-        <li><a href="">&#268;</a></li>
-        <li>D</li>
-        <li><a href="">E</a></li>
-        <li>F</li>
-        <li><a href="">G</a></li>
-        <li>H</li>
-        <li>I</li>
-        <li><a href="">J</a></li>
-        <li><a href="">K</a></li>
-        <li><a href="">L</a></li>
-        <li>M</li>
-        <li><a href="">N</a></li>
-        <li><a href="">O</a></li>
-        <li><a href="">P</a></li>
-        <li>Q</li>
-        <li><a href="">R</a></li>
-        <li>S</li>
-        <li>T</li>
-        <li>U</li>
-        <li><a href="">V</a></li>
-        <li><a href="">W</a></li>
-        <li>X</li>
-        <li>Y</li>
-        <li><a href="">Z</a></li>
+        {% for group in contacts|groupby_alphabet('name', full_alphabet=True) %}
+            <li>
+                {% if group.list %}
+                    <a href="#contacts-{{ group.grouper.name }}">{{ group.grouper }}</a>
+                {% else %}
+                    {{ group.grouper }}
+                {% endif %}
+            </li>
+        {% endfor %}
     </ul>
 </div>
 
@@ -53,23 +35,26 @@
         </table>
 
         {{ form.csrf_token }}
-        <button type="submit">Add contact</button> or <a href="">I'm done adding contacts</a>
+        <button type="submit">Add contact</button>
     </form>
 </div>
 
-<p>A</p>
-<hr>
-
 <ul>
-    <li>E-mail <img src="#"> Honza Javorek, honza@javorek.net <a href="">Delete</a></li>
-</ul>
-
-<p>F</p>
-<hr>
-
-<ul>
-    <li>E-mail <img src="https://graph.facebook.com/honzajavorek/picture?type=square"> Honza Javorek, honza@javorek.net <a href="">Delete</a></li>
-    <li>E-mail <img src="https://graph.facebook.com/honzajavorek/picture?type=square"> Honza Javorek, honza@javorek.net <a href="">Delete</a></li>
+    {% for group in contacts|groupby_alphabet('name') %}
+        <li id="contacts-{{ group.grouper.name }}">{{ group.grouper }}
+            <ul>
+            {% for contact in group.list %}
+                <li>
+                    {{- contact.label }}
+                    <img src="{{ contact.avatar }}">
+                    {{ contact.name }}
+                    {{ contact.identifier }}
+                    <a href="{{ url_for('delete_contact', id=contact.id) }}">Delete</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
 </ul>
 
 <style>

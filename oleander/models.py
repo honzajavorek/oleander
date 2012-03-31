@@ -8,6 +8,7 @@ import hashlib
 import string
 
 
+
 def salt_generator(length=10, chars=string.letters + string.digits):
     """Generates random alphanumeric string of specified length."""
     return ''.join([choice(chars) for i in range(length)])
@@ -51,17 +52,34 @@ class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     type = db.Column('type', db.Enum(*['email', 'facebook', 'google'], name='contact_types'), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
+    user = db.relationship('User', backref=db.backref('contacts', cascade='all', lazy='dynamic'))
+    identifier = None
+    avatar = None
 
     __mapper_args__ = {
         'polymorphic_on': type,
         'with_polymorphic': '*',
     }
 
+    def __repr__(self):
+        return '<%s %r>' % (self.__class__.__name__, self.name)
 
-class EmailContact(Contact):
+
+class GravatarMixin(object):
+    """Support for gravatar."""
+
+    @property
+    def avatar(self):
+        # see https://secure.gravatar.com/site/implement/images
+        return 'https://secure.gravatar.com/avatar/%s?s=50&d=mm' % hashlib.md5(self.email).hexdigest()
+
+
+class EmailContact(GravatarMixin, Contact):
     """Simple contact represented by a plain e-mail address."""
 
     slug = 'email'
+    label = u'E-mail'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     email = db.Column(db.String(100), nullable=False)
@@ -72,11 +90,16 @@ class EmailContact(Contact):
         'polymorphic_identity': slug,
     }
 
+    @property
+    def identifier(self):
+        return self.email
+
 
 class FacebookContact(Contact):
     """Facebook contact represented by a Facebook account."""
 
     slug = 'facebook'
+    label = u'Facebook'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
@@ -88,11 +111,20 @@ class FacebookContact(Contact):
         'polymorphic_identity': slug,
     }
 
+    @property
+    def identifier(self):
+        return 'facebook.com/' + (self.username or self.user_id)
 
-class GoogleContact(Contact):
+    @property
+    def avatar(self):
+        return 'https://graph.facebook.com/%s/picture?type=square' % self.user_id
+
+
+class GoogleContact(GravatarMixin, Contact):
     """Google contact represented by a Gmail and/or Google+ account."""
 
     slug = 'google'
+    label = u'Google'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     email = db.Column(db.String(100), nullable=False)
@@ -102,4 +134,8 @@ class GoogleContact(Contact):
     __mapper_args__ = {
         'polymorphic_identity': slug,
     }
+
+    @property
+    def identifier(self):
+        return self.email
 
