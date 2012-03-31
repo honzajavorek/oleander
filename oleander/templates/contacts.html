@@ -1,5 +1,5 @@
 {% extends '_layout.html' %}
-{% from '_macros.html' import form_errors %}
+{% from '_macros.html' import form_errors, contact_box %}
 
 
 {% block content %}
@@ -45,10 +45,7 @@
             <ul>
             {% for contact in group.list %}
                 <li>
-                    {{- contact.label }}
-                    <img src="{{ contact.avatar }}">
-                    {{ contact.name }}
-                    {{ contact.identifier }}
+                    {{ contact_box(contact) }}
                     <a href="{{ url_for('delete_contact', id=contact.id) }}">Delete</a>
                 </li>
             {% endfor %}

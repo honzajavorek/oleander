@@ -21,3 +21,11 @@
         {% endif %}
     {% endwith %}
 {% endmacro %}
+
+
+{% macro contact_box(contact) %}
+    {{- contact.label }}
+    <img src="{{ contact.avatar }}">
+    {{ contact.name }}
+    {{ contact.identifier }}
+{% endmacro %}
