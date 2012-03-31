@@ -7,7 +7,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from random import choice
 import hashlib
 import string
-
+import operator
 
 
 def salt_generator(length=10, chars=string.letters + string.digits):
@@ -46,6 +46,20 @@ class User(db.Model, UserMixin):
         hash = hashlib.sha1(password + self.password_salt).hexdigest()
         return hash == self.password_hash
 
+    def search_contacts(self, term):
+        """Searches contacts by a given term."""
+        pattern = term + '%'
+
+        # basic name search
+        by_name = self.contacts.filter(Contact.name.ilike(pattern))
+
+        # by special attributes
+        by_email = self.contacts.filter(db.or_(EmailContact.email.ilike(pattern), GoogleContact.email.ilike(pattern)))
+        by_id_or_username = self.contacts.filter(db.or_(db.cast(FacebookContact.user_id, db.String).ilike(pattern), FacebookContact.username.ilike(pattern)))
+
+        # union of results
+        return by_name.union(by_email, by_id_or_username)
+
 
 class Contact(db.Model):
     """Base contact model class."""
@@ -65,6 +79,9 @@ class Contact(db.Model):
 
     def __repr__(self):
         return '<%s %r>' % (self.__class__.__name__, self.name)
+
+    def to_dict(self):
+        return dict(id=self.id, name=self.name, type=self.type, identifier=self.identifier, avatar=self.avatar)
 
 
 class GravatarMixin(object):

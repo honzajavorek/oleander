@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import render_template, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
 from oleander import app, db
 from oleander.models import Group
@@ -35,6 +35,15 @@ def groups(action=None, id=None):
 
     groups = current_user.groups
     return render_template('groups.html', action=action, edited_group=group, groups=groups, form=form)
+
+
+@app.route('/groups/search-contacts/<string:term>')
+def search_contacts(term):
+    if not request.is_xhr and not app.debug:
+        abort(404)
+    contacts = [contact.to_dict() for contact in current_user.search_contacts(term)]
+    return jsonify(term=term, contacts=contacts)
+
 
 
 @app.route('/groups/delete/<int:id>')
