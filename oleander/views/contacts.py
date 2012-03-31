@@ -26,7 +26,7 @@ def contacts():
     return render_template('contacts.html', form=form, contacts=contacts)
 
 
-@app.route('/delete-contact/<int:id>')
+@app.route('/contacts/delete/<int:id>')
 @login_required
 def delete_contact(id):
     """Removes contact by ID."""
