@@ -31,4 +31,29 @@ class UserData(DataSet):
         timezone = 'Europe/Prague'
 
 
-all_data = (UserData,)
+class EmailContactData(DataSet):
+
+    class zuzejk:
+        name = 'Zuzejk'
+        user = UserData.honza
+        email = 'perdas@example.com'
+
+    class maple:
+        name = 'Maple'
+        user = UserData.honza
+        email = 'maple@example.com'
+
+
+class GroupData(DataSet):
+
+    class penoclan:
+        name = 'Peno Clan'
+        user = UserData.honza
+        contacts = [EmailContactData.zuzejk, EmailContactData.maple]
+
+
+all_data = (
+    UserData,
+    EmailContactData,
+    GroupData,
+)
