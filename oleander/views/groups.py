@@ -4,6 +4,7 @@
 from flask import render_template, request, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
 from oleander import app, db
+from oleander.ajax import ajax_only, template_to_html
 from oleander.models import Group
 from oleander.forms import GroupForm
 
@@ -38,10 +39,14 @@ def groups(action=None, id=None):
 
 
 @app.route('/groups/search-contacts/<string:term>')
+@ajax_only
 def search_contacts(term):
-    if not request.is_xhr and not app.debug:
-        abort(404)
-    contacts = [contact.to_dict() for contact in current_user.search_contacts(term)]
+    contacts = []
+    for contact in current_user.search_contacts(term):
+        contact_dict = contact.to_dict()
+        contact_dict['html_search_result'] = template_to_html('_contact.html', contact=contact, term=term)
+        contact_dict['html'] = template_to_html('_contact.html', contact=contact)
+        contacts.append(contact_dict)
     return jsonify(term=term, contacts=contacts)
 
 

@@ -5,6 +5,80 @@
 {% block content %}
 <h2>Groups</h2>
 
+<script>
+    var lastXhr;
+
+    updateContactsField = function() {
+        var ids = [];
+        $('#members').find('li').each(function(i, element) {
+            ids.push($(element).find('.contact').attr('data-contact-id'));
+        });
+        $('#contact_ids_str').val(ids.join(','));
+    }
+
+    $(document).ready(function() {
+        $('#members-add').keyup(function(event) {
+            var term = $(this).val();
+            var $ul = $('#members-search-results');
+
+            if (lastXhr) {
+                lastXhr.abort();
+            }
+            $ul.empty();
+
+            if (term) {
+                var uri = '/groups/search-contacts/' + encodeURIComponent(term);
+                lastXhr = $.getJSON(uri, function(data, status, xhr) {
+                    if (xhr === lastXhr) {
+                        $.each(data.contacts, function(i, contact) {
+                            var $li = $('<li>', {'html': contact.html_search_result});
+                            $li.appendTo($ul);
+                            $li.data('contact', contact);
+                        });
+                    }
+                });
+            }
+        });
+        $('#members-add').keyup();
+
+        $members = $('#members');
+        $searchResults = $('#members-search-results');
+
+        $('li a', $searchResults).live('click', function(event) {
+            event.preventDefault();
+
+            var $searchResult = $(this).closest('li');
+            var contact = $searchResult.data('contact');
+
+            var alreadyAdded = false;
+            $members.find('li').each(function(i, element) {
+                if ($(element).find('.contact').attr('data-contact-id') == contact.id) {
+                    alreadyAdded = true;
+                    return false;
+                }
+            });
+            if (alreadyAdded) {
+                return;
+            }
+
+            var $li = $('<li>', {'html': contact.html});
+            $li.data('contact', contact);
+            $li.appendTo($members);
+
+            updateContactsField();
+        });
+
+        $('li a', $members).live('click', function(event) {
+            event.preventDefault();
+
+            var $member = $(this).closest('li');
+            $member.remove();
+
+            updateContactsField();
+        });
+    });
+</script>
+
 {% if action == 'new' %}
     <div class="group">
         <form action="{{ url_for('groups', action='new') }}" method="post">
@@ -15,9 +89,9 @@
 
             <h4>Members</h4>
             {{ form.contact_ids_str() }}
-            <ul></ul>
-            <p><label for="add_member">Add member</label> <input id="add_member" type="search"></p>
-            <ul></ul>
+            <ul id="members"></ul>
+            <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
+            <ul id="members-search-results"></ul>
 
             {{ form.csrf_token }}
         </form>
@@ -39,9 +113,13 @@
 
             <h4>Members</h4>
             {{ form.contact_ids_str() }}
-            <ul></ul>
-            <p><label for="add_member">Add member</label> <input id="add_member" type="search"></p>
-            <ul></ul>
+            <ul id="members">
+                {% for contact in group.contacts %}
+                    <li>{% include '_contact.html' %}</li>
+                {% endfor %}
+            </ul>
+            <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
+            <ul id="members-search-results"></ul>
 
             {{ form.csrf_token }}
         </form>

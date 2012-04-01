@@ -3,7 +3,6 @@
 
 from oleander import app, db
 from flask.ext.login import UserMixin
-from sqlalchemy.ext.associationproxy import association_proxy
 from random import choice
 import hashlib
 import string
@@ -46,7 +45,7 @@ class User(db.Model, UserMixin):
         hash = hashlib.sha1(password + self.password_salt).hexdigest()
         return hash == self.password_hash
 
-    def search_contacts(self, term):
+    def search_contacts(self, term, limit=5):
         """Searches contacts by a given term."""
         pattern = term + '%'
 
@@ -58,7 +57,7 @@ class User(db.Model, UserMixin):
         by_id_or_username = self.contacts.filter(db.or_(db.cast(FacebookContact.user_id, db.String).ilike(pattern), FacebookContact.username.ilike(pattern)))
 
         # union of results
-        return by_name.union(by_email, by_id_or_username)
+        return by_name.union(by_email, by_id_or_username).limit(limit)
 
 
 class Contact(db.Model):
@@ -81,7 +80,13 @@ class Contact(db.Model):
         return '<%s %r>' % (self.__class__.__name__, self.name)
 
     def to_dict(self):
-        return dict(id=self.id, name=self.name, type=self.type, identifier=self.identifier, avatar=self.avatar)
+        return dict(
+            id=self.id,
+            name=self.name,
+            type=self.type,
+            identifier=self.identifier,
+            avatar=self.avatar
+        )
 
 
 class GravatarMixin(object):
@@ -172,15 +177,22 @@ class Group(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('groups', cascade='all', lazy='dynamic'))
     contacts = db.relationship('Contact', secondary=grouping, backref=db.backref('groups', lazy='dynamic'))
-    contact_ids = association_proxy('contacts', 'id')
 
     __mapper_args__ = {
         'order_by': name,
     }
 
     @property
+    def contact_ids(self):
+        return [contact.id for contact in self.contacts]
+
+    @contact_ids.setter
+    def contact_ids(self, ids):
+        self.contacts = list(Contact.query.filter(Contact.id.in_(ids)))
+
+    @property
     def contact_ids_str(self):
-        return ','.join(self.contact_ids)
+        return ','.join(map(str, self.contact_ids))
 
     @contact_ids_str.setter
     def contact_ids_str(self, ids_str):

@@ -23,9 +23,19 @@
 {% endmacro %}
 
 
-{% macro contact_box(contact) %}
-    {{- contact.label }}
+{% macro contact_box(contact, term=None) %}
+    {{ contact.label }}
     <img src="{{ contact.avatar }}">
-    {{ contact.name }}
-    {{ contact.identifier }}
+
+    {% if term %}
+        {{ contact.name|mark(term, pattern='^%(term)s') }}
+    {% else %}
+        {{ contact.name }}
+    {% endif %}
+
+    {% if term %}
+        {{ contact.identifier|mark(term, pattern='^%(term)s') }}
+    {% else %}
+        {{ contact.identifier }}
+    {% endif %}
 {% endmacro %}
