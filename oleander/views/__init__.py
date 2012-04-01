@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
 
 
-from .index import index
-from .auth import sign_up, sign_in, sign_out
-from .settings import settings, change_password
-from .contacts import contacts, delete_contact
-from .groups import groups, delete_group
+__all__ = [
+    'auth',
+    'contacts',
+    'groups',
+    'index',
+    'settings',
+]
+
+
+for module in __all__:
+    name = '.'.join([__name__, module])
+    __import__(name)
