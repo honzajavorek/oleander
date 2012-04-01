@@ -14,7 +14,16 @@ def salt_generator(length=10, chars=string.letters + string.digits):
     return ''.join([choice(chars) for i in range(length)])
 
 
-class User(db.Model, UserMixin):
+class GravatarMixin(object):
+    """Support for gravatar."""
+
+    @property
+    def avatar(self):
+        # see https://secure.gravatar.com/site/implement/images
+        return 'https://secure.gravatar.com/avatar/%s?s=50&d=mm' % hashlib.md5(self.email).hexdigest()
+
+
+class User(db.Model, UserMixin, GravatarMixin):
     """User model class."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -59,6 +68,19 @@ class User(db.Model, UserMixin):
         # union of results
         return by_name.union(by_email, by_id_or_username).limit(limit)
 
+    def group_or_404(self, id):
+        """Returns user's group by given ID or aborts the request."""
+        return self.groups.filter(Group.id == id).first_or_404()
+
+    def topic_or_404(self, id, group_id=None):
+        """Returns user's topic by given IDs or aborts the request."""
+        query = Topic.query\
+            .filter(Topic.group.user == current_user)\
+            .filter(Topic.id == id)
+        if group_id:
+            query = query.filter(Topic.group.id == group_id)
+        return query.first_or_404()
+
 
 class Contact(db.Model):
     """Base contact model class."""
@@ -87,15 +109,6 @@ class Contact(db.Model):
             identifier=self.identifier,
             avatar=self.avatar
         )
-
-
-class GravatarMixin(object):
-    """Support for gravatar."""
-
-    @property
-    def avatar(self):
-        # see https://secure.gravatar.com/site/implement/images
-        return 'https://secure.gravatar.com/avatar/%s?s=50&d=mm' % hashlib.md5(self.email).hexdigest()
 
 
 class EmailContact(GravatarMixin, Contact):
@@ -198,3 +211,10 @@ class Group(db.Model):
     def contact_ids_str(self, ids_str):
         ids = map(int, set(filter(None, ids_str.split(','))))
         self.contact_ids = ids
+
+
+class Topic(db.Model):
+    """Discussion topic."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    subject = db.Column(db.String(200), nullable=False)

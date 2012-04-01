@@ -31,5 +31,5 @@ def contacts():
 def delete_contact(id):
     """Removes contact by ID."""
     with db.transaction as session:
-        Contact.query.with_polymorphic(Contact).filter(Contact.id == id).delete()
+        Contact.query.with_polymorphic(Contact).filter(Contact.id == id).filter(Contact.user == current_user).delete()
     return redirect(url_for('contacts'))

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import render_template, request, redirect, url_for, abort, jsonify
+from flask import render_template, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
 from oleander import app, db
 from oleander.ajax import ajax_only, template_to_html
@@ -15,8 +15,7 @@ from oleander.forms import GroupForm
 @login_required
 def groups(action=None, id=None):
     """Groups index."""
-
-    group = Group.query.filter(Group.id == id).first_or_404() if id else None
+    group = current_user.group_or_404(id) if id else None
     form = GroupForm(obj=group)
 
     if form.validate_on_submit():
@@ -56,7 +55,7 @@ def search_contacts(term):
 def delete_group(id):
     """Removes group by ID."""
     with db.transaction as session:
-        Group.query.filter(Group.id == id).delete()
+        current_user.group_or_404(id).delete()
     return redirect(url_for('groups'))
 
 
@@ -65,7 +64,7 @@ def delete_group(id):
 @login_required
 def group(id, action=None):
     """Group page."""
-    group = Group.query.filter(Group.id == id).first_or_404()
+    group = current_user.group_or_404(id)
     form = GroupForm(obj=group) if action else None
 
     if form and form.validate_on_submit():

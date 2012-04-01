@@ -115,3 +115,12 @@ class GroupForm(Form):
         wtf.Length(max=200),
     ])
     contact_ids_str = wtf.HiddenField()
+
+
+class TopicForm(Form):
+    """Form to create a new topic."""
+
+    subject = wtf.TextField('Subject', validators=[
+        wtf.Required(),
+        wtf.Length(max=200),
+    ])
