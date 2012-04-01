@@ -221,3 +221,4 @@ class Topic(db.Model):
     group_id = db.Column(db.Integer(), db.ForeignKey('group.id', ondelete='cascade'), nullable=False)
     group = db.relationship('Group', backref=db.backref('topics', cascade='all', lazy='dynamic'))
     created_at = db.Column(db.DateTime())
+    updated_at = db.Column(db.DateTime())

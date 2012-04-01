@@ -15,13 +15,15 @@ def new_topic(group_id):
     """Form to create a new discussion topic."""
     group = current_user.group_or_404(group_id)
     form = TopicForm()
+    now = times.now()
 
     if form.validate_on_submit():
         with db.transaction as session:
             topic = Topic()
             form.populate_obj(topic)
             topic.group = group
-            topic.created_at = times.now()
+            topic.created_at = now
+            topic.updated_at = now
             session.add(topic)
         return redirect(url_for('topic', id=topic.id, group_id=group.id))
 
