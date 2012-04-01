@@ -1,0 +1,163 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box %}
+
+
+{% block content %}
+
+<script>
+    var lastXhr;
+
+    updateContactsField = function() {
+        var ids = [];
+        $('#members').find('li').each(function(i, element) {
+            ids.push($(element).find('.contact').attr('data-contact-id'));
+        });
+        $('#contact_ids_str').val(ids.join(','));
+    }
+
+    $(document).ready(function() {
+        $('#members-add').keyup(function(event) {
+            var term = $(this).val();
+            var $ul = $('#members-search-results');
+
+            if (lastXhr) {
+                lastXhr.abort();
+            }
+            $ul.empty();
+
+            if (term) {
+                var uri = '/groups/search-contacts/' + encodeURIComponent(term);
+                lastXhr = $.getJSON(uri, function(data, status, xhr) {
+                    if (xhr === lastXhr) {
+                        $.each(data.contacts, function(i, contact) {
+                            var $li = $('<li>', {'html': contact.html_search_result});
+                            $li.appendTo($ul);
+                            $li.data('contact', contact);
+                        });
+                    }
+                });
+            }
+        });
+        $('#members-add').keyup();
+
+        $members = $('#members');
+        $searchResults = $('#members-search-results');
+
+        $('li a', $searchResults).live('click', function(event) {
+            event.preventDefault();
+
+            var $searchResult = $(this).closest('li');
+            var contact = $searchResult.data('contact');
+
+            var alreadyAdded = false;
+            $members.find('li').each(function(i, element) {
+                if ($(element).find('.contact').attr('data-contact-id') == contact.id) {
+                    alreadyAdded = true;
+                    return false;
+                }
+            });
+            if (alreadyAdded) {
+                return;
+            }
+
+            var $li = $('<li>', {'html': contact.html});
+            $li.data('contact', contact);
+            $li.appendTo($members);
+
+            updateContactsField();
+        });
+
+        $('li a', $members).live('click', function(event) {
+            event.preventDefault();
+
+            var $member = $(this).closest('li');
+            $member.remove();
+
+            updateContactsField();
+        });
+    });
+</script>
+
+
+<div class="block">
+{% if action == 'edit' %}
+    <form action="{{ url_for('group', action='edit', id=group.id) }}" method="post">
+        {{ form_errors(form) }}
+
+        <h2>{{ form.name(placeholder=form.name.label.text) }}</h2>
+        <p><a href="{{ url_for('group', id=group.id) }}">Cancel</a> or <button type="submit">Save</button></p>
+
+        <h4>Members</h4>
+        {{ form.contact_ids_str() }}
+        <ul id="members">
+            {% for contact in group.contacts %}
+                <li>{% include '_contact.html' %}</li>
+            {% endfor %}
+        </ul>
+        <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
+        <ul id="members-search-results"></ul>
+
+        {{ form.csrf_token }}
+    </form>
+{% else %}
+    <h2>{{ group.name }} <a href="{{ url_for('group', action='edit', id=group.id) }}">Rename</a></h2>
+
+    {% with contacts = group.contacts|list %}
+        <h3>Members <a href="{{ url_for('group', action='edit', id=group.id) }}">Edit</a></h3>
+        {% if contacts %}
+            <ul>
+                {% for contact in contacts %}
+                    <li>{{ contact_box(contact) }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Empty group.</p>
+        {% endif %}
+    {% endwith %}
+{% endif %}
+</div>
+
+{% if not action %}
+<div class="block">
+<h3>Attachments</h3>
+<ul>
+    <li><a href="">Poll</a> <small>Is my head big? &rarr; Yes (72%)</small></li>
+    <li><a href="">Picture</a> <small>56 kB, 100&times;400px</small></li>
+    <li><a href="">Event</a> <small>December meeting &middot; Wed, Dec 7 at 13:00</small></li>
+    <li><a href="">Schedule poll</a> <small>December meeting &rarr; Wed, Dec 7</small></li>
+    <li><a href="">ZIP file</a> <small>56 MB</small></li>
+    <li><a href="">Schedule poll</a> <small>October meeting &rarr; ?</small></li>
+</ul>
+</div>
+
+<h3>Topics</h3>
+<div class="block">
+    <p><a href="">Start a new topic</a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (19 minutes ago)</small></a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (59 minutes ago)</small></a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (1 hours ago)</small></a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (30 hours ago)</small></a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (... ago)</small></a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (... ago)</small></a></p>
+</div>
+<div class="block">
+    <p><a href=""><strong>Today's meeting</strong> <small>15:01 (... ago)</small></a></p>
+</div>
+{% endif %}
+
+<style>
+    .block { background: #EEE; padding: 0.001em 1em; margin: 1em 0; }
+</style>
+{% endblock %}

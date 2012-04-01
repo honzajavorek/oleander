@@ -58,3 +58,21 @@ def delete_group(id):
     with db.transaction as session:
         Group.query.filter(Group.id == id).delete()
     return redirect(url_for('groups'))
+
+
+@app.route('/group/<int:id>')
+@app.route('/group/<any(edit):action>/<int:id>', methods=('GET', 'POST'))
+@login_required
+def group(id, action=None):
+    """Group page."""
+    group = Group.query.filter(Group.id == id).first_or_404()
+    form = GroupForm(obj=group) if action else None
+
+    if form and form.validate_on_submit():
+        with db.transaction as session:
+            form.populate_obj(group)
+        return redirect(url_for('group', id=id))
+
+    return render_template('group.html', group=group, action=action, form=form)
+
+
