@@ -21,8 +21,9 @@ def new_topic(group_id):
             topic = Topic()
             form.populate_obj(topic)
             topic.group = group
+            topic.created_at = times.now()
             session.add(topic)
-        return redirect(url_for('topic', id=topic.id))
+        return redirect(url_for('topic', id=topic.id, group_id=group.id))
 
     return render_template('new_topic.html', group=group, form=form, now=times.now())
 
