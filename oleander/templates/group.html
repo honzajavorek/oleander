@@ -118,18 +118,6 @@
 </div>
 
 {% if not action %}
-    <div class="block">
-    <h3>Attachments</h3>
-    <ul>
-        <li><a href="">Poll</a> <small>Is my head big? &rarr; Yes (72%)</small></li>
-        <li><a href="">Picture</a> <small>56 kB, 100&times;400px</small></li>
-        <li><a href="">Event</a> <small>December meeting &middot; Wed, Dec 7 at 13:00</small></li>
-        <li><a href="">Schedule poll</a> <small>December meeting &rarr; Wed, Dec 7</small></li>
-        <li><a href="">ZIP file</a> <small>56 MB</small></li>
-        <li><a href="">Schedule poll</a> <small>October meeting &rarr; ?</small></li>
-    </ul>
-    </div>
-
     <h3>Topics</h3>
     <div class="block">
         <p><a href="{{ url_for('new_topic', group_id=group.id) }}">Start a new topic</a></p>

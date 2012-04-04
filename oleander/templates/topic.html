@@ -1,0 +1,38 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box %}
+
+
+{% block content %}
+<h2><a href="{{ url_for('group', id=topic.group_id) }}">{{ topic.group.name }}</a>: {{ topic.subject }}</h2>
+
+{% for message in topic.messages %}
+<div class="group" id="message-{{ message.id }}">
+    <p><img src="{{ message.contact.avatar }}"> {% if message.contact.user == current_user %}me{% else %}{{ message.contact.name }}{% endif %}</p>
+    <p>{{ message.posted_at|datetime }}<p>
+
+    <blockquote>
+        {{ message.content }}
+    </blockquote>
+</div>
+{% endfor %}
+
+<div class="group">
+    <form action="" method="post">
+        {{ form_errors(form) }}
+
+        <p><img src="{{ current_user.avatar }}"> me</p>
+        <p>{{ now|datetime }}<p>
+
+        <blockquote>
+            {{ form.message(cols=100, rows=10) }}
+            <p><button type="submit">Reply</button></p>
+        </blockquote>
+
+        {{ form.csrf_token }}
+    </form>
+</div>
+
+<style>
+    .group { background: #EEE; padding: 0.001em 1em; margin: 1em 0; }
+</style>
+{% endblock %}

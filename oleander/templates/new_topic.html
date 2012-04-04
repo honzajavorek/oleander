@@ -13,7 +13,7 @@
 
     <blockquote>
         <p><label>Subject</label> {{ form.subject(size=50) }}</p>
-        <textarea cols="100" rows="10"></textarea>
+        {{ form.message(cols=100, rows=10) }}
         <p><button type="submit">Send!</button> or <a href="{{ url_for('group', id=group.id) }}">Cancel</a></p>
     </blockquote>
 

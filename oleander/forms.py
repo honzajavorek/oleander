@@ -124,3 +124,14 @@ class TopicForm(Form):
         wtf.Required(),
         wtf.Length(max=200),
     ])
+    message = wtf.TextAreaField('Message', validators=[
+        wtf.Required(),
+    ])
+
+
+class MessageForm(Form):
+    """Form to send a message."""
+
+    message = wtf.TextAreaField('Message', validators=[
+        wtf.Required(),
+    ])
