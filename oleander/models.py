@@ -9,11 +9,6 @@ import string
 import operator
 
 
-def salt_generator(length=10, chars=string.letters + string.digits):
-    """Generates random alphanumeric string of specified length."""
-    return ''.join([choice(chars) for i in range(length)])
-
-
 class GravatarMixin(object):
     """Support for gravatar."""
 
@@ -33,12 +28,16 @@ class User(db.Model, UserMixin, GravatarMixin):
     password_salt = db.Column(db.String(10), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default=app.config['DEFAULT_TIMEZONE'])
 
+    def _generate_salt(self, length=10, chars=string.letters + string.digits):
+        """Generates random alphanumeric string of specified length."""
+        return ''.join([choice(chars) for i in range(length)])
+
     def set_password(self, password):
         """New password setter."""
         if isinstance(password, unicode):
             password = password.encode('utf-8')
 
-        salt = salt_generator()
+        salt = self._generate_salt()
         hash = hashlib.sha1(password + salt).hexdigest()
 
         self.password_hash = hash
@@ -75,23 +74,62 @@ class User(db.Model, UserMixin, GravatarMixin):
     def topic_or_404(self, id, group_id=None):
         """Returns user's topic by given IDs or aborts the request."""
         query = Topic.query\
-            .filter(Topic.group.user == current_user)\
+            .join(Group)\
+            .filter(Group.user == self)\
             .filter(Topic.id == id)
         if group_id:
-            query = query.filter(Topic.group.id == group_id)
+            query = query.filter(Group.id == group_id)
         return query.first_or_404()
 
 
-class Contact(db.Model):
+class ContactMixin(object):
+    """Mixin for all contacts."""
+
+    type = None
+    name = None
+    avatar = None
+    identifier = None
+
+    @property
+    def label(self):
+        return Contact.contact_types[self.type]
+
+
+class UserContact(ContactMixin):
+    """Contact created from User instance."""
+
+    def __init__(self, type, user):
+        self.type = type
+        self.name = user.name
+        self.avatar = user.avatar
+        self.user = user
+
+        if type == 'email':
+            self.identifier = user.email
+        else:
+            raise NotImplementedError("Type '%s' is not supported yet" % type)
+
+
+class DeletedContact(ContactMixin):
+    """Contact representing a previously deleted one."""
+
+    def __init__(self, type, name, identifier, avatar=None):
+        self.type = type
+        self.name = name
+        self.identifier = identifier
+        self.avatar = avatar or None
+
+
+class Contact(db.Model, ContactMixin):
     """Base contact model class."""
+
+    contact_types = {'email': u'E-mail', 'facebook': u'Facebook', 'google': u'Google'}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    type = db.Column('type', db.Enum(*['email', 'facebook', 'google'], name='contact_types'), nullable=False)
+    type = db.Column(db.Enum(*contact_types.keys(), name='contact_types'), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('contacts', cascade='all', lazy='dynamic'))
-    identifier = None
-    avatar = None
 
     __mapper_args__ = {
         'polymorphic_on': type,
@@ -111,11 +149,10 @@ class Contact(db.Model):
         )
 
 
-class EmailContact(GravatarMixin, Contact):
+class EmailContact(Contact, GravatarMixin):
     """Simple contact represented by a plain e-mail address."""
 
     slug = 'email'
-    label = u'E-mail'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     email = db.Column(db.String(100), nullable=False)
@@ -135,7 +172,6 @@ class FacebookContact(Contact):
     """Facebook contact represented by a Facebook account."""
 
     slug = 'facebook'
-    label = u'Facebook'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
@@ -156,11 +192,10 @@ class FacebookContact(Contact):
         return 'https://graph.facebook.com/%s/picture?type=square' % self.user_id
 
 
-class GoogleContact(GravatarMixin, Contact):
+class GoogleContact(Contact, GravatarMixin):
     """Google contact represented by a Gmail and/or Google+ account."""
 
     slug = 'google'
-    label = u'Google'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     email = db.Column(db.String(100), nullable=False)
@@ -220,5 +255,62 @@ class Topic(db.Model):
     subject = db.Column(db.String(200), nullable=False)
     group_id = db.Column(db.Integer(), db.ForeignKey('group.id', ondelete='cascade'), nullable=False)
     group = db.relationship('Group', backref=db.backref('topics', cascade='all', lazy='dynamic'))
-    created_at = db.Column(db.DateTime())
-    updated_at = db.Column(db.DateTime())
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
+
+    __mapper_args__ = {
+        'order_by': db.desc(updated_at),
+    }
+
+
+class Message(db.Model):
+    """Message in topic."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    topic_id = db.Column(db.Integer(), db.ForeignKey('topic.id', ondelete='cascade'), nullable=False)
+    topic = db.relationship('Topic', backref=db.backref('messages', cascade='all', lazy='dynamic'))
+    _user_id = db.Column('user_id', db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=True)
+    _user = db.relationship('User', backref=db.backref('messages', cascade='all', lazy='dynamic'))
+    _contact_id = db.Column('contact_id', db.Integer(), db.ForeignKey('contact.id', ondelete='cascade'), nullable=True)
+    _contact_name = db.Column('contact_name', db.String(200), nullable=False)
+    _contact_identifier = db.Column('contact_identifier', db.String(200), nullable=False)
+    _contact_avatar = db.Column('contact_avatar', db.String(500), nullable=False)
+    _contact = db.relationship('Contact', backref=db.backref('messages', cascade='all', lazy='dynamic'))
+    type = db.Column(db.Enum(*Contact.contact_types, name='contact_types'))
+    content = db.Column(db.Text(), nullable=False)
+    posted_at = db.Column(db.DateTime(), nullable=False)
+
+    __mapper_args__ = {
+        'order_by': posted_at,
+    }
+
+    @property
+    def contact(self):
+        if self._user_id or self._contact_id:
+            return UserContact(self.type, self._user) or self._contact
+
+        # contact doesn't exist anymore
+        return DeletedContact(
+            self.type,
+            self._contact_name,
+            self._contact_identifier,
+            self._contact_avatar
+        )
+
+        return None
+
+    @contact.setter
+    def contact(self, contact):
+        self._user = getattr(contact, 'user', None)
+        self._contact = contact if hasattr(contact, 'id') else None
+
+        if contact is None:
+            self.type = None
+            self._contact_name = None
+            self._contact_identifier = None
+            self._contact_avatar = None
+        else:
+            self.type = contact.type
+            self._contact_name = contact.name
+            self._contact_identifier = contact.identifier
+            self._contact_avatar = contact.avatar
