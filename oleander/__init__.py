@@ -19,7 +19,7 @@ db.transaction = Transaction(db)
 login_manager = LoginManager()
 login_manager.setup_app(app)
 login_manager.login_view = 'sign_in'
-login_manager.needs_refresh = 'sign_in'
+login_manager.refresh_view = 'sign_in'
 
 
 import oleander.views
