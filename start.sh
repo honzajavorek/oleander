@@ -6,6 +6,7 @@
 
 
 PROJECT_DIR=`dirname $0`
+CSS_DIR="$PROJECT_DIR/oleander/static/css"
 
 
 RCFILE=`tempfile`
@@ -25,6 +26,10 @@ until python $PROJECT_DIR/manage.py runserver; do
 done
 " >> $DEV_SERVER_RCFILE
 
+SASS_RCFILE=`tempfile`
+cat $RCFILE >> $SASS_RCFILE
+echo "sass --style expanded --debug-info --watch $CSS_DIR" >> $SASS_RCFILE
+
 SHELL_RCFILE=`tempfile`
 cat $VIRTUALENV_RCFILE >> $SHELL_RCFILE
 echo "export OLEANDER_SETTINGS=$PROJECT_DIR/settings/lisa.py
@@ -37,6 +42,7 @@ if which gnome-terminal &> /dev/null; then
     exec gnome-terminal\
         --geometry="85x24+850+100"\
         --tab -e "bash --rcfile $DEV_SERVER_RCFILE" -t "Dev Server"\
+        --tab -e "bash --rcfile $SASS_RCFILE" -t "Sass/Scss"\
         --tab -e "bash --rcfile $SHELL_RCFILE" -t "Shell"
 
 else
@@ -44,5 +50,5 @@ else
 fi
 
 
-rm $RCFILE $VIRTUALENV_RCFILE $DEV_SERVER_RCFILE $GUN_SERVER_RCFILE $SHELL_RCFILE
+rm $RCFILE $VIRTUALENV_RCFILE $DEV_SERVER_RCFILE $SASS_RCFILE $SHELL_RCFILE
 
