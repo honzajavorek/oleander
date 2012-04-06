@@ -41,10 +41,10 @@ def groups(action=None, id=None):
 @ajax_only
 def search_contacts(term):
     contacts = []
-    for contact in current_user.search_contacts(term):
+    for contact in current_user.search_contacts(term, limit=6):
         contact_dict = contact.to_dict()
-        contact_dict['html_search_result'] = template_to_html('_contact.html', contact=contact, term=term)
-        contact_dict['html'] = template_to_html('_contact.html', contact=contact)
+        contact_dict['html_search_result'] = template_to_html('_contact_box.html', contact=contact, term=term)
+        contact_dict['html'] = template_to_html('_contact_box.html', contact=contact)
         contacts.append(contact_dict)
     return jsonify(term=term, contacts=contacts)
 

@@ -1,10 +1,103 @@
 {% extends '_layout.html' %}
-{% from '_macros.html' import form_errors, contact_box %}
+{% from '_macros.html' import form_errors, contact_box, button_link %}
 
 
 {% block content %}
-<h2>Groups</h2>
+<h1>Groups</h1>
 
+
+{% if action != 'new' %}
+    <div class="action_area">
+        <p>{{ button_link(url_for('groups', action='new'), 'Create new') }}</p>
+    </div>
+{% endif %}
+
+
+<div class="groups_list">
+    {% if action == 'new' %}
+        <div class="group">
+            <form action="{{ url_for('groups', action='new') }}" method="post">
+                {{ form_errors(form) }}
+
+                <h3 class="legend">{{ form.name(placeholder=form.name.label.text) }}</h3>
+                <p class="icons">
+                    <a href="{{ url_for('groups') }}">Cancel</a> or <button type="submit">Save</button>
+                </p>
+
+                {{ form.contact_ids_str() }}
+                <ul id="members" class="contacts_list"></ul>
+                <br class="cleaner">
+                <table>
+                    <tr><th>
+                        <label for="members_add">Add member</label>
+                    </th><td>
+                        <input id="members_add" type="search">
+                    </td></tr>
+                </table>
+                <ul id="members_search_results" class="contacts_list"></ul>
+                <br class="cleaner">
+
+                {{ form.csrf_token }}
+            </form>
+        </div>
+    {% endif %}
+
+    {% for group in groups %}
+    <div class="group">
+        {% if edited_group == group %}
+            <form action="{{ url_for('groups', action='edit', id=group.id) }}" method="post">
+                {{ form_errors(form) }}
+
+                <h3 class="legend">{{ form.name(placeholder=form.name.label.text) }}</h3>
+                <p class="icons">
+                    <a href="{{ url_for('groups') }}">Cancel</a> or <button type="submit">Save</button>
+                </p>
+
+                {{ form.contact_ids_str() }}
+                <ul id="members" class="contacts_list">
+                    {% for contact in group.contacts %}
+                        <li>{% include '_contact_box.html' %}</li>
+                    {% endfor %}
+                </ul>
+                <br class="cleaner">
+                <table>
+                    <tr><th>
+                        <label for="members_add">Add member</label>
+                    </th><td>
+                        <input id="members_add" type="search" placeholder="Type to search">
+                    </td></tr>
+                </table>
+                <ul id="members_search_results" class="contacts_list"></ul>
+                <br class="cleaner">
+
+                {{ form.csrf_token }}
+            </form>
+        {% else %}
+            <h3 class="legend"><a href="{{ url_for('group', id=group.id) }}">{{ group.name }}</a></h3>
+            <p class="icons">
+                <a class="icon" href="{{ url_for('groups', action='edit', id=group.id) }}" title="Edit group details, adjust members">Edit</a>
+            </p>
+
+            {% with contacts = group.contacts|list %}
+                {% if contacts %}
+                    <ul class="contacts_list">
+                        {% for contact in contacts %}
+                            <li>{{ contact_box(contact) }}</li>
+                        {% endfor %}
+                    </ul>
+                    <br class="cleaner">
+                {% else %}
+                    <p>Empty group.</p>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block script %}
 <script>
     var lastXhr;
 
@@ -17,9 +110,9 @@
     }
 
     $(document).ready(function() {
-        $('#members-add').keyup(function(event) {
+        $('#members_add').keyup(function(event) {
             var term = $(this).val();
-            var $ul = $('#members-search-results');
+            var $ul = $('#members_search_results');
 
             if (lastXhr) {
                 lastXhr.abort();
@@ -33,16 +126,17 @@
                         $.each(data.contacts, function(i, contact) {
                             var $li = $('<li>', {'html': contact.html_search_result});
                             $li.appendTo($ul);
+                            $('a.icon[title]', $li).tipsy({opacity: 1});
                             $li.data('contact', contact);
                         });
                     }
                 });
             }
         });
-        $('#members-add').keyup();
+        $('#members_add').keyup();
 
         $members = $('#members');
-        $searchResults = $('#members-search-results');
+        $searchResults = $('#members_search_results');
 
         $('li a', $searchResults).live('click', function(event) {
             event.preventDefault();
@@ -57,93 +151,34 @@
                     return false;
                 }
             });
-            if (alreadyAdded) {
-                return;
+
+            if (!alreadyAdded) {
+                var $li = $('<li>', {'html': contact.html});
+                $li.data('contact', contact);
+                $('a.icon[title]', $li).tipsy({opacity: 1});
+                $li.appendTo($members);
+
+                updateContactsField();
             }
 
-            var $li = $('<li>', {'html': contact.html});
-            $li.data('contact', contact);
-            $li.appendTo($members);
-
-            updateContactsField();
+            $('.contact[data-contact-id="' + contact.id + '"]', $members)
+                .addClass('highlighted')
+                .delay(500)
+                .queue(function(next){
+                    $(this).removeClass('highlighted');
+                    next();
+                });
         });
 
         $('li a', $members).live('click', function(event) {
             event.preventDefault();
 
-            var $member = $(this).closest('li');
-            $member.remove();
+            $(this).tipsy('hide');
+            $(this).closest('li').remove();
 
             updateContactsField();
         });
     });
 </script>
-
-{% if action == 'new' %}
-    <div class="group">
-        <form action="{{ url_for('groups', action='new') }}" method="post">
-            {{ form_errors(form) }}
-
-            <h3>{{ form.name(placeholder=form.name.label.text) }}</h3>
-            <p><a href="{{ url_for('groups') }}">Cancel</a> or <button type="submit">Save</button></p>
-
-            <h4>Members</h4>
-            {{ form.contact_ids_str() }}
-            <ul id="members"></ul>
-            <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
-            <ul id="members-search-results"></ul>
-
-            {{ form.csrf_token }}
-        </form>
-    </div>
-{% else %}
-    <div class="group">
-        <p><a href="{{ url_for('groups', action='new') }}">Create new</a></p>
-    </div>
-{% endif %}
-
-{% for group in groups %}
-<div class="group">
-    {% if edited_group == group %}
-        <form action="{{ url_for('groups', action='edit', id=group.id) }}" method="post">
-            {{ form_errors(form) }}
-
-            <h3>{{ form.name(placeholder=form.name.label.text) }}</h3>
-            <p><a href="{{ url_for('groups') }}">Cancel</a> or <button type="submit">Save</button></p>
-
-            <h4>Members</h4>
-            {{ form.contact_ids_str() }}
-            <ul id="members">
-                {% for contact in group.contacts %}
-                    <li>{% include '_contact.html' %}</li>
-                {% endfor %}
-            </ul>
-            <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
-            <ul id="members-search-results"></ul>
-
-            {{ form.csrf_token }}
-        </form>
-    {% else %}
-        <h3><a href="{{ url_for('group', id=group.id) }}">{{ group.name }}</a></h3>
-        <p><a href="{{ url_for('groups', action='edit', id=group.id) }}">Edit</a></p>
-
-        {% with contacts = group.contacts|list %}
-            {% if contacts %}
-                <h4>Members</h4>
-                <ul>
-                    {% for contact in contacts %}
-                        <li>{{ contact_box(contact) }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Empty group.</p>
-            {% endif %}
-        {% endwith %}
-    {% endif %}
-</div>
-{% endfor %}
-
-<style>
-    .group { background: #EEE; padding: 0.001em 1em; margin: 1em 0; }
-</style>
 {% endblock %}
+

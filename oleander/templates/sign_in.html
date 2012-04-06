@@ -3,9 +3,9 @@
 
 
 {% block content %}
-<h2>Sign in</h2>
+<h1>Sign in</h1>
 
-<form method="post" action="">
+<form method="post" action="" class="main_form login_form">
     {{ form_errors(form) }}
     <table>
         <tr>
@@ -18,11 +18,11 @@
         </tr>
     </table>
 
-    {{ form.csrf_token }}
-    <button type="submit">Go</button>
+    <div class="action_area">
+        {{ form.csrf_token }}
+        <p><button type="submit">Go</button> or <a href="{{ url_for('sign_up') }}">Sign up</a></p>
+    </div>
 </form>
-
-<p><a href="{{ url_for('sign_up') }}">Sign up</a></p>
 {% endblock %}
 
 

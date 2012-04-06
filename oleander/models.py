@@ -65,7 +65,15 @@ class User(db.Model, UserMixin, GravatarMixin):
         by_id_or_username = self.contacts.filter(db.or_(db.cast(FacebookContact.user_id, db.String).ilike(pattern), FacebookContact.username.ilike(pattern)))
 
         # union of results
-        return by_name.union(by_email, by_id_or_username).limit(limit)
+        return by_name.union(by_email, by_id_or_username).order_by(Contact.name).limit(limit)
+
+    @property
+    def current_topics(self):
+        """Returns user's current topics."""
+        return Topic.query\
+            .join(Group)\
+            .filter(Group.user == self)\
+            .order_by(db.desc(Topic.updated_at))
 
     def group_or_404(self, id):
         """Returns user's group by given ID or aborts the request."""
@@ -94,6 +102,12 @@ class ContactMixin(object):
     def label(self):
         return Contact.contact_types[self.type]
 
+    def __eq__(self, other):
+        return self.identifier == getattr(other, 'identifier', None)
+
+    def __hash__(self):
+        return hash(self.identifier)
+
 
 class UserContact(ContactMixin):
     """Contact created from User instance."""
@@ -118,6 +132,7 @@ class DeletedContact(ContactMixin):
         self.name = name
         self.identifier = identifier
         self.avatar = avatar or None
+
 
 
 class Contact(db.Model, ContactMixin):
@@ -149,7 +164,7 @@ class Contact(db.Model, ContactMixin):
         )
 
 
-class EmailContact(Contact, GravatarMixin):
+class EmailContact(GravatarMixin, Contact):
     """Simple contact represented by a plain e-mail address."""
 
     slug = 'email'
@@ -192,7 +207,7 @@ class FacebookContact(Contact):
         return 'https://graph.facebook.com/%s/picture?type=square' % self.user_id
 
 
-class GoogleContact(Contact, GravatarMixin):
+class GoogleContact(GravatarMixin, Contact):
     """Google contact represented by a Gmail and/or Google+ account."""
 
     slug = 'google'
@@ -261,6 +276,10 @@ class Topic(db.Model):
     __mapper_args__ = {
         'order_by': db.desc(updated_at),
     }
+
+    @property
+    def contacts(self):
+        return sorted(list(set(message.contact for message in self.messages)), key=lambda c: c.name)
 
 
 class Message(db.Model):

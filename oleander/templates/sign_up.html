@@ -1,9 +1,9 @@
 {% extends '_layout.html' %}
-{% from '_macros.html' import form_errors %}
+{% from '_macros.html' import form_errors, form_help %}
 
 
 {% block content %}
-<h2>Sign up</h2>
+<h1>Sign up</h1>
 
 <form method="post" action="">
     {{ form_errors(form) }}
@@ -13,7 +13,7 @@
         <table>
             <tr>
                 <th>{{ form.name.label }}</th>
-                <td>{{ form.name(size=20) }} (e.g. <em>Johnny</em>)</td>
+                <td>{{ form.name(size=20) }} {{ form_help(form.name) }}</td>
             </tr>
             <tr>
                 <th>{{ form.email.label }}</th>
@@ -31,13 +31,15 @@
             </tr>
             <tr>
                 <th>{{ form.password_check.label }}</th>
-                <td>{{ form.password_check(size=20) }} (protection against typos)</td>
+                <td>{{ form.password_check(size=20) }} {{ form_help(form.password_check) }}</td>
             </tr>
         </table>
     </fieldset>
 
     {{ form.csrf_token }}
-    <button type="submit">Create account</button> or <a href="{{ url_for('sign_in') }}">Cancel</a>
+    <div class="action_area">
+        <button type="submit">Create account</button> or <a href="{{ url_for('sign_in') }}">Cancel</a>
+    </div>
 </form>
 
 {% endblock %}

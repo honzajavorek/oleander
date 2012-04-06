@@ -1,8 +1,0 @@
-{% from '_macros.html' import contact_box %}
-<div class="contact" data-contact-id="{{ contact.id }}">
-    {% if term %}
-        {{ contact_box(contact, term=term) }} <a href="#">Add</a>
-    {% else %}
-        {{ contact_box(contact) }} <a href="#">Remove</a>
-    {% endif %}
-</div>

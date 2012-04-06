@@ -36,7 +36,7 @@ class SignUpForm(Form):
     name = wtf.TextField('Name', validators=[
         wtf.Required(),
         wtf.Length(max=100),
-    ])
+    ], description='e.g. Johnny')
     email = wtf.TextField('E-mail', validators=[
         wtf.Required(),
         wtf.Email(),
@@ -47,7 +47,7 @@ class SignUpForm(Form):
     ])
     password_check = wtf.PasswordField('Password once more', validators=[
         wtf.EqualTo('password', message='Passwords must match'),
-    ])
+    ], description='protection against typos')
 
 
 class SignInForm(Form):
@@ -68,7 +68,7 @@ class SettingsForm(Form):
     name = wtf.TextField('Name', validators=[
         wtf.Required(),
         wtf.Length(max=100),
-    ])
+    ], description='e.g. Johnny')
     email = wtf.TextField('E-mail', validators=[
         wtf.Required(),
         wtf.Email(),
@@ -90,7 +90,7 @@ class PasswordForm(Form):
     ])
     password_check = wtf.PasswordField('New password once more', validators=[
         wtf.EqualTo('new_password', message='Passwords must match'),
-    ])
+    ], description='protection against typos')
 
 
 class EmailContactForm(Form):
@@ -99,7 +99,7 @@ class EmailContactForm(Form):
     name = wtf.TextField('Name', validators=[
         wtf.Required(),
         wtf.Length(max=100),
-    ])
+    ], description='e.g. Susan')
     email = wtf.TextField('E-mail', validators=[
         wtf.Required(),
         wtf.Email(),

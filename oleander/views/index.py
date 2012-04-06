@@ -2,7 +2,7 @@
 
 
 from flask import render_template
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 from oleander import app
 
 
@@ -10,4 +10,4 @@ from oleander import app
 @login_required
 def index():
     """Index view, dashboard."""
-    return render_template('index.html')
+    return render_template('index.html', topics=current_user.current_topics)
