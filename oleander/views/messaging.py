@@ -6,6 +6,7 @@ from flask.ext.login import login_required, current_user
 from oleander import app, db
 from oleander.models import Topic, Message, UserContact
 from oleander.forms import TopicForm, MessageForm
+from oleander.messaging import send
 import times
 
 
@@ -33,6 +34,8 @@ def new_topic(group_id):
             message.contact = UserContact('email', current_user)
             session.add(message)
 
+            send(message)
+
         return redirect(
             url_for('topic', id=topic.id, group_id=topic.group_id)\
             + '#message-%d' % message.id
@@ -59,6 +62,8 @@ def topic(id, group_id):
             session.add(message)
 
             topic.updated_at = now
+
+            send(message)
 
         return redirect(
             url_for('topic', id=topic.id, group_id=topic.group_id)\

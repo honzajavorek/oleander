@@ -4,6 +4,7 @@
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
+from flask.ext.mail import Mail
 from oleander.database import Transaction
 
 
@@ -14,6 +15,9 @@ app.config.from_envvar('OLEANDER_SETTINGS', silent=True)
 
 db = SQLAlchemy(app)
 db.transaction = Transaction(db)
+
+
+mail = Mail(app)
 
 
 login_manager = LoginManager()

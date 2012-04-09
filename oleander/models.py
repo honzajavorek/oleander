@@ -245,6 +245,9 @@ class Group(db.Model):
         'order_by': name,
     }
 
+    def contacts_by_type(self, type):
+        return filter(lambda contact: contact.type == type, self.contacts)
+
     @property
     def contact_ids(self):
         return [contact.id for contact in self.contacts]
@@ -280,6 +283,12 @@ class Topic(db.Model):
     @property
     def contacts(self):
         return sorted(list(set(message.contact for message in self.messages)), key=lambda c: c.name)
+
+    @property
+    def hash(self):
+        id = str(self.id)
+        salt = self.subject.encode('utf-8')
+        return hashlib.md5(id + salt).hexdigest()
 
 
 class Message(db.Model):
