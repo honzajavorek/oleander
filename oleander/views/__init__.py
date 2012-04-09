@@ -6,6 +6,7 @@ __all__ = [
     'contacts',
     'groups',
     'index',
+    'mail',
     'messaging',
     'settings',
 ]
