@@ -26,9 +26,9 @@ def runtests():
 @manager.command
 def resetdb():
     """Drops all tables and recreates them from scratch including fixtures."""
-    if not app.debug:
-        # to prevent accidental disasters
-        raise RuntimeError('Application is not in debug mode.')
+    #if not app.debug:
+    #    # to prevent accidental disasters
+    #    raise RuntimeError('Application is not in debug mode.')
     db.drop_all()
     db.create_all()
     _fixtures.install(db.session, *_fixtures.all_data)

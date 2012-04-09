@@ -3,7 +3,5 @@
 env
 doc
 start.sh
-manage.py
-fixtures.py
 settings/*
 !settings/epio.py
