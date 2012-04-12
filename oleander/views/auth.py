@@ -3,7 +3,7 @@
 
 from flask import render_template, redirect, url_for, request
 from flask.ext.login import login_required, login_user, logout_user
-from oleander import app, db, login_manager
+from oleander import app, login_manager
 from oleander.forms import SignUpForm, SignInForm
 from oleander.models import User
 

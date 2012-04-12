@@ -17,13 +17,10 @@ db = SQLAlchemy(app)
 db.transaction = Transaction(db)
 
 
-mail = Mail(app)
-
-
 login_manager = LoginManager()
 login_manager.setup_app(app)
-login_manager.login_view = 'sign_in'
-login_manager.refresh_view = 'sign_in'
+login_manager.login_view = app.config['LOGIN_VIEW']
+login_manager.refresh_view = app.config['LOGIN_VIEW']
 
 
 import oleander.views
