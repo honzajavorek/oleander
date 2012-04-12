@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 
-from oleander import app, db
+#from flask import current_app as app
 from flask.ext.login import UserMixin
+from oleander import app, db
 from random import choice
 import hashlib
 import string
@@ -74,6 +75,10 @@ class User(db.Model, UserMixin, GravatarMixin):
             .join(Group)\
             .filter(Group.user == self)\
             .order_by(db.desc(Topic.updated_at))
+
+    @property
+    def contact_types(self):
+        return ['email']
 
     def group_or_404(self, id):
         """Returns user's group by given ID or aborts the request."""
@@ -265,6 +270,21 @@ class Group(db.Model):
         ids = map(int, set(filter(None, ids_str.split(','))))
         self.contact_ids = ids
 
+    @property
+    def members(self):
+        contacts = list(self.contacts)
+        for type in self.user.contact_types:
+            contacts.append(
+                UserContact(type, self.user)
+            )
+        return sorted(contacts, key=lambda c: c.name)
+
+    def member_by_identifier(self, identifier):
+        for contact in self.members:
+            if contact.identifier == identifier:
+                return contact
+        return None
+
 
 class Topic(db.Model):
     """Discussion topic."""
@@ -275,6 +295,7 @@ class Topic(db.Model):
     group = db.relationship('Group', backref=db.backref('topics', cascade='all', lazy='dynamic'))
     created_at = db.Column(db.DateTime(), nullable=False)
     updated_at = db.Column(db.DateTime(), nullable=False)
+    _hash = db.Column('hash', db.String(32), nullable=True)
 
     __mapper_args__ = {
         'order_by': db.desc(updated_at),
@@ -284,11 +305,28 @@ class Topic(db.Model):
     def contacts(self):
         return sorted(list(set(message.contact for message in self.messages)), key=lambda c: c.name)
 
-    @property
-    def hash(self):
+    def generate_hash(self):
+        if self.subject is None or self.id is None:
+            raise ValueError('Missing topic subject or ID.')
         id = str(self.id)
         salt = self.subject.encode('utf-8')
-        return hashlib.md5(id + salt).hexdigest()
+        self._hash = hashlib.md5(id + '/' + salt).hexdigest()
+
+    @property
+    def hash(self):
+        if not self._hash:
+            self.generate_hash()
+        return self._hash
+
+
+class TopicModel(object):
+    """Topic model."""
+
+    def get_by_hash(hash, or_404=False):
+        query = Topic.query.filter(Topic._hash == hash)
+        if or_404:
+            return query.first_or_404()
+        return query.first()
 
 
 class Message(db.Model):

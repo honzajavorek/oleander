@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import g
-from flask.ext.mail import Message as _EmailMessage
-from oleander import app, mail
+from flask.ext.mail import Mail, Message as _EmailMessage
+from oleander import app
 
 
 class EmailMessage(_EmailMessage):
@@ -32,6 +31,7 @@ def _send_email(message):
     sender = '%s <%s>' % (message.contact.name, message.contact.identifier)
     reply_to = '%s <%s>' % (message.contact.name, reply_to_email)
 
+    mail = Mail(app)
     with mail.connect() as conn:
         for recipient in recipients:
             conn.send(

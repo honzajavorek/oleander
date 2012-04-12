@@ -36,6 +36,9 @@ def new_topic(group_id):
 
             send(message)
 
+        with db.transaction as session:
+            topic.generate_hash()
+
         return redirect(
             url_for('topic', id=topic.id, group_id=topic.group_id)\
             + '#message-%d' % message.id
