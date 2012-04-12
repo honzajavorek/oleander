@@ -11,7 +11,6 @@ def install(session, *datasets):
     db_fixture = SQLAlchemyFixture(env=models, style=NamedDataStyle(), session=session)
     data = db_fixture.data(*datasets)
     data.setup()
-    session.commit()
 
 
 # emails are rot13 encoded not to be readable by spamming bots

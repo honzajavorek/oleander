@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-__all__ = [
+modules = [
     'auth',
     'contacts',
     'groups',
@@ -12,7 +12,10 @@ __all__ = [
 ]
 
 
-for module in __all__:
+__all__ = modules
+
+
+for module in modules:
     name = '.'.join([__name__, module])
     __import__(name)
 

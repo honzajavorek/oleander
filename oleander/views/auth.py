@@ -2,10 +2,16 @@
 
 
 from flask import render_template, redirect, url_for, request
-from flask.ext.login import login_required, login_user, logout_user
-from oleander import app, login_manager
+from flask.ext.login import login_required, login_user, logout_user, LoginManager
+from oleander import app
 from oleander.forms import SignUpForm, SignInForm
 from oleander.models import User
+
+
+login_manager = LoginManager()
+login_manager.setup_app(app)
+login_manager.login_view = app.config['LOGIN_VIEW']
+login_manager.refresh_view = app.config['LOGIN_VIEW']
 
 
 @login_manager.user_loader

@@ -1,27 +1,16 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import Flask, render_template
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
-from flask.ext.mail import Mail
-from oleander.database import Transaction
+from flask import Flask
+from oleander.database import create_db
 
 
-app = Flask(__name__)
+app = Flask('oleander')
 app.config.from_object('oleander.default_settings')
-app.config.from_envvar('OLEANDER_SETTINGS', silent=True)
+app.config.from_envvar('OLEANDER_SETTINGS', silent=False)
 
+db = create_db(app=app)
 
-db = SQLAlchemy(app)
-db.transaction = Transaction(db)
-
-
-login_manager = LoginManager()
-login_manager.setup_app(app)
-login_manager.login_view = app.config['LOGIN_VIEW']
-login_manager.refresh_view = app.config['LOGIN_VIEW']
-
-
+import oleander.models
 import oleander.views
 import oleander.templating

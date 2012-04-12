@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-#from flask import current_app as app
 from flask.ext.login import UserMixin
 from oleander import app, db
 from random import choice
