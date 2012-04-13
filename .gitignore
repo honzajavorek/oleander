@@ -1,6 +1,4 @@
 *.pyo
 *.pyc
 env
-settings/*
-!settings/sample_settings.py
-.coverage
+example

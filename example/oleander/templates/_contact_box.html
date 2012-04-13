@@ -1,8 +1,0 @@
-{% from '_macros.html' import contact_box %}
-
-
-{% if term %}
-    {{ contact_box(contact, term=term, link='#', link_label='Add', link_title='Add to group') }}
-{% else %}
-    {{ contact_box(contact, link='#', link_label='Remove', link_title='Remove from group') }}
-{% endif %}
