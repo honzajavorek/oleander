@@ -27,17 +27,17 @@ class Letter(str):
         return str(self) < other
 
     def __le__(self, other):
-        if self == '#':
-            return False
         if other == '#':
             return True
+        elif self == '#':
+            return False
         return str(self) <= other
 
     def __gt__(self, other):
-        if self == '#':
-            return True
         if other == '#':
             return False
+        elif self == '#':
+            return True
         return str(self) > other
 
     def __ge__(self, other):
@@ -58,7 +58,7 @@ class Letter(str):
 
 
 def alphabet():
-    """Generates an alphabet letters. Character '#' is the last one, representing all non-ASCII letters."""
+    """Generates an alphabet letters."""
     return map(Letter, string.ascii_uppercase)
 
 

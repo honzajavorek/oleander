@@ -6,6 +6,12 @@ import fixtures
 import sys
 
 
+try:
+    from unittest2 import TestCase
+except ImportError:
+    from unittest import TestCase
+
+
 class AppMixin(object):
 
     def setUp(self):

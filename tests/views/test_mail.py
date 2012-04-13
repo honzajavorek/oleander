@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from unittest import TestCase
-from tests import DatabaseMixin
+from .. import TestCase, DatabaseMixin
 
 
 class TestMail(DatabaseMixin, TestCase):
