@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # Simple BASH script to begin work on project.
-# - launches Flask development server
-# - opens terminal at project directory with virtualenv activated
 
 
 PROJECT_DIR=`dirname $0`
