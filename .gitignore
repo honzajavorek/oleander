@@ -3,4 +3,5 @@
 env
 settings/*
 !settings/sample_settings.py
+!settings/epio.py
 .coverage
