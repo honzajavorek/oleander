@@ -1,7 +1,0 @@
-*.pyo
-*.pyc
-env
-doc
-start.sh
-settings/*
-!settings/epio.py
