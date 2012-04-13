@@ -2,5 +2,5 @@
 *.pyc
 env
 settings/*
-!settings/lisa.py
+!settings/sample_settings.py
 .coverage
