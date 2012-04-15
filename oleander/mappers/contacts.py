@@ -8,6 +8,7 @@ from . import Mapper
 class ContactsMapper(Mapper):
 
     def from_csv_file(self, data):
+        """Map CSV file fragments into contact entities."""
         for row in data:
             try:
                 parsed_bday_datetime = datetime.strptime(row.get('Birthday', ''), '%d.%m.%Y')

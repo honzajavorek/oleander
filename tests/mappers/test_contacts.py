@@ -8,6 +8,7 @@ except ImportError:
 
 
 from oleander.mappers.contacts import ContactsMapper
+from datetime import date
 
 
 class Entity(object):
@@ -22,21 +23,22 @@ class Entity(object):
 
 class TestContactsMapper(unittest.TestCase):
 
-    csv_rows = [{u'Priority': u'Normal', u'E-mail Address': u'6a6@example.com',
-        u'Categories': u'6a6;Moje kontakty', u'First Name': u'6A6'}]
-
-    def test_set_entity_class(self):
-        m = ContactsMapper(entity_class=Entity)
-        contacts = list(m.from_csv_file(self.csv_rows))
-        self.assertEqual(len(contacts), 1)
-        self.assertTrue(isinstance(contacts[0], Entity))
-        self.assertEqual(contacts[0].email, '6a6@example.com')
+    csv_rows = [
+        {u'Priority': u'Normal', u'E-mail Address': u'6a6@example.com',
+        u'Categories': u'6a6;Moje kontakty', u'First Name': u'6A6'},
+        {u'Birthday': u'15.2.1978', u'First Name': u'Bubák'}
+    ]
 
     def test_from_csv_file(self):
         m = ContactsMapper()
         contacts = list(m.from_csv_file(self.csv_rows))
-        self.assertEqual(len(contacts), 1)
+        self.assertEqual(len(contacts), 2)
         self.assertEqual(contacts[0]['email'], '6a6@example.com')
+
+    def test_from_csv_file_date(self):
+        m = ContactsMapper()
+        contacts = list(m.from_csv_file(self.csv_rows))
+        self.assertEqual(contacts[1]['birthday'], date(1978, 15, 2))
 
 
 if __name__ == '__main__':
