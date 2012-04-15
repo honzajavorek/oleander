@@ -28,7 +28,7 @@ class UTF8Recoder(object):
 
 
 class UnicodeReader(object):
-    """A CSV reader which will iterate over lines in the CSV file "f", which is encoded in the given encoding."""
+    """A CSV reader which will iterate over lines in the CSV file 'f', which is encoded in the given encoding."""
 
     def __init__(self, f, dialect=csv.excel, encoding='utf-8', **kwargs):
         f = UTF8Recoder(f, encoding)
@@ -43,7 +43,7 @@ class UnicodeReader(object):
 
 
 class UnicodeWriter(object):
-    """A CSV writer which will write rows to CSV file "f", which is encoded in the given encoding."""
+    """A CSV writer which will write rows to CSV file 'f', which is encoded in the given encoding."""
 
     def __init__(self, f, dialect=csv.excel, encoding='utf-8', **kwargs):
         # redirect output to a queue
