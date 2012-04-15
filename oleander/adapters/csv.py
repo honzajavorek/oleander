@@ -72,7 +72,7 @@ class UnicodeWriter(object):
 # adapter's own code
 
 
-class CSVFileAdapter(object):
+class CSVAdapter(object):
     """Adapter for classic CSV files."""
 
     def __init__(self, file_name, encoding):
