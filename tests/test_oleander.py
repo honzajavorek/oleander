@@ -10,6 +10,9 @@ except ImportError:
 from oleander import Oleander, MissingComponentException, MissingMethodException
 
 
+package_import = 'tests.test_oleander'
+
+
 class ContactsMapper(object):
 
     from_facebook_called = False
@@ -55,8 +58,8 @@ class TestOleander(unittest.TestCase):
     def test_reqister_by_import_string(self):
         o = Oleander()
 
-        o.register_mapper('contacts', 'test_oleander.ContactsMapper')
-        o.register_adapter('facebook', 'test_oleander.FacebookAdapter')
+        o.register_mapper('contacts', package_import + '.ContactsMapper')
+        o.register_adapter('facebook', package_import + '.FacebookAdapter')
         o.get('contacts', 'facebook')
 
         self.assertTrue(o._mappers['contacts'].from_facebook_called)
@@ -115,4 +118,5 @@ class TestOleander(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    package_import = 'test_oleander'
     unittest.main()

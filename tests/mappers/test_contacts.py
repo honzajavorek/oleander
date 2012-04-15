@@ -38,7 +38,7 @@ class TestContactsMapper(unittest.TestCase):
     def test_from_csv_file_date(self):
         m = ContactsMapper()
         contacts = list(m.from_csv_file(self.csv_rows))
-        self.assertEqual(contacts[1]['birthday'], date(1978, 15, 2))
+        self.assertEqual(contacts[1]['birthday'], date(1978, 2, 15))
 
 
 if __name__ == '__main__':

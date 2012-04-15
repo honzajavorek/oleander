@@ -34,7 +34,7 @@ class TestMapper(unittest.TestCase):
 
     def test_set_entity_class(self):
         m = EntityMapper(entity_class=Entity)
-        entities = list(m.from_service({'name': 'Franta', 'email': 'franta@example.com'}))
+        entities = list(m.from_service([{'name': 'Franta', 'email': 'franta@example.com'}]))
         self.assertEqual(len(entities), 1)
         self.assertTrue(isinstance(entities[0], Entity))
         self.assertEqual(entities[0].email, 'franta@example.com')

@@ -7,18 +7,21 @@ except ImportError:
     import unittest
 
 
-from oleander.adapters.csv_file import CSVAdapter
+import os
+from oleander.adapters.csv import CSVAdapter
 
 
 class TestCSVAdapter(unittest.TestCase):
 
+    file_path = os.path.join(os.path.dirname(__file__), 'mock_csv.csv')
+
     def test_get_results(self):
-        csv = CSVAdapter('mock_csv_file.csv', 'cp1250')
+        csv = CSVAdapter(self.file_path, 'cp1250')
         result = list(csv.get_contacts())
         self.assertEquals(len(result), 26)
 
     def test_get_right_encoding(self):
-        csv = CSVAdapter('mock_csv_file.csv', 'cp1250')
+        csv = CSVAdapter(self.file_path, 'cp1250')
         result = list(csv.get_contacts())
         self.assertEquals(result[8]['Last Name'], u'Štěpanovský')
 

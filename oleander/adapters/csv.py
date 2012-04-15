@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
-import csv
+# There is obviously naming collision between standard library's csv module and this module,
+# but I really didn't want to come up with a different name. For further explanation of this
+# statement, see http://docs.python.org/whatsnew/2.5.html#pep-328-absolute-and-relative-imports.
+from __future__ import absolute_import
+
+
+import csv as csv_parser
 import codecs
 
 
@@ -30,9 +36,9 @@ class UTF8Recoder(object):
 class UnicodeReader(object):
     """A CSV reader which will iterate over lines in the CSV file 'f', which is encoded in the given encoding."""
 
-    def __init__(self, f, dialect=csv.excel, encoding='utf-8', **kwargs):
+    def __init__(self, f, dialect=csv_parser.excel, encoding='utf-8', **kwargs):
         f = UTF8Recoder(f, encoding)
-        self.reader = csv.reader(f, dialect=dialect, **kwargs)
+        self.reader = csv_parser.reader(f, dialect=dialect, **kwargs)
 
     def next(self):
         row = self.reader.next()
@@ -45,10 +51,10 @@ class UnicodeReader(object):
 class UnicodeWriter(object):
     """A CSV writer which will write rows to CSV file 'f', which is encoded in the given encoding."""
 
-    def __init__(self, f, dialect=csv.excel, encoding='utf-8', **kwargs):
+    def __init__(self, f, dialect=csv_parser.excel, encoding='utf-8', **kwargs):
         # redirect output to a queue
         self.queue = StringIO.StringIO()
-        self.writer = csv.writer(self.queue, dialect=dialect, **kwargs)
+        self.writer = csv_parser.writer(self.queue, dialect=dialect, **kwargs)
         self.stream = f
         self.encoder = codecs.getincrementalencoder(encoding)()
 

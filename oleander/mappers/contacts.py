@@ -20,9 +20,16 @@ class ContactsMapper(Mapper):
             middle_name = row.get('Middle Name', None)
             last_name = row.get('Last Name', None)
 
-            name = row.get('Name', None)
+            name = row.get('Name', '')
             if not name:
-                name = ' '.join([first_name, middle_name, last_name])
+                names = []
+                if first_name:
+                    names.append(first_name)
+                if middle_name:
+                    names.append(middle_name)
+                if last_name:
+                    names.append(last_name)
+                name = ' '.join(names) or None
 
             yield self.create_entity(
                 name=name,
