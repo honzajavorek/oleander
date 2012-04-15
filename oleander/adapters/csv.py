@@ -8,6 +8,7 @@ from __future__ import absolute_import
 
 
 import csv as csv_parser
+from datetime import datetime
 import codecs
 
 
@@ -78,6 +79,57 @@ class UnicodeWriter(object):
 # adapter's own code
 
 
+class CSVContactMapper(object):
+
+    def _parse_date(self, date_string):
+        try:
+            parsed_datetime = datetime.strptime(date_string, '%d.%m.%Y')
+            return parsed_datetime.date()
+        except ValueError:
+            return None
+
+    def _parse_name(self, name, first_name=None, middle_name=None, last_name=None):
+        if not name:
+            names = []
+            if first_name:
+                names.append(first_name)
+            if middle_name:
+                names.append(middle_name)
+            if last_name:
+                names.append(last_name)
+            name = ' '.join(names) or None
+        return name
+
+    def source_to_contact(self, contact):
+        """Map CSV file rows into contact entities."""
+        bday_date = self._parse_date(contact.get('Birthday', ''))
+        first_name = contact.get('First Name', None)
+        middle_name = contact.get('Middle Name', None)
+        last_name = contact.get('Last Name', None)
+
+        # determine name
+        name = self._parse_name(
+            contact.get('Name', None),
+            first_name, middle_name, last_name
+        )
+
+        # map values to contact object
+        return Contact(
+            name=name,
+            first_name=first_name,
+            middle_name=middle_name,
+            last_name=last_name,
+            gender=contact.get('Gender', None),
+            birthday=bday_date,
+            location=contact.get('Location', None),
+            language=contact.get('Language', None),
+            website=contact.get('Web Page', None),
+            email=contact.get('E-mail Address', None),
+            phone=contact.get('Primary Phone', None),
+            address=contact.get('Primary Phone', None),
+        )
+
+
 class CSVAdapter(object):
     """Adapter for classic CSV files."""
 
@@ -85,10 +137,15 @@ class CSVAdapter(object):
         self.file_name = file_name
         self.encoding = encoding
 
-    def get_contacts(self):
+    def _get_rows(self):
         with open(self.file_name, 'rb') as f:
             reader = UnicodeReader(f, encoding=self.encoding)
             first_row = next(reader)
-
             for row in reader:
                 yield dict(zip(first_row, row))
+
+    @property
+    def contacts(self):
+        mapper = CSVContactMapper()
+        return (mapper.source_to_contact(row) for row in self._get_rows())
+
