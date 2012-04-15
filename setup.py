@@ -2,30 +2,19 @@
 
 
 import re
+import oleander
 from setuptools import setup
-
-
-# version handling
-def find_version():
-    version_file = 'oleander/__init__.py'
-    try:
-        match = re.search(r'__version__ = [\'"]([^\'"]*)[\'"]', open(version_file, 'r').read())
-    except IOError:
-        raise RuntimeError("Unable to find version string in '%s'." % version_file)
-    if match:
-        return match.group(1)
-    else:
-        raise RuntimeError("Unable to find version string in '%s'." % version_file)
 
 
 setup(
     name = 'oleander',
-    version = find_version(),
+    version = oleander.__version__,
     description = 'Library for agnostic communitation between people.',
+    long_description=open('README').read(),
     url = 'https://github.com/honzajavorek/oleander',
     author = 'Honza Javorek',
     author_email = 'honza@javorek.net',
-    license = 'MIT',
+    license = open('LICENSE').read(),
     packages = ['oleander', 'tests']
 )
 
