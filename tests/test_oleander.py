@@ -7,102 +7,52 @@ except ImportError:
     import unittest
 
 
-from oleander import Oleander, MissingComponentException, MissingMethodException
+from oleander import Oleander
 
 
 package_import = 'tests.test_oleander'
 
 
-class ContactsMapper(object):
-
-    from_facebook_called = False
-    to_facebook_called = False
-
-    def from_facebook(self, data):
-        self.from_facebook_called = True
-
-    def to_facebook(self, data):
-        self.to_facebook_called = True
-
-
-class EventsMapper(object):
-    pass
-
-
 class FacebookAdapter(object):
 
-    get_contacts_called = False
-    send_contacts_called = False
+    get_contacts_called = 0
+    send_contacts_called = 0
 
-    def get_contacts(self):
-        self.get_contacts_called = True
+    @property
+    def contacts(self):
+        self.get_contacts_called += 1
 
-    def send_contacts(self, data=None):
-        self.send_contacts_called = True
+    @contacts.setter
+    def contacts(self, data=None):
+        self.send_contacts_called += 1
 
 
 class TestOleander(unittest.TestCase):
 
     def test_missing_adapter(self):
         o = Oleander()
-        o.register_mapper('contacts', ContactsMapper())
-        with self.assertRaises(MissingComponentException):
-            o.get('contacts', 'facebook')
-
-    def test_missing_mapper(self):
-        o = Oleander()
-        o.register_adapter('facebook', FacebookAdapter())
-        with self.assertRaises(MissingComponentException):
-            o.get('contacts', 'facebook')
+        with self.assertRaises(LookupError):
+            o.facebook.contacts
 
     def test_reqister_by_import_string(self):
         o = Oleander()
-
-        o.register_mapper('contacts', package_import + '.ContactsMapper')
         o.register_adapter('facebook', package_import + '.FacebookAdapter')
-        o.get('contacts', 'facebook')
-
-        self.assertTrue(o._mappers['contacts'].from_facebook_called)
-        self.assertTrue(o._adapters['facebook'].get_contacts_called)
+        o.facebook.contacts
+        self.assertEquals(o._adapters['facebook'].get_contacts_called, 1)
 
     def test_get(self):
         o = Oleander()
-        m = ContactsMapper()
         a = FacebookAdapter()
-
-        o.register_mapper('contacts', m)
         o.register_adapter('facebook', a)
-
-        o.get('contacts', 'facebook')
-        self.assertTrue(m.from_facebook_called)
-        self.assertTrue(a.get_contacts_called)
+        o.facebook.contacts
+        self.assertEquals(a.get_contacts_called, 1)
 
     def test_send(self):
         o = Oleander()
-        m = ContactsMapper()
         a = FacebookAdapter()
-
-        o.register_mapper('contacts', m)
         o.register_adapter('facebook', a)
-
-        dummy_data = [2, 4, 6, 8, 10]
-        o.send('contacts', 'facebook', data=dummy_data)
-        self.assertTrue(m.to_facebook_called)
-        self.assertTrue(a.send_contacts_called)
-        self.assertTrue(m.from_facebook_called)
-
-    def test_missing_methods(self):
-        o = Oleander()
-        o.register_mapper('events', EventsMapper())
-        o.register_adapter('facebook', FacebookAdapter())
-        with self.assertRaises(MissingMethodException):
-            o.get('events', 'facebook')
-        with self.assertRaises(MissingMethodException):
-            o.send('events', 'facebook')
-
-        dummy_data = [2, 4, 6, 8, 10]
-        with self.assertRaises(MissingMethodException):
-            o.send('events', 'facebook', data=dummy_data)
+        o.facebook.contacts = [2, 4, 6, 8, 10]
+        self.assertEquals(a.send_contacts_called, 1)
 
     def test_documentation(self):
         o = Oleander()

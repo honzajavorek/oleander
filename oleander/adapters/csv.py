@@ -10,6 +10,7 @@ from __future__ import absolute_import
 import csv as csv_parser
 from datetime import datetime
 import codecs
+from oleander import Entity
 
 
 try:
@@ -114,7 +115,7 @@ class CSVContactMapper(object):
         )
 
         # map values to contact object
-        return Contact(
+        return Entity(
             name=name,
             first_name=first_name,
             middle_name=middle_name,

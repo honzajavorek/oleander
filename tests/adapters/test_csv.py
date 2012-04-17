@@ -17,13 +17,13 @@ class TestCSVAdapter(unittest.TestCase):
 
     def test_get_results(self):
         csv = CSVAdapter(self.file_path, 'cp1250')
-        result = list(csv.get_contacts())
+        result = list(csv.contacts)
         self.assertEquals(len(result), 26)
 
     def test_get_right_encoding(self):
         csv = CSVAdapter(self.file_path, 'cp1250')
-        result = list(csv.get_contacts())
-        self.assertEquals(result[8]['Last Name'], u'Štěpanovský')
+        result = list(csv.contacts)
+        self.assertEquals(result[8].last_name, u'Štěpanovský')
 
 
 if __name__ == '__main__':

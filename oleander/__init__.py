@@ -38,3 +38,13 @@ class Oleander(object):
 
     def __getattr__(self, service_name):
         return self._adapter_for_service(service_name)
+
+
+class Entity(object):
+    """Simple & benevolent data container."""
+
+    def __init__(self, **properties):
+        self.__dict__.update(properties)
+
+    def __getattr__(self, property):
+        return None
