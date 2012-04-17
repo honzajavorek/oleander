@@ -15,7 +15,7 @@ class TestCSVAdapter(unittest.TestCase):
 
     file_path = os.path.join(os.path.dirname(__file__), 'mock_csv.csv')
 
-    def test_get_results(self):
+    def test_get_contacts(self):
         csv = CSVAdapter(self.file_path, 'cp1250')
         result = list(csv.contacts)
         self.assertEquals(len(result), 26)
