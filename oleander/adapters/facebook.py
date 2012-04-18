@@ -59,10 +59,12 @@ class FacebookAdapter(object):
         contacts = []
         mapper = FacebookContactMapper()
 
-        friends = self.graph.get('me/friends').get('data', [])
-        for friend in friends:
-            friend_id = friend.get('id', None)
-            if friend_id:
-                contacts.append(mapper.source_to_contact(self.graph.get(friend_id)))
-        return contacts
+        _, results = self.graph.batch([
+            # named query for further use, returns None
+            {'method': 'GET', 'relative_url': 'me/friends', 'name': 'get-friends'},
+
+            # returns dict of friends using the previous query
+            {'method': 'GET', 'relative_url': '?ids={result=get-friends:$.data.*.id}'},
+        ])
+        return (mapper.source_to_contact(contact) for contact in results.values())
 
