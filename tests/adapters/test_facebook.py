@@ -40,7 +40,7 @@ class TestFacebookAdapter(unittest.TestCase):
     @unittest.skipUnless(user_access_token, "No Facebook 'user access token' defined. Use developers.facebook.com/tools/explorer/ to acquire one.")
     def test_get_contacts(self):
         a = FacebookAdapter(self.user_access_token)
-        a.contacts
+        list(a.contacts)
 
 
 if __name__ == '__main__':
