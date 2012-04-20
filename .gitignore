@@ -4,3 +4,4 @@ env
 settings/*
 !settings/sample_settings.py
 .coverage
+*.egg-info
