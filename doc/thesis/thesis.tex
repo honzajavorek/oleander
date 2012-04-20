@@ -65,77 +65,121 @@
 
 
 \chapter{Úvod}
-Jak píše docent Adam Herout:
-\begin{itemize}
-    \item \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/}
-    \item \url{http://www.herout.net/blog/2011/12/dve-poznamky-k-semestralnim-projektum-jakoz-i-diplomkam/}
-\end{itemize}
+Internet je fragmentovaný a decentralizovaný i dnes, v době velkých sociálních sítí typu Facebook. Málokdy se lidé při společné domluvě sejdou na stejné platformě a proto se následně uchylují k primitivním řešením, jako je e-mail. Tím se však připravují o určité pohodlí, jelikož nejedna internetová služba dnes nabízí bohatší nástroje pro účel organizace skupin, než pouhou výměnu zpráv -- např. speciální stránky událostí, stránky pro sběr anketních odpovědí a další. Bylo by možné vytvořit aplikaci, která pomůže lidi efektivněji a pohodlněji organizovat z pohledu pořadatele, ale přitom nevnucuje žádnou konkrétní službu či nové uživatelské účty samotným členům skupiny?
 
-Nemá se jednat o „úvod do problematiky“, ale o „úvod do knížečky“. Po jeho přečtení tedy má čtenář 1) mít představu o čem knížečka bude, 2) se těšit na to, že si ji přečte. Úvod ať se vejde na jednu stranu a nemá podkapitoly
+Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dnešní formy počítačem zprostředkovávané komunikace a následně pomocí průzkumu zjišťuje, jaký k nim mají uživatelé vztah. Ověřuje doměnku, že je potřeba výše nastíněný problém interoperability řešit, zabývá se teoretickou realizovatelností řešení a pokračuje návrhem implementace. V návrhu se zabývá praktickými možnostmi propojení různých komunikačních kanálů, z nichž vychází realizace ukázkové aplikace se zaměřením na správu událostí. Práce končí popisem tvorby této aplikace a zhodnocením jejího provozu.
 
-Úvod v diplomce je úvod do vašeho textu, ne úvod do problematiky. Čtenář se má dozvědět, jaký je účel a cíl vaší práce, s čím má přistoupit k textu, co má a nemá očekávat.
 
-Není to úvod do problematiky, kde by se čtenář dozvěděl, kde se vzaly technologie a techniky, které používáte, to přijde později, to je právě ta tzv. teoretická část.
+% Jak píše docent Adam Herout:
+% \begin{itemize}
+%     \item \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/}
+%     \item \url{http://www.herout.net/blog/2011/12/dve-poznamky-k-semestralnim-projektum-jakoz-i-diplomkam/}
+% \end{itemize}
 
-Úvod se má vejít maximálně na jednu stranu, spíš na půl. Ještě jsem neviděl dobře napsaný úvod, který by mělo smysl strukturovat do podkapitol – pouze do odstavců.
+% Nemá se jednat o „úvod do problematiky“, ale o „úvod do knížečky“. Po jeho přečtení tedy má čtenář 1) mít představu o čem knížečka bude, 2) se těšit na to, že si ji přečte. Úvod ať se vejde na jednu stranu a nemá podkapitoly
 
-Opakuji: Úvod je úvod k textu diplomky, ne úvod do problematiky.
+% Úvod v diplomce je úvod do vašeho textu, ne úvod do problematiky. Čtenář se má dozvědět, jaký je účel a cíl vaší práce, s čím má přistoupit k textu, co má a nemá očekávat.
 
-Z úvodu má čtenář zjistit, co se v práci dozví a jakým způsobem, ale ještě se nic z toho nemá dozvědět. Úvod se tedy má vejít na 1/2 – 1 stranu, nemá být strukturován do podkapitol, pouze odstavců a má dát velice stručně tyto informace: Čím se práce zabývá a proč je to důležité, co všechno se člověk čtením textu dozví a jaká je struktura práce.
+% Z úvodu má čtenář zjistit, co se v práci dozví a jakým způsobem, ale ještě se nic z toho nemá dozvědět. Úvod se tedy má vejít na 1/2 – 1 stranu, nemá být strukturován do podkapitol, pouze odstavců a má dát velice stručně tyto informace: Čím se práce zabývá a proč je to důležité, co všechno se člověk čtením textu dozví a jaká je struktura práce.
 
-Terminologie, shrnutí použité teorie a tyto věci už patří do kapitoly po úvodu. Recenzent čte úvod hned na začátku a je jím tedy naladěn na práci – těší se, nebo je předem naštván; nechte si na úvodu záležet! Máločím své práci ublížíte tak účinně, jako úvodem, který sestává z nicneříkající vaty, nepodložených siláckých tvrzení, něčeho jakože vtipného a podobně.
+% Terminologie, shrnutí použité teorie a tyto věci už patří do kapitoly po úvodu. Recenzent čte úvod hned na začátku a je jím tedy naladěn na práci – těší se, nebo je předem naštván; nechte si na úvodu záležet! Máločím své práci ublížíte tak účinně, jako úvodem, který sestává z nicneříkající vaty, nepodložených siláckých tvrzení, něčeho jakože vtipného a podobně.
 
-\chapter{Motivace}
-Shrnutí důvodů pro práci na takovéto téma. Uvedení do problematiky, popis současné situace. Upozornění na roztříštěnost komunikačních a organizačních nástrojů, stručná minulost a nastínění možné budoucnosti.
 
-Co už v oblasti mého zadání existuje? Jak to dělají jiní?
 
-Přečíst:
-\begin{itemize}
-    \item \url{http://www.amazon.com/Designing-Social-Web-ebook/dp/B0015DWIQ0/ref=tmm_kin_title_0?ie=UTF8&m=A2M9W3KSQUCQTK}
-    \item \url{http://is.muni.cz/th/143212/fi_m/}
-\end{itemize}
+\chapter{Motivace}\label{motivation}
+Potřebujeme-li organizovat skupinu lidí, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se totiž neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook\footnote{Facebook, \url{https://www.facebook.com/}, je rozsáhlý webový systém určený ke komunikaci, sdílení obsahu, udržování vztahů a zábavě. Podrobně je popsán v oddíle \ref{cmc}.}, několik jednotlivců přes e-maily a zbytek snad přes Google Kalendář\footnote{Google Kalendář, \url{https://www.google.com/calendar/}, je službou společnosti Google, která přenáší funkce klasického diáře do webové aplikace. Viz oddíl \ref{cmc}.}.
+
+Pořadateli by v tomto případě jiste přišla vhod služba, která by u\-mož\-ňo\-va\-la komunikovat s lidmi uceleně přes několik kanálů. Služba centralizující organizaci, ale zachovávající svobodu jednotlivců rozhodnout se pro takový komunikační kanál, jenž vyhovuje jim. Organizátor by přes zmíněný {\it velín} mohl psát svým kontaktům zprávy a udržovat historii diskuse, vytvářet jednoduché stránky se souhrnem dohodnutých informací, činit rozhodnutí na anketách, nebo zakládat {\it stránky událostí}, u nichž by lidé mohli potvrdit či zamítnout účast.
+
+Přitom běžný účastník domluvy by používal nástroje, na jaké je zvyklý a do organizační služby by se nemusel nijak registrovat nebo přihlašovat. Jestliže má účet na Facebooku, mohl by s organizátorem komunikovat pro\-střed\-nic\-tvím tohoto kanálu, pokud mu vyhovuje Google se svým kalendářem nebo prosté e-maily, mohl by je použít zrovna tak.
+
+
+
+% motivace k práci - nastínění problému a doměnka
+
+% Shrnutí důvodů pro práci na takovéto téma. Uvedení do problematiky, popis současné situace. Upozornění na roztříštěnost komunikačních a organizačních nástrojů, stručná minulost a nastínění možné budoucnosti.
+
+% Co už v oblasti mého zadání existuje? Jak to dělají jiní?
+
+% Přečíst:
+% \begin{itemize}
+%     \item \url{http://www.amazon.com/Designing-Social-Web-ebook/dp/B0015DWIQ0/ref=tmm_kin_title_0?ie=UTF8&m=A2M9W3KSQUCQTK}
+%     \item \url{http://is.muni.cz/th/143212/fi_m/}
+% \end{itemize}
+
+
 
 \chapter{Analýza způsobů organizace lidí přes internet}
-Kapitola má za úkol analyzovat způsoby, jakými lidé přes internet běžně
-organizují malé skupiny lidí (e-mail, instant messaging, sociální sítě,
-VoIP, atd.). Výčet způsobů by měl být podložen průzkumem či výsledky dotazníku mezi lidmi.
+% pozorování a popis skutečnosti, průzkum mezi lidmi, vyhodnocení výsledků
 
-\chapter{Identifikace elementárních prvků komunikace}
-Kapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
-prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
-integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
+\section{Počítačem zprostředkovaná komunikace}\label{cmc}
+% Kapitola má za úkol analyzovat způsoby, jakými lidé přes internet běžně
+% organizují malé skupiny lidí + teoretický background CMC
 
-\chapter{Specifikace požadavků a rámcový návrh řešení}
-Cílem této části je shrnout výzkum předešlých dvou kapitol a rámcově navrhnout řešení aplikace. Výsledkem této kapitoly by měla být především specifikace zadání, jeho doplnění, konkretizace toho co přesně bude implementováno v aplikaci a proč právě to (cílení projektu, realizovatelnost, apod.).
+% zmenit odkazy v {motivation}
 
-Zadaný problém by šel řešit tak a nebo tak, já k němu přistoupím tímto způsobem, protože na zvolené platformě je to nejefektivnější. Rozhodl jsem se. Vymyslel jsem. Rozvrhl jsem. Vypočítal jsem. Odvodil jsem. Zjednodušil jsem. Vylepšil jsem. Navrhl jsem. Zjistil jsem. Vyzkoumal jsem.
+\section{Průzkum mezi uživateli}
+% (e-mail, instant messaging, sociální sítě, VoIP, atd.).
+% Výčet způsobů by měl být podložen průzkumem či výsledky dotazníku mezi lidmi.
 
-\chapter{Použité technologie}
-Zde by mělo být popsáno a rozebráno jaké nástroje a služby budou použity pro implementaci aplikace. U každého nástroje či služby by mělo být stručně vysvětleno k čemu slouží a z jakého důvodu došlo k výběru.
 
-\chapter{Návrh systému}
-Přesný popis návrhu systému. Struktura, uživatelské rozhraní, model, atd.
 
-\chapter{Implementace}
-Pro implementaci jsem zvolil ty a ty nástroje, celý systém rozvrhl do takových modulů. Naprogramoval jsem. Posbíral jsem data. Pustil jsem to. Výsledky jsou takové. Je to tak a tak rychlé.
+\chapter{Problém interoperability systémů určených ke komunikaci}
+% formulace problému
+% smysluplnost a uzitecnost nastroju, proc je to potrebne (vychazi z vysledku pruzkumu)
+% proc pro normalni lidi ne ale pro organizatory ano
 
-Popis výsledné implementace. Část kapitoly by se měla zaměřit na výběr zajímavých problémů, na které se při implementaci narazilo, spolu s jejich řešeními.
+\section{Identifikace elementárních prvků komunikace}
+% Podkapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
+% prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
+% integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
 
-\chapter{Vývoj a testování}
-Zpráva o tom jak probíhal vývoj aplikace (systém správy verzí, aj.) a jak byla testována (na kterých prohlížečích, platformách, co bylo testováno, co testováno nebylo a proč, unit testy, apod.).
+\section{Realizovatelnost}
+% z tohoto vyjde hypotéza, že by šlo vytvořit sjednocující systém
+
+
+
+\chapter{Specifikace požadavků a návrh řešení}
+% Cílem této části je shrnout výzkum předešlých dvou kapitol a rámcově navrhnout řešení aplikace. Výsledkem této kapitoly by měla být především specifikace zadání, jeho doplnění, konkretizace toho co přesně bude implementováno v aplikaci a proč právě to (cílení projektu, realizovatelnost, apod.).
+
+\section{Požadavky na aplikaci}
+
+\section{Praktické možnosti propojení různých komunikačních kanálů}
+
+\section{Revize požadavků}
+
+\section{Návrh systému pro správu událostí}
+% Přesný popis návrhu systému.
+
+% Zadaný problém by šel řešit tak a nebo tak, já k němu přistoupím tímto způsobem, protože na zvolené platformě je to nejefektivnější. Rozhodl jsem se. Vymyslel jsem. Rozvrhl jsem. Vypočítal jsem. Odvodil jsem. Zjednodušil jsem. Vylepšil jsem. Navrhl jsem. Zjistil jsem. Vyzkoumal jsem.
+
+
+
+\chapter{Implementace nástroje pro nezávislou správu událostí}
+% Pro implementaci jsem zvolil ty a ty nástroje, celý systém rozvrhl do takových modulů. Naprogramoval jsem. Posbíral jsem data. Pustil jsem to. Výsledky jsou takové. Je to tak a tak rychlé.
+% Popis výsledné implementace. Část kapitoly by se měla zaměřit na výběr zajímavých problémů, na které se při implementaci narazilo, spolu s jejich řešeními.
+
+\section{Použité technologie}
+% Zde by mělo být popsáno a rozebráno jaké nástroje a služby budou použity pro implementaci aplikace. U každého nástroje či služby by mělo být stručně vysvětleno k čemu slouží a z jakého důvodu došlo k výběru.
+
+\section{Vývoj a testování}
+% STRUČNÁ zpráva o tom jak probíhal vývoj aplikace (systém správy verzí, aj.) a jak byla testována (na kterých prohlížečích, platformách, co bylo testováno, co testováno nebylo a proč, unit testy, apod.).
+
+
 
 \chapter{Zkušenosti z provozu}
-Pokud dojde na včasné spuštění služby, bylo by možno napsat kapitolu o zkušenostech z jejího provozu. Systém může být skvěle naprogramovaný, ale nakonec se např. přijde na to, že lidé stejně mají nějaké zábrany jej z určitých důvodů používat (viz Google Wave). V takovém případě lze v této části navrhnout nějaké změny, které by mohly kladnému přijetí pomoci.
+% Pokud dojde na včasné spuštění služby, bylo by možno napsat kapitolu o zkušenostech z jejího provozu. Systém může být skvěle naprogramovaný, ale nakonec se např. přijde na to, že lidé stejně mají nějaké zábrany jej z určitých důvodů používat (viz Google Wave). V takovém případě lze v této části navrhnout nějaké změny, které by mohly kladnému přijetí pomoci.
 
-Výsledek je takhle rychlý, má takovou úspěšnost a reakce uživatelů jsou takové a takové.
+% Výsledek je takhle rychlý, má takovou úspěšnost a reakce uživatelů jsou takové a takové.
+
+
 
 \chapter{Závěr}
-Jak píše docent Adam Herout: \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/} nebo \url{http://www.herout.net/blog/2012/03/struktura-diplomove-prace/}.
+% Jak píše docent Adam Herout: \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/} nebo \url{http://www.herout.net/blog/2012/03/struktura-diplomove-prace/}.
 
-Se závěrem se to má podobně jako s úvodem: má se vejít na 1/2 – 1 stranu, nemá být strukturovaný a má práci shrnout, uzavřít, zhodnotit. U školní práce je rozumné v závěru reagovat na zadání a shrnout bod po bodu, že byl splněn a kterou kapitolou práce (ovšem nenásilně – nikoli například odrážkami). Recenzent čte závěr na konci a závěr tedy z velké části utváří dojem zanechaný prací pro hodnocení – nechte si na něm záležet.
+% Se závěrem se to má podobně jako s úvodem: má se vejít na 1/2 – 1 stranu, nemá být strukturovaný a má práci shrnout, uzavřít, zhodnotit. U školní práce je rozumné v závěru reagovat na zadání a shrnout bod po bodu, že byl splněn a kterou kapitolou práce (ovšem nenásilně – nikoli například odrážkami). Recenzent čte závěr na konci a závěr tedy z velké části utváří dojem zanechaný prací pro hodnocení – nechte si na něm záležet.
 
-V závěru ať nepřicházejí žádné nové poznatky, neobjeví se tam nové číslo nebo nový graf.
+% V závěru ať nepřicházejí žádné nové poznatky, neobjeví se tam nové číslo nebo nový graf.
 
 
 % \bibliographystyle{plain}
