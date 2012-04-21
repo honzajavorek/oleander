@@ -3,8 +3,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
-% \usepackage{url}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
+\usepackage{url}
+
+
+
+\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
 
 
 
@@ -64,7 +68,7 @@
 
 
 
-\chapter{Úvod}
+\chapter{Úvod}\label{introduction}
 Internet je fragmentovaný a decentralizovaný i dnes, v době velkých sociálních sítí typu Facebook. Málokdy se lidé při společné domluvě sejdou na stejné platformě a proto se následně uchylují k primitivním řešením, jako je e-mail. Tím se však připravují o určité pohodlí, jelikož nejedna internetová služba dnes nabízí bohatší nástroje pro účel organizace skupin, než pouhou výměnu zpráv -- např. speciální stránky událostí, stránky pro sběr anketních odpovědí a další. Bylo by možné vytvořit aplikaci, která pomůže lidi efektivněji a pohodlněji organizovat z pohledu pořadatele, ale přitom nevnucuje žádnou konkrétní službu či nové uživatelské účty samotným členům skupiny?
 
 Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dnešní formy počítačem zprostředkovávané komunikace a následně pomocí průzkumu zjišťuje, jaký k nim mají uživatelé vztah. Ověřuje doměnku, že je potřeba výše nastíněný problém interoperability řešit, zabývá se teoretickou realizovatelností řešení a pokračuje návrhem implementace. V návrhu se zabývá praktickými možnostmi propojení různých komunikačních kanálů, z nichž vychází realizace ukázkové aplikace se zaměřením na správu událostí. Práce končí popisem tvorby této aplikace a zhodnocením jejího provozu.
@@ -87,7 +91,7 @@ Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dneš
 
 
 \chapter{Motivace}\label{motivation}
-Potřebujeme-li organizovat skupinu lidí, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se totiž neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook\footnote{Facebook, \url{https://www.facebook.com/}, je rozsáhlý webový systém určený ke komunikaci, sdílení obsahu, udržování vztahů a zábavě. Podrobně je popsán v oddíle \ref{cmc}.}, několik jednotlivců přes e-maily a zbytek snad přes Google Kalendář\footnote{Google Kalendář, \url{https://www.google.com/calendar/}, je službou společnosti Google, která přenáší funkce klasického diáře do webové aplikace. Viz oddíl \ref{cmc}.}.
+Potřebujeme-li organizovat skupinu lidí, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se totiž neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook\footnote{Facebook, \url{http://facebook.com}, je rozsáhlý webový systém určený ke komunikaci, sdílení obsahu, udržování vztahů a zábavě. Podrobně je popsán v oddíle \ref{facebook}.}, několik jednotlivců přes e-maily a zbytek snad přes Google Kalendář\footnote{Google Kalendář, \url{http://google.com/calendar}, je službou společnosti Google, která přenáší funkce klasického diáře do webové aplikace. Viz oddíl \ref{google}.}.
 
 Pořadateli by v tomto případě jiste přišla vhod služba, která by u\-mož\-ňo\-va\-la komunikovat s lidmi uceleně přes několik kanálů. Služba centralizující organizaci, ale zachovávající svobodu jednotlivců rozhodnout se pro takový komunikační kanál, jenž vyhovuje jim. Organizátor by přes zmíněný {\it velín} mohl psát svým kontaktům zprávy a udržovat historii diskuse, vytvářet jednoduché stránky se souhrnem dohodnutých informací, činit rozhodnutí na anketách, nebo zakládat {\it stránky událostí}, u nichž by lidé mohli potvrdit či zamítnout účast.
 
@@ -95,46 +99,93 @@ Přitom běžný účastník domluvy by používal nástroje, na jaké je zvykl�
 
 
 
-% motivace k práci - nastínění problému a doměnka
-
-% Shrnutí důvodů pro práci na takovéto téma. Uvedení do problematiky, popis současné situace. Upozornění na roztříštěnost komunikačních a organizačních nástrojů, stručná minulost a nastínění možné budoucnosti.
-
-% Co už v oblasti mého zadání existuje? Jak to dělají jiní?
-
-% Přečíst:
-% \begin{itemize}
-%     \item \url{http://www.amazon.com/Designing-Social-Web-ebook/dp/B0015DWIQ0/ref=tmm_kin_title_0?ie=UTF8&m=A2M9W3KSQUCQTK}
-%     \item \url{http://is.muni.cz/th/143212/fi_m/}
-% \end{itemize}
-
-
-
-\chapter{Analýza způsobů organizace lidí přes internet}
-% pozorování a popis skutečnosti, průzkum mezi lidmi, vyhodnocení výsledků
+\chapter{Analýza způsobů organizace přes internet}\label{analysis}
+Je-li naším cílem umožnit organizaci lidí bez toho, že bychom jednotlivcům vnucovali jeden společný způsob komunikace přes internet, potřebujeme nejdříve zjistit, jaké služby a nástroje již dnes běžně používají. V následujících odstavcích jsou vysvětleny pojmy {\it počítačem zprostředkovaná komunikace} a {\it groupware}. Jsou rozebrány současné způsoby komunikace přes internet, existující webový groupware a z nich plynoucí možnosti organizace skupin lidí. Analýza je podpořena průzkumem mezi uživateli.
 
 \section{Počítačem zprostředkovaná komunikace}\label{cmc}
-% Kapitola má za úkol analyzovat způsoby, jakými lidé přes internet běžně
-% organizují malé skupiny lidí + teoretický background CMC
+Termín {\it počítačem zprostředkovaná komunikace} (anglicky {\it Computer-mediated communication}, zkráceně CMC) označuje podle Susan Herring veškerou lidskou komunikaci, která je dosahována prostřednictvím (nebo alespoň pomocí) počítačových technologií \cite{thurlow2004computer}. John December vymezuje pojem jako proces lidské komunikace prostřednictvím počítačů zahrnující lidi, kteří se nacházejí v určitých kontextech a zapojují se do procesu formování média pro rozmanité účely \cite{december1997notes}.
 
-% zmenit odkazy v {motivation}
+V této práci se vzhledem k jejímu kontextu omezím v rámci CMC pouze na vzájemné dorozumívání uživatelů přes internet pomocí počítačových programů, protokolů, a služeb. Více o tomto termínu, jeho dělení a srovnání s osobní komunikací tváří v tvář lze nalézt v \cite{thurlow2004computer}, \cite{rulik2006computer} a \cite{bordia1997face}. Zde s odkazem na tyto publikace stručně vysvětluji pouze základní klasifikaci, jež je potřebná k následné analýze.
 
-\section{Průzkum mezi uživateli}
-% (e-mail, instant messaging, sociální sítě, VoIP, atd.).
+\subsection{Dělení CMC na synchronní a asynchronní}
+CMC dělíme dle způsobu odesílání a doručování zpráv na synchronní a asynchronní. Při první jmenované jsou účastníci vzájemného dorozumívání k dispozici jeden druhému v tentýž čas (např. IRC popsané v \ref{irc}), zatímco asynchronní probíhá s časovými prodlevami (např. e-mail). Lidé preferují asynchronní komunikaci pro delší zprávy, které mohou v klidu napsat a zasílají je s tím, že si je protistrana přečte v relativně blízké době, nemusí to být však ihned. Také tímto způsobem zasílají špatné zprávy raději než jinak, protože nedochází k přímé konfrontaci s příjemcem. Asynchronní komunikace v tomto navazuje na tradiční poštu. Naopak synchronní CMC je využívána spíše ke krátkým, méně důležitým a dobrým zprávám. Tato počítačová komunikace tedy vychází spíše z dědictví telegrafu a telefonu. Často navíc umožňuje, aby člověk během synchronně vedeného rozhovoru vykonával zároveň i jiné činnosti.
+
+\subsection{Dělení CMC podle obsahu}
+Počítačem zprostředkovanou komunikaci lze klasifikovat také podle charakteru přenášeného obsahu. V tomto případě vyčleňujeme dorozumívání založené na textových zprávách (tzv. {\it text-based}) od všech jiných druhů, tedy od komunikace vedené zvukem či obrazem ({\it non text-based}). V dnešní době již není problém přes internet volat (viz \ref{voip}) nebo pořádat videokonference, ale většinu objemu CMC i přesto stále tvoří textové zprávy. Multimédia, ač jsou dnes stále významnějším představitelem internetového obsahu určeného ke konzumaci, hrají v počítačové komunikaci zatím spíše doplňkovou roli. Například telefonování přes internet je přijímáno poměrně zvolna \cite{latif2007adoption} a příliš na tom nemění ani popularita programu Skype. Ten přitom umožnil takřka komukoliv libovolné volání (včetně telekonferencí a videohovorů), a to v podstatě zdarma.
+
+\section{Klasické internetové protokoly}\label{protocols}
+Internet byl již od svých počátků navrhován především jako komunikační médium a proto nám už jeho základní sada protokolů aplikační vrstvy poskytne zajímavý přehled způsobů dorozumívání, jaké při dnešní práci s počítačem používáme.
+
+\subsection{Diskusní protokol IRC}\label{irc}
+IRC, což je zkratka anglického {\it Internet Relay Chat} je jeden z nejstarších internetových protokolů\footnote{Vznikl ve Finsku v roce 1988 \cite{oikarinen2011founding}.}. Popisuje simultánní textovou konferenci mnoha uživatelů v reálném čase, primárně určenou k diskusím ve skupinách. Její webové obdobě se v českém prostředí běžně říká pouze anglickým slovem {\it chat}. S původním IRC nemá z technického hlediska mnoho společného, avšak uživatelsky jde prakticky o totéž.
+
+Chat, původně označení pro neformální konverzaci, je typická synchronní textová CMC. Diskusní skupiny se většinou zabývají určitým tématem a často díky tomu fungují jako platforma pro sdílení zkušeností -- nováčci se připojí za účelem pokládání dotazů, přítomní odborníci odpovídají. Rychlá konverzace v reálném čase může rovněž sloužit k operativním dohodám, řešením urgentních problémů nebo např. k brainstormingu.
+
+\subsection{E-mailové protokoly SMTP, POP a IMAP}\label{email}
+
+\subsection{Rychlé zprávy, neboli XMPP}\label{xmpp}
+
+\subsection{Protokoly VoIP pro přenos hlasu}\label{voip}
+
+\section{Groupware}
+Pojem {\it Computer-mediated communication} nás sice uvedl do různých typů komunikace přes počítač, ale ta samotná k naplnění úkolu organizovat skupiny lidí nestačí. Lidé se mohou dorozumívat bez ohledu na to, zda něco společně připravují, na druhou stranu organizátor může navíc při standardní komunikaci postrádat různé pomocné nástroje, usnadňující zachycení trvaleji platných informací. Takovými jsou například diáře, seznamy úkolů, úložiště dokumentů, nástěnky, adresáře, a jiné. Software sdružující výše zmíněné komunikační a organizační funkce se typicky označuje jako {\it groupware}. Kolektiv autorů v čele s Clarence Ellisem popisuje groupware jako počítačový systém, který podporuje skupinu lidí v plnění nějakého úkolu (či v postupu k cíli) a jenž poskytuje rozhraní ke společnému prostředí \cite{ellis1991groupware}.
+
+Typické nástroje dostupné v groupware lze zařadit do několika kategorií, a to komunikace, kooperace a koordinace \cite{kunstova1999skupinova}. Komunikaci zajišťují různé mechanismy posílání zpráv, ať už vestavěné (např. diskusní fóra, {\it chat}, otázky a odpovědi), nebo přímo v podobě e-mailu či rychlých zpráv (viz \ref{xmpp}). Kooperaci potom podporují především různá úložiště dokumentů, např. {\it wiki systémy}. Mohou disponovat rozhraním pro kolektivní úpravy dokumentu, archivaci, vyhledávání, správu verzí apod. Nakonec pod koordinaci spadají nástroje navazující na pomůcky známé z tradičního reálného světa -- diáře, kalendáře, seznamy úkolů, adresáře kontaktů, nástěnky a další.
+
+\section{Moderní webové aplikace a sociální sítě}\label{web}
+Na HTTP, jednom z internetových protokolů, byl vystavěn celý obrovský ekosystém aplikací a služeb -- {\it World Wide Web}. Ač začal jako několik hypertextově spojených vědeckých dokumentů, vysoká adopce tohoto prostředí komerční sférou z něj vytvořila fenomén dnešní doby, jenž se velice rychle a dynamicky vyvíjí. Nejen že se postupně z jedné ze služeb internetu stává jeho jádro pohlcující většinu jeho agend, ale dokonce dochází i k postupnému prolínání tohoto virtuálního webového světa s naší každodenní realitou \cite{thurlow2004computer}.
+
+V tomto prostředí, zkráceně nazývaném {\it web}, se rozvinulo mnoho aplikací vyloženě či alespoň částečně vhodných ke koordinaci a kooperaci skupin lidí. V poslední době lze navíc sledovat rozmach služeb, tzv. {\it sociálních sítí}, jež jsou na spolupráci lidí, komunikaci a sdílení obsahu mezi nimi přímo postavené. V následujících odstavcích zmíním nejvýznamnější představitele webových aplikací blízkých charakteristice groupware.
+
+\subsection{Facebook}\label{facebook}
+
+\subsection{Twitter}\label{twitter}
+
+\subsection{Služby společnosti Google}\label{google}
+
+\subsection{Groupware společnosti 37signals}\label{37signals}
+
+
+\section{Shrnutí možností organizace skupin}
+% shrnuti, jak lide mohou organizovat
+% Co už v oblasti mého zadání existuje? Jak to dělají jiní?
+
+\section{Průzkum mezi uživateli}\label{poll}
+% pruzkum, jak lide opravdu organizuji ... jakými lidé přes internet běžně
+% organizují malé skupiny lidí
+
 % Výčet způsobů by měl být podložen průzkumem či výsledky dotazníku mezi lidmi.
+% pozorování a popis skutečnosti, průzkum mezi lidmi, vyhodnocení výsledků
+
+% vyhodnoceni zajimavych vysledku v oblasti CMC vs FtF
+% http://wiki.knihovna.cz/index.php?title=Computer_mediated_communication#Pou.C5.BEit.C3.A1_literatura
+
+% jak zminuje https://cs.wikipedia.org/wiki/Groupware#Pou.C5.BEit.C3.AD_groupwaru, tedy \cite{kunstova1999skupinova},
+% Problémem je menší chuť na straně uživatelů, pokud jde o mimopodnikové aktivity (nechtějí se „organizovat“).
+% ...
+% Oblast uplatnění nástrojů pro podporu spolupráce je neomezená. Zdaleka nemusí jít jen o podnikové prostředí, kde pracují rozsáhlejší týmy. V omezené podobě (jen část funkcionality) je využívají různé skupiny lidí. Může jít o: ...
 
 
 
-\chapter{Problém interoperability systémů určených ke komunikaci}
+
+
+
+
+
+
+
+
+\chapter{Problém interoperability systémů určených ke komunikaci}\label{interoperabilityProblem}
 % formulace problému
 % smysluplnost a uzitecnost nastroju, proc je to potrebne (vychazi z vysledku pruzkumu)
 % proc pro normalni lidi ne ale pro organizatory ano
 
-\section{Identifikace elementárních prvků komunikace}
+\section{Identifikace elementárních prvků komunikace}\label{communicationElements}
 % Podkapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
 % prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
 % integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
 
-\section{Realizovatelnost}
+\section{Realizovatelnost}\label{realizability}
 % z tohoto vyjde hypotéza, že by šlo vytvořit sjednocující systém
 
 
@@ -182,8 +233,10 @@ Přitom běžný účastník domluvy by používal nástroje, na jaké je zvykl�
 % V závěru ať nepřicházejí žádné nové poznatky, neobjeví se tam nové číslo nebo nový graf.
 
 
-% \bibliographystyle{plain}
-% \bibliography{bib-db}
+\bibliographystyle{czechiso}
+\begin{flushleft}
+    \bibliography{thesis} % thesis.bib
+\end{flushleft}
 
 
 

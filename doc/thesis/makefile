@@ -10,7 +10,7 @@ $(DOCUMENT).pdf: clean
 		TEXINPUTS=.:${CLASS_DIR}:${TEXINPUTS:-:} && \
 		export TEXINPUTS && \
 	 	pdflatex $(DOCUMENT) && \
-	 	# bibtex $(DOCUMENT) && \
+	 	bibtex $(DOCUMENT) && \
 	 	pdflatex $(DOCUMENT) && \
 	 	pdflatex $(DOCUMENT) \
 	)
