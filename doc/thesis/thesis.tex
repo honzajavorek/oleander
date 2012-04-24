@@ -3,12 +3,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage[hyphens]{url}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
-\usepackage{url}
 
 
 
-\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
+\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>}\urlstyle{tt}}
 
 
 
@@ -111,30 +111,29 @@ V této práci se vzhledem k jejímu kontextu omezím v rámci CMC pouze na vzá
 CMC dělíme dle způsobu odesílání a doručování zpráv na synchronní a asynchronní. Při první jmenované jsou účastníci vzájemného dorozumívání k dispozici jeden druhému v tentýž čas (např. IRC popsané v \ref{irc}), zatímco asynchronní probíhá s časovými prodlevami (např. e-mail). Lidé preferují asynchronní komunikaci pro delší zprávy, které mohou v klidu napsat a zasílají je s tím, že si je protistrana přečte v relativně blízké době, nemusí to být však ihned. Také tímto způsobem zasílají špatné zprávy raději než jinak, protože nedochází k přímé konfrontaci s příjemcem. Asynchronní komunikace v tomto navazuje na tradiční poštu. Naopak synchronní CMC je využívána spíše ke krátkým, méně důležitým a dobrým zprávám. Tato počítačová komunikace tedy vychází spíše z dědictví telegrafu a telefonu. Často navíc umožňuje, aby člověk během synchronně vedeného rozhovoru vykonával zároveň i jiné činnosti.
 
 \subsection{Dělení CMC podle obsahu}
-Počítačem zprostředkovanou komunikaci lze klasifikovat také podle charakteru přenášeného obsahu. V tomto případě vyčleňujeme dorozumívání založené na textových zprávách (tzv. {\it text-based}) od všech jiných druhů, tedy od komunikace vedené zvukem či obrazem ({\it non text-based}). V dnešní době již není problém přes internet volat (viz \ref{voip}) nebo pořádat videokonference, ale většinu objemu CMC i přesto stále tvoří textové zprávy. Multimédia, ač jsou dnes stále významnějším představitelem internetového obsahu určeného ke konzumaci, hrají v počítačové komunikaci zatím spíše doplňkovou roli. Například telefonování přes internet je přijímáno poměrně zvolna \cite{latif2007adoption} a příliš na tom nemění ani popularita programu Skype. Ten přitom umožnil takřka komukoliv libovolné volání (včetně telekonferencí a videohovorů), a to v podstatě zdarma.
+Počítačem zprostředkovanou komunikaci lze klasifikovat také podle charakteru přenášeného obsahu. V tomto případě vyčleňujeme dorozumívání založené na textových zprávách (tzv. {\it text-based}) od všech jiných druhů, tedy od komunikace vedené zvukem či obrazem ({\it non text-based}). V dnešní době již není problém přes internet volat nebo pořádat videokonference, ale většinu objemu CMC i přesto stále tvoří textové zprávy. Multimédia, ač jsou dnes stále významnějším představitelem internetového obsahu určeného ke konzumaci, hrají v počítačové komunikaci zatím spíše doplňkovou roli. Například telefonování přes internet je přijímáno poměrně zvolna \cite{latif2007adoption} a příliš na tom nemění ani popularita programu Skype. Ten přitom umožnil takřka komukoliv libovolné volání (včetně telekonferencí a videohovorů), a to v podstatě zdarma.
 
 \section{Klasické internetové protokoly}\label{protocols}
 Internet byl již od svých počátků navrhován především jako komunikační médium a proto nám už jeho základní sada protokolů aplikační vrstvy poskytne zajímavý přehled způsobů dorozumívání, jaké při dnešní práci s počítačem používáme.
 
-\subsection{Diskusní protokol IRC}\label{irc}
+\subsection{Skupinové diskuse v reálném čase (IRC)}\label{irc}
 IRC, což je zkratka anglického {\it Internet Relay Chat}, je jeden z nejstarších internetových protokolů\footnote{Vznikl ve Finsku v roce 1988 \cite{oikarinen2011founding}.}. Popisuje simultánní textovou konferenci mnoha uživatelů v reálném čase, primárně určenou k diskusím ve skupinách. Její webové obdobě se v českém prostředí běžně říká pouze anglickým slovem {\it chat}. S původním IRC nemá z technického hlediska mnoho společného, avšak uživatelsky jde prakticky o totéž. Možnost zahájit obdobný typ textové konference je také součástí protokolu XMPP (popsán v \ref{xmpp}).
 
 Chat, původně označení pro neformální konverzaci, je synchronní textová CMC. Skupiny, zde nazývané {\it kanály} nebo {\it místnosti}, se většinou zabývají určitým tématem a často díky tomu fungují jako platforma pro sdílení zkušeností -- nováčci se připojí za účelem pokládání dotazů, přítomní odborníci odpovídají. Rychlá konverzace v reálném čase může rovněž sloužit k operativním dohodám, řešením urgentních problémů nebo např. k brainstormingu.
 
-\subsection{Rychlé zprávy -- XMPP a další}\label{xmpp}
+\subsection{Rychlé zprávy (XMPP)}\label{xmpp}
 {\it Extensible Messaging and Presence Protocol} standardizuje problematiku zasílání rychlých zpráv označovanou anglickým termínem jako {\it Instant Messaging} \cite{saintandre2004xmppcore} \cite{saintandre2004xmppim}. Uživatel má při této formě komunikace k dispozici svůj osobní seznam kontaktů, s nimiž může zahájit soukromou konverzaci. Díky seznamu má přehled, kdo je mu zrovna k dispozici.
 
 Protokol navazuje na velké množství dříve velmi populárních nestandardizovaných služeb a programů jako v České republice nejznámnější ICQ, polské Gadu-Gadu či Tlen, americké AIM, Windows Live Messenger (dříve MSN Messenger), Yahoo! Messenger a další. XMPP, původně pod názvem {\it Jabber}, vznikl jako nezávislá a decentralizovaná alternativa k těmto programům. Podobně jako u e-mailu si může zřídit XMPP server kdokoliv a uživatelé těchto serverů mezi sebou mohou volně komunikovat. Dnes na tomto standardu funguje mnoho velkých služeb v čele s Google Talk \cite{bau2005google} nebo Facebook Chat \cite{reiss2010facebook}. K Jabberu i jeho příbuzným existuje velké množství rozšíření (někdy také standardizovaných pomocí RFC), ale zasílání rychlých zpráv stále zůstává hlavním důvodem použití.
 
-Instant Messaging, jak jej popisuje XMPP, je dnes pravděpodobně nejtypičtějším zástupcem synchronní textové CMC. Prošel mnohaletým vývojem a dnes se s nimi setkáváme nejen v instalovaných programech, ale také v řadě webových aplikacích včetně později zmiňovaných sociálních sítí (viz \ref{web}). Lidé přes IM vedou neformální konverzace za účelem rychlé a operativní domluvy, ale také se tímto způsobem dorozumívají v případě, že si potřebují sdělit jen něco krátkého a nepříliš důležitého. Nevýhodou IM je nekontrolované vyrušování příjemce, jenž má většinou velmi omezenou možnost zvolit si, zda chce v určitý okamžik nějaké zprávy přijímat, případně od kterých kontaktů.
+Instant Messaging, jak jej popisuje XMPP, je dnes pravděpodobně nejtypičtějším zástupcem synchronní textové CMC. Prošel mnohaletým vývojem a dnes se s nimi setkáváme nejen v instalovaných programech, ale také v řadě webových aplikací včetně později zmiňovaných sociálních sítí (viz \ref{web}). Lidé přes IM vedou neformální konverzace za účelem rychlé a operativní domluvy, ale také se tímto způsobem dorozumívají v případě, že si potřebují sdělit jen něco krátkého a nepříliš důležitého. Nevýhodou IM je nekontrolované vyrušování příjemce, jenž má většinou velmi omezenou možnost zvolit si, zda chce v určitý okamžik nějaké zprávy přijímat, případně od kterých kontaktů.
 
-\subsection{E-mailový protokol}\label{email}
+\subsection{E-mail (SMTP)}\label{email}
 Počátky e-mailu sahají až do internetové prehistorie\footnote{Elektronická pošta existuje od roku 1965, což je ještě před vznikem samotného internetu \cite{vanvleck2012electronic}.} a dnes tvoří páteř veškeré elektronické komunikace. Popisují jej protokoly SMTP, POP a IMAP, kde poslední dva řeší pouze různé mechanismy vzdáleného čtení přijatých zpráv. Jen málokdo v současnosti nemá vlastní aktivně využívanou e-mailovou adresu. Elektronická pošta je již tak hluboce zakořeněna v naší společnosti, že je v podstatě jako jediný počítačem zprostředkovaný způsob komunikace uznáván a používán také státní správou a úřady. Jedná se o tradičního reprezentanta asynchronní textové CMC.
 
 Lidé e-mailem původně nahrazovali hlavně klasickou poštu, ale dnes je adopce tohoto kanálu natolik samozřejmá, že je jeho využití takřka univerzální. Pravděpodobně díky všem výše zmíněným skutečnostem jsou na elektronické poště dnes dobře patrné různé snahy o integraci s jinými způsoby počítačové komunikace. V následujících dvou odstavcích popíši některé vybrané trendy.
 
-Jako zajímavý příklad netradičního spojení v rámci CMC může posloužit Google Talk (viz \ref{xmpp}), který využívá svou sesterskou e-mailovou službu Gmail k doručení rychlé zprávy, není-li příjemce k dispozici ({\it doručování offline zpráv}). Gmail na druhou stranu archivuje historii konverzací z Google Talk a uživateli je zpřístupňuje jakoby to byly e-mailové zprávy. Podobný způsob integrace asynchronních zpráv se synchronními lze vypozorovat také u sociální sítě Facebook (popsána v \ref{facebook}), která se rovněž snaží stále více oba koncepty sbližovat. Uživateli je v takovém případě nabízeno různé rozhraní (jak e-mailové, tak v podobě rychlých zpráv), ale společný archiv vedené komunikace.
-
+\subsubsection{Integrace e-mailu do webové aplikace}
 Aplikace dnes většinou neintegrují e-mailové funkce přímo, ale předpokládají, že je s nimi uživatel dobře seznámen a disponuje svou vlastní e-mailovou schránkou. Hromadně zasílají informace o změnách a novinkách, používají e-mailovou adresu k ověření identity, obnově přihlašovacích údajů, apod. Jedná se tedy spíše o využití e-mailu jen jako kanálu k rutinnímu dorozumívání s uživatelem či ke sdílení obsahu. Někteří tvůrci groupware (viz \ref{groupware}) však jdou vstříc uživateli tím, že svůj program na elektronickou poštu navazují přímo. Rozšiřují jej o schopnost přijímat e-mailové zprávy a nějakým způsobem jim porozumnět. Např. již zmíněný Facebook umí lidem rozesílat e-mailová upozornění na komentáře z této sociální sítě. Málo známý fakt ovšem je, že na tyto lze přímo odpovědět -- e-mail je doručen na servery Facebooku, ty rozpoznají do jaké konverzace míří a přetvoří jej na komentář, jenž je k nerozeznání od jiných, ručně vepsaných ve webovém uživatelském rozhraní \cite{whitnah2010replying}. Obdobnou funkčnost nabízí také server pro vývojáře GitHub nebo aplikace pro projektový management BaseCamp (zmiňovaná také v \ref{37signals}).
 
 \section{Groupware}\label{groupware}
@@ -142,23 +141,85 @@ Pojem CMC nás sice uvedl do různých typů komunikace přes počítač, ale ta
 
 Organizátor tedy může při standardní komunikaci postrádat různé pomocné nástroje, usnadňující zachycení výše zmíněných prvků v podobě trvaleji platných informací. Takovými jsou například diáře, seznamy úkolů a jiné. Software sdružující výše zmíněné komunikační a organizační funkce se typicky označuje jako {\it groupware}. Kolektiv autorů v čele s Clarence Ellisem popisuje groupware jako počítačový systém, který podporuje skupinu lidí v plnění nějakého úkolu (či v postupu k cíli) a jenž poskytuje rozhraní ke společnému prostředí \cite{ellis1991groupware}.
 
-Typické nástroje dostupné v groupware lze zařadit do několika kategorií, a to komunikace, kooperace a koordinace \cite{kunstova1999skupinova}. Komunikaci zajišťují různé mechanismy posílání zpráv, ať už vestavěné (např. diskusní fóra, {\it chat}, otázky a odpovědi), nebo přímo v podobě e-mailu či rychlých zpráv (viz \ref{xmpp}). Kooperaci potom podporují především různá úložiště dokumentů, např. {\it wiki systémy}. Mohou disponovat rozhraním pro kolektivní úpravy dokumentu, archivaci, vyhledávání, správu verzí apod. Nakonec pod koordinaci spadají nástroje navazující na pomůcky známé z tradičního reálného světa -- diáře, kalendáře, seznamy úkolů, adresáře kontaktů, nástěnky a další.
+Typické nástroje dostupné v groupware lze zařadit do několika kategorií, a to komunikace, kooperace a koordinace \cite{kunstova1999skupinova}. Komunikaci zajišťují různé mechanismy posílání zpráv, ať už vestavěné (např. diskusní fóra, {\it chat}, otázky a odpovědi), nebo přímo v podobě e-mailu či rychlých zpráv. Kooperaci potom podporují především různá úložiště dokumentů, např. {\it wiki systémy}. Mohou disponovat rozhraním pro kolektivní úpravy dokumentu, archivaci, vyhledávání, správu verzí apod. Nakonec pod koordinaci spadají nástroje navazující na pomůcky známé z tradičního reálného světa -- diáře, kalendáře, seznamy úkolů, adresáře kontaktů, nástěnky a další.
+
+\subsection{Kritická většina pro přijetí skupinou}
+Důležitým aspektem tvorby, zavádění a práce s jakýmkoliv groupware či nástrojem pro dorozumívání je tzv. kritická většina (Jonathan Grudin problematiku popisuje jako {\it critical mass and prisoner's dilemma problems} \cite{grudin1994groupware}). V zásadě se jedná o problém, kdy lidé nejsou ochotni nástroj přijmout a používat, dokud jej nevyužívá i dostatečná, tzv. kritická většina jejich kolegů. Úspěch nástroje potom nestojí ani tolik na jeho přínosu a užitečnosti oproti stávajícím řešením, ale na zvyku a počtu uživatelů. Důležití jsou v tomto případě tzv. {\it early adopters}, tedy lidé, kteří si nástroj osvojili mezi prvními, rozšiřují o něm povědomí a nabádají k jeho použití ostatní. Jak zmiňuje Grudin, budeme-li prodávat běžný software pro jednoho uživatele (např. textový editor), který se zalíbí jednomu člověku z deseti, je to úspěch. Jestliže však chceme prosadit nový komunikační kanál nebo groupware v týmu deseti zdravotních sestřiček a ten se zalíbí devíti z nich, je pro tuto skupinu nepoužitelný.
+
+Překonávání kritické většiny šlo v minulých letech několikrát pozorovat i na českém internetu. Jako příklady mohou sloužit snahy o migraci uživatelů z ICQ na Jabber nebo počáteční nechuť mnoha uživatelů registrovat se na Facebook (viz \ref{facebook}) v počátcích jeho penetrace do českých končin.
+
+Na tezi, že lidé mají podobné zábrany využívat nových služeb, stojí i tato práce.
 
 \section{Moderní webové aplikace a sociální sítě}\label{web}
 Na HTTP, jednom z internetových protokolů, byl vystavěn celý obrovský ekosystém aplikací a služeb -- {\it World Wide Web}. Ač začal jako několik hypertextově spojených vědeckých dokumentů, vysoká adopce tohoto prostředí komerční sférou z něj vytvořila fenomén dnešní doby, jenž se velice rychle a dynamicky vyvíjí. Nejen že se postupně z jedné ze služeb internetu stává jeho jádro pohlcující většinu jeho agend, ale dokonce dochází i k postupnému prolínání tohoto virtuálního webového světa s naší každodenní realitou \cite{thurlow2004computer}.
 
 Na webu se rozvinulo mnoho aplikací vyloženě či alespoň částečně vhodných ke koordinaci a kooperaci skupin lidí. V poslední době lze navíc sledovat rozmach služeb, tzv. {\it sociálních sítí}, jež jsou na spolupráci lidí, komunikaci a sdílení obsahu mezi nimi přímo postavené. V následujících odstavcích zmíním nejvýznamnější představitele těchto sítí a jiných webových aplikací blízkých charakteristice groupware.
 
-% github?
+% github? linkedin?
 
 \subsection{Facebook}\label{facebook}
+Facebook, dostupný na adrese \url{http://facebook.com}, je rozsáhlý webový systém určený ke komunikaci, sdílení obsahu, udržování vztahů a zábavě. Současně je dlouhodobě největší sociální sítí na světě \cite{kazeniac2009social} \cite{protalinski2012facebook}. Vzhledem k jeho vysoké adopci napříč obyvatelstvem \cite{docekal2011socialni} je jeho použití pro hodně lidí, především mladých, samozřejmé asi jako použití e-mailu. Také díky tomuto jevu dnes Facebook již netrpí nedostatkem kritické většiny a lidé se přes něj sami poměrně přirozeně organizují.
+
+\subsubsection{Zprávy}
+Z hlediska CMC a groupware jsou pro tuto práci zajímavé především následující funkce Facebooku: Chat, Messages, Events a Groups. Chat představuje integrované rozhraní pro posílání rychlých zpráv mezi uživateli sítě. Disponuje i veřejnou bránou postavenou nad XMPP protokolem, čímž umožňuje připojit se k této službě jako k jakémukoliv jinému Jabberu a poskytuje tak částečnou interoperabilitu s okolním světem \cite{reiss2010facebook}. Messages jsou zase vzdáleným příbuzným asynchronních e-mailových konverzací, na něž jsou také napojeny (viz \ref{syncAsync}). Obojí má potom společný archiv vedené konverzace \cite{seligstein2010see}.
+
+\subsubsection{Události}
+Events, česky {\it události}, umožňují vytvoření informační stránky pro libovolnou pořádanou akci. Je na ní typicky prostor pro název akce, datum a místo konání, seznam účastníků (rozdělený podle typu odpovědi na ty, kteří se budou účastnit určitě, možná, nebo vůbec), delší popis události a místo, kde mohou uživatelé nad akcí diskutovat. Pro organizátora mají tyto stránky smysl v tom, že má orientační přehled nad počty účastníků, ví kdo konkrétně nejspíše přijde a může s lidmi se zájmem o akci na místě komunikovat (odpovídat na dotazy, oznamovat nové informace). Uživatelé díky tomu v systému získávají evidenci událostí, kterých se hodlají účastnit a jsou stále informováni o všem potřebném (např. změna místa). Mají rovněž jedno stabilní místo, kde mohou ověřit čas a místo konání -- nemusí tyto údaje složitě hledat např. v archivu své e-mailové schránky. Zde je dobré povšimnout si, že jak {\it manažer}, tedy pořadatel akce, tak {\it člen skupiny}, tedy účastník, mají z explicitního vkládání informací do systému Events užitek. To je, jak zmiňuje i Johnatan Grudin, velice důležité pro přijetí takové funkce lidmi \cite{grudin1994groupware}.
+
+\subsubsection{Skupiny}
+Facebook navíc ke všemu uvedenému nabízí pro práci skupin celý samostatný produkt -- Groups \cite{chai2010new}. V podstatě se jedná o univerzální groupware pro skupiny v rámci Facebooku, jenž disponuje např. vlastním chatem pro zasílání zpráv jen mezi členy, nebo i vlastními událostmi. Lidé se mohou v takovýchto skupinách uzavřít a nedovolit, aby do nich volně přicházeli noví členové, nebo aby byly čitelné komukoliv zvenčí. Facebook tak poskytuje jednoduchý nástroj (navíc ve svém všeobecně známém a uživateli již přijatém prostředí) pro organizaci a sociální interakci malých skupin jako jsou rodiny, zájmové kluby, školní třídy, skupiny spolubydlících, a další \cite{novati2012introducing}. Na druhou stranu Groups nijak nebrání ani růstu skupin a stejně dobře funguje i pro různá společenství se stovkami členů (toto mohu v praxi pozorovat členstvím ve skupině příznivců programovacího jazyka Python)\footnote{Skupina je dne 23. 4. 2012 dostupná na adrese \url{http://facebook.com/groups/201628346516017} a má 128 členů.}.
 
 \subsection{Twitter}\label{twitter}
+Sociální síť Twitter, kterou nalezneme na \url{http://twitter.com}, je na rozdíl od Facebooku spíše mikroblogovací službou s možností zasílání zpráv mezi uživateli, než komplexním systémem s mnoha agendami zaměřenými na CMC a správu skupin. Uživatelé si zde podobně jako v případě blogu\footnote{Blog je pojem označující webový zápisník. Zpravidla disponuje hlavně chronologicky řazenými příspěvky a komentáři od čtenářů. Bývá psán neformálním stylem, existují však také např. blogy firemní, jež mívají spíše rezervovaný, korporátní projev.} vedou svůj webový zápisník, ale jednotlivé příspěvky, nazývané v jednotném čísle anglickým slovem {\it tweet}, mohou mít pouze 160 znaků. To nutí autora ke stručnosti a snaha vyjádřit myšlenku co nejméně slovy podněcuje jeho tvořivost.
+
+Z hlediska zaměření této práce však Twitter nemá příliš zajímavých aspektů. Uživatelé si mohou psát zmíněné krátké zprávy i navzájem, a to jak veřejně, tak soukromně, není zde však žádný způsob jak se sdružovat ve skupinách nebo jak komunikovat nad rámec tweetů. Protože příjemce odpovědního tweetu je vyjadřován zmíněním jeho jména na začátku, může uživatel směřovat zprávu více lidem. Příjemci se však započítávají do limitu znaků, takže při zaslání odpovědi čtyřem kolegům již nezbývá mnoho prostoru pro samotný obsah sdělení.
+
+Zprávy na Twitteru lze zařadit do asynchronní komunikace, převážně textové (Twitter umožňuje přiložit ke tweetu vybrané přílohy, jimiž se stává nejčastěji obrázek). Vybočují však z charakteristiky dlouhých sdělení, kterou si nesou např. e-maily. Naopak, jsou využívány k velice krátkým a rychlým projevům, navíc častěji vysílaným veřejně do světa, než směřovaným konkrétním příjemcům.
 
 \subsection{Služby společnosti Google}\label{google}
+Byť je firma Google známá především díky svému celosvětovému webovému vyhledávání, vytvořila (či akvizicí přibrala pod svá křídla) také mnoho jiných užitečných webových nástrojů. Dokonce pro své uživatele vytvořila svou vlastní sociální síť pojmenovanou {\it Google+}. Jelikož téměř všechny tyto své produkty, většinou vycházející z nějakých tradičních služeb pro jednotlivce, obohacuje o možnosti skupinové spolupráce, hraje v této oblasti významnou roli.
+
+\subsubsection{E-mail}
+Služba Gmail, původně jednoduchý webový e-mailový klient, přímo integruje rychlé zasílání zpráv (popsáno v \ref{syncAsync}) přes Google Talk. Nejen že poskytuje tradiční (avšak webové) rozhraní pro instant messaging, dokonce spojuje archiv e-mailů s archivem diskusí v reálném čase. V seznamu kontaktů lidem přiřazuje profily a fotky, pokud také používají služby od Google, což zlepšuje orientaci. Má-li uživatel ve svém profilu vyplněny a zveřejněny i takové kontaktní údaje, o nichž z vlastních zdrojů nevíme, objeví se nám mezi kontakty u osoby automaticky \cite{striebeck2010gmail}. Gmail umožňuje kontakty sdružovat do skupin a tzv. kruhů, což je funkce, která přišla z jiného produktu, sociální sítě Google+. Za zmínku stojí také spolupráce s kalendářem -- ten je schopen na Gmail odesílat speciální interaktivní e-maily, přes něž lze rovnou z prostředí e-mailové schránky činit jednoduchá rozhodnutí (např. kliknutím na odkaz v e-mailu s pozvánkou se přihlásit jako účastník události naplánované kolegou). V prostředí schránky jsou uživateli také k dispozici jednoduché úkoly, ale ty nelze nijak sdílet či na nich spolupracovat.
+
+\subsubsection{Instant Messaging}
+Rychlé zprávy jsou reprezentovány značkou Google Talk. Stále častěji je však uváděna spíše jako součást jiných produktů než jako samostatná služba a dá se tedy očekávat její postupné pohlcování ekosystémem Google produktů. Jak již bylo zmíněno, tato služba na bázi standardu XMPP je silně napojena na e-mailovou schránku Gmail. Kromě posílání textových zpráv mezi jednotlivci umožňuje nejen skupinový chat, ale také volání, a to jak mezi vlastními uživateli, tak do běžných telefonních sítí \cite{teague2010making}. Poskytuje k tomu zásuvné moduly do prohlížečů a jiné nástroje, které tuto funkci zpřístupňují i lidem s minimálním programovým vybavením. Díky tomuto lze volat také přímo z webového rozhraní e-mailové schránky Gmail \cite{schriebman2010call}. Volání zahrnuje rovněž přenos videa z webkamery.
+
+\subsubsection{Kalendář}
+Kalendář z hlediska skupinové spolupráce nabízí hned několik funkcí. Uživatel může mít ve svém rozhraní několik kalendářů, tedy pojmenovaných sad událostí. Tyto potom může sdílet s jinými uživateli, nebo je poskytnout i zcela veřejně. Vlastník má možnost při sdílení určit, zda může druhá osoba události pouze vidět, nebo může-li je také měnit. Třetí možností je volba, kdy kolega vidí jen informaci o tom, zda máte či nemáte v daný čas volno (tzv. {\it free/busy}). Další funkcí podporující kooperaci jsou {\it Appointment Slots} -- uživatel může označit místo ve svém kalendáři jako volné ke sjednávání schůzek a jeho kolegové si toto místo mohou sami zamluvit pro setkání, pokud potřebují \cite{chung2010introducing}. Velice zajímavou funkcí jsou potom pozvánky na události. Na jakýkoliv záznam ve svém kalendáři může uživatel přizvat lidi ze svých kontaktů a ti mohou na pozvánku odpovědět -- přijmout ji, odmítnout, či dát najevo nerozhodnost. Tímto se Google Calendar velice blíží chování Facebook Events \cite{florescu2010insert}.
+
+\subsubsection{Dokumenty}
+Klasické programy pro tvorbu dokumentů se většinou omezují v rámci spolupráce uživatelů na nástroje k připomínkování a poznámkování. Těmito funkcemi disponují webové Google Docs také, navíc ovšem nabízí možnost úprav jednoho dokumentu více lidmi přímo v reálném čase. Uživatel tak vidí, že právě otevřenou tabulku sledují i další dva kolegové a může okamžitě pozorovat i jejich úpravy. Oni samozřejmě stejným způsobem vidí veškerou jeho práci, dokonce i umístění kurzoru. Spolu s diskusí, jež je také v reálném čase\footnote{Tato diskuse ovšem nijak nesouvisí se službou Google Talk -- vztahuje se pouze ke konkrétnímu dokumentu a je přístupná jen z něj.} a kterou lze k dokumentu otevřít, je tento způsob kolaborace nad textem či tabulkou zcela ojedinělý a např. pro skupinově spravované texty velice nápomocný.
+
+\subsubsection{Google+}
+
+\subsubsection{Google Apps}
 
 \subsection{Groupware společnosti 37signals}\label{37signals}
 
+\subsubsection{Projektový management}
+
+\subsubsection{CRM}
+
+\subsubsection{Firemní intranet}
+
+\subsubsection{Textové konference v reálném čase}
+
+\subsubsection{Dokumenty s možností spolupráce}
+
+\subsection{Další služby s prvky skupinové spolupráce}
+
+\subsubsection{GitHub: Spolupráce při programování}
+
+\subsubsection{LinkedIn: Profesní sociální síť}
+
+\subsubsection{Lanyrd, SuperLectures a Srazy: Pořádání konferencí}
+
+\subsubsection{Remember The Milk: Sdílení úkolů}
+
+\subsubsection{Doodle: Domlouvání schůzek}
+
+% \footnote{Funkci sdílení či přeposílání úkolů mezi lidmi lze pozorovat např. u služby Remember The Milk dostupné na adrese \url{http://rememberthemilk.com}}.
 
 \section{Shrnutí možností organizace skupin}
 
@@ -203,6 +264,8 @@ Na webu se rozvinulo mnoho aplikací vyloženě či alespoň částečně vhodn�
 \section{Realizovatelnost}\label{realizability}
 % z tohoto vyjde hypotéza, že by šlo vytvořit sjednocující systém
 
+\subsection{Spojení synchronní a asynchronní komunikace}\label{syncAsync}
+Jako zajímavý příklad netradičního spojení v rámci CMC může posloužit Google Talk, který využívá svou sesterskou e-mailovou službu Gmail k doručení rychlé zprávy, není-li příjemce k dispozici ({\it doručování offline zpráv}, \cite{lindberg2006offline}). Gmail na druhou stranu archivuje historii konverzací z Google Talk a uživateli je zpřístupňuje jakoby to byly e-mailové zprávy. Podobný způsob integrace asynchronních zpráv se synchronními lze vypozorovat také u sociální sítě Facebook, která se rovněž snaží stále více oba koncepty sbližovat. Uživateli je v takovém případě nabízeno různé rozhraní (jak e-mailové, tak v podobě rychlých zpráv), ale společný archiv vedené komunikace.
 
 
 \chapter{Specifikace požadavků a návrh řešení}
@@ -248,7 +311,7 @@ Na webu se rozvinulo mnoho aplikací vyloženě či alespoň částečně vhodn�
 % V závěru ať nepřicházejí žádné nové poznatky, neobjeví se tam nové číslo nebo nový graf.
 
 
-\bibliographystyle{czechiso}
+\bibliographystyle{czechiso-v2}
 \begin{flushleft}
     \bibliography{thesis} % thesis.bib
 \end{flushleft}

@@ -4,13 +4,13 @@
 %%
 %% The original source files were:
 %%
-%% merlin.mbs  (with options: `head,exlang,lang,vonx,nm-rev,jnrlst,aunm-semi,nmlm,x3,m3,atit-u,vnum-nr,volp-sp,jwdpg,pp-last,jwdvol,num-xser,ser-vol,ser-ed,pg-bk,add-pub,isbn,issn,doi,edpar,edby,blk-tit,au-col,čeština,pp,and-xcom,xand,eprint,url,url-nl,nfss,,{}')
-%% czech.mbs  (with options: `exlang,lang,vonx,nm-rev,jnrlst,aunm-semi,nmlm,x3,m3,atit-u,vnum-nr,volp-sp,jwdpg,pp-last,jwdvol,num-xser,ser-vol,ser-ed,pg-bk,add-pub,isbn,issn,doi,edpar,edby,blk-tit,au-col,čeština,pp,and-xcom,xand,eprint,url,url-nl,nfss,,{}')
-%% merlin.mbs  (with options: `tail,exlang,lang,vonx,nm-rev,jnrlst,aunm-semi,nmlm,x3,m3,atit-u,vnum-nr,volp-sp,jwdpg,pp-last,jwdvol,num-xser,ser-vol,ser-ed,pg-bk,add-pub,isbn,issn,doi,edpar,edby,blk-tit,au-col,čeština,pp,and-xcom,xand,eprint,url,url-nl,nfss,,{}')
+%% merlin.mbs  (with options: `head,exlang,lang,vonx,nm-rev,jnrlst,nmlm,x3,m3,atit-u,vnum-nr,volp-sp,jwdpg,pp-last,jwdvol,num-xser,ser-vol,ser-ed,pg-bk,add-pub,isbn,issn,doi,edpar,edby,blk-tit,au-col,čeština,pp,and-xcom,xand,eprint,url,url-nl,nfss,,{}')
+%% czech.mbs  (with options: `exlang,lang,vonx,nm-rev,jnrlst,nmlm,x3,m3,atit-u,vnum-nr,volp-sp,jwdpg,pp-last,jwdvol,num-xser,ser-vol,ser-ed,pg-bk,add-pub,isbn,issn,doi,edpar,edby,blk-tit,au-col,čeština,pp,and-xcom,xand,eprint,url,url-nl,nfss,,{}')
+%% merlin.mbs  (with options: `tail,exlang,lang,vonx,nm-rev,jnrlst,nmlm,x3,m3,atit-u,vnum-nr,volp-sp,jwdpg,pp-last,jwdvol,num-xser,ser-vol,ser-ed,pg-bk,add-pub,isbn,issn,doi,edpar,edby,blk-tit,au-col,čeština,pp,and-xcom,xand,eprint,url,url-nl,nfss,,{}')
 %% ----------------------------------------
 %% *** Styl snažící se být v souladu s normou ISO 690. Pomocí latex makebst vytvořil David Martinek. ***
-%% 
-%% Copyright 1994-2004 Patrick W Daly
+%%
+%% Copyright 1994-2007 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:
  % This bibliographic style (bst) file has been generated from one or
@@ -22,7 +22,7 @@
  % version 1 of the License, or any later version.
  % ===============================================================
  % Name and version information of the main mbs file:
- % \ProvidesFile{merlin.mbs}[2004/02/09 4.13 (PWD, AO, DPC)]
+ % \ProvidesFile{merlin.mbs}[2007/04/24 4.20 (PWD, AO, DPC)]
  %   For use with BibTeX version 0.99a or later
  %-------------------------------------------------------------------
  % This bibliography style file is intended for texts in
@@ -328,7 +328,7 @@ MACRO {nov} {"Listopad"}
 MACRO {dec} {"Prosinec"}
 
  % End module: czech.mbs
-%% Copyright 1994-2004 Patrick W Daly
+%% Copyright 1994-2007 Patrick W Daly
 MACRO {acmcs} {"ACM Computing Surveys"}
 
 MACRO {acta} {"Acta Informatica"}
@@ -424,8 +424,10 @@ FUNCTION {write.url}
   if$
 }
 
-STRINGS  { bibinfo}
 INTEGERS { nameptr namesleft numnames }
+
+
+STRINGS  { bibinfo}
 
 FUNCTION {format.names}
 { 'bibinfo :=
@@ -452,13 +454,13 @@ FUNCTION {format.names}
             'skip$
           if$
           namesleft #1 >
-            { "; " * t * }
+            { ", " * t * }
             {
-              ";" *
               s nameptr "{ll}" format.name$ duplicate$ "others" =
                 { 't := }
                 { pop$ }
               if$
+              "," *
               t "others" =
                 {
                   " " * bbl.etal *
@@ -494,13 +496,13 @@ FUNCTION {format.names.ed}
       nameptr #1 >
         {
           namesleft #1 >
-            { "; " * t * }
+            { ", " * t * }
             {
-              ";" *
               s nameptr "{ll}" format.name$ duplicate$ "others" =
                 { 't := }
                 { pop$ }
               if$
+              "," *
               t "others" =
                 {
 
@@ -1063,7 +1065,7 @@ FUNCTION {format.organization.address}
 FUNCTION {article}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.title "title" output.check
   new.sentence
   crossref missing$
@@ -1093,10 +1095,10 @@ FUNCTION {book}
 { output.bibitem
   author empty$
     { format.editors "author and editor" output.check
-      add.colon
+       new.sentence
     }
     { format.authors output.nonnull
-      add.colon
+      new.sentence
       crossref missing$
         { "author and editor" editor either.or.check }
         'skip$
@@ -1128,7 +1130,7 @@ FUNCTION {book}
 FUNCTION {booklet}
 { output.bibitem
   format.authors output
-  add.colon
+  new.sentence
   format.title "title" output.check
   new.sentence
   howpublished "howpublished" bibinfo.check output
@@ -1147,10 +1149,10 @@ FUNCTION {inbook}
 { output.bibitem
   author empty$
     { format.editors "author and editor" output.check
-      add.colon
+      new.sentence
     }
     { format.authors output.nonnull
-      add.colon
+      new.sentence
       crossref missing$
         { "author and editor" editor either.or.check }
         'skip$
@@ -1189,7 +1191,7 @@ FUNCTION {inbook}
 FUNCTION {incollection}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.title "title" output.check
   new.sentence
   crossref missing$
@@ -1215,7 +1217,7 @@ FUNCTION {incollection}
 FUNCTION {inproceedings}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.title "title" output.check
   new.sentence
   crossref missing$
@@ -1254,7 +1256,7 @@ FUNCTION {manual}
     }
     { format.authors output.nonnull }
   if$
-  add.colon
+  new.sentence
   format.btitle "title" output.check
   new.sentence
   author empty$
@@ -1282,7 +1284,7 @@ FUNCTION {manual}
 FUNCTION {mastersthesis}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.btitle
   "title" output.check
   new.sentence
@@ -1300,7 +1302,7 @@ FUNCTION {mastersthesis}
 FUNCTION {misc}
 { output.bibitem
   format.authors output
-  add.colon
+  new.sentence
   format.title output
   new.sentence
   howpublished "howpublished" bibinfo.check output
@@ -1315,7 +1317,7 @@ FUNCTION {misc}
 FUNCTION {phdthesis}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.btitle
   "title" output.check
   new.sentence
@@ -1337,13 +1339,12 @@ FUNCTION {proceedings}
     }
     { format.editors output.nonnull }
   if$
-  add.colon
+  new.sentence
   format.btitle "title" output.check
   format.bvolume output
   format.number.series output
   editor empty$
     { publisher empty$
-        'skip$
         {
           format.publisher.address output
         }
@@ -1372,7 +1373,7 @@ FUNCTION {proceedings}
 FUNCTION {techreport}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.title
   "title" output.check
   new.sentence
@@ -1390,7 +1391,7 @@ FUNCTION {techreport}
 FUNCTION {unpublished}
 { output.bibitem
   format.authors "author" output.check
-  add.colon
+  new.sentence
   format.title "title" output.check
   format.date output
   format.doi output
@@ -1576,7 +1577,7 @@ FUNCTION {begin.bib}
   write$ newline$
   "\providecommand{\url}[1]{\texttt{#1}}"
   write$ newline$
-  "\providecommand{\urlprefix}{URL~}"
+  "\providecommand{\urlprefix}{URL }"
   write$ newline$
   "\expandafter\ifx\csname urlstyle\endcsname\relax"
   write$ newline$
