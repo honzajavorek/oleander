@@ -102,6 +102,7 @@ Přitom běžný účastník domluvy by používal nástroje, na jaké je zvykl�
 \chapter{Analýza způsobů organizace přes internet}\label{analysis}
 Je-li naším cílem umožnit organizaci lidí bez toho, že bychom jednotlivcům vnucovali jeden společný způsob komunikace přes internet, potřebujeme nejdříve zjistit, jaké služby a nástroje již dnes běžně používají. V následujících odstavcích jsou vysvětleny pojmy {\it počítačem zprostředkovaná komunikace} a {\it groupware}. Jsou rozebrány současné způsoby komunikace přes internet, existující webový groupware a z nich plynoucí možnosti organizace skupin lidí. Analýza je podpořena průzkumem mezi uživateli.
 
+
 \section{Počítačem zprostředkovaná komunikace}\label{cmc}
 Termín {\it počítačem zprostředkovaná komunikace} (anglicky {\it Computer-mediated communication}, zkráceně CMC) označuje podle Susan Herring veškerou lidskou komunikaci, která je dosahována prostřednictvím (nebo alespoň pomocí) počítačových technologií \cite{thurlow2004computer}. John December vymezuje pojem jako proces lidské komunikace prostřednictvím počítačů zahrnující lidi, kteří se nacházejí v určitých kontextech a zapojují se do procesu formování média pro rozmanité účely \cite{december1997notes}.
 
@@ -112,6 +113,7 @@ CMC dělíme dle způsobu odesílání a doručování zpráv na synchronní a a
 
 \subsection{Dělení CMC podle obsahu}
 Počítačem zprostředkovanou komunikaci lze klasifikovat také podle charakteru přenášeného obsahu. V tomto případě vyčleňujeme dorozumívání založené na textových zprávách (tzv. {\it text-based}) od všech jiných druhů, tedy od komunikace vedené zvukem či obrazem ({\it non text-based}). V dnešní době již není problém přes internet volat nebo pořádat videokonference, ale většinu objemu CMC i přesto stále tvoří textové zprávy. Multimédia, ač jsou dnes stále významnějším představitelem internetového obsahu určeného ke konzumaci, hrají v počítačové komunikaci zatím spíše doplňkovou roli. Například telefonování přes internet je přijímáno poměrně zvolna \cite{latif2007adoption} a příliš na tom nemění ani popularita programu Skype. Ten přitom umožnil takřka komukoliv libovolné volání (včetně telekonferencí a videohovorů), a to v podstatě zdarma.
+
 
 \section{Klasické internetové protokoly}\label{protocols}
 Internet byl již od svých počátků navrhován především jako komunikační médium a proto nám už jeho základní sada protokolů aplikační vrstvy poskytne zajímavý přehled způsobů dorozumívání, jaké při dnešní práci s počítačem používáme.
@@ -136,6 +138,7 @@ Lidé e-mailem původně nahrazovali hlavně klasickou poštu, ale dnes je adopc
 \subsubsection*{Integrace e-mailu do webové aplikace}
 Aplikace dnes většinou neintegrují e-mailové funkce přímo, ale předpokládají, že je s nimi uživatel dobře seznámen a disponuje svou vlastní e-mailovou schránkou. Hromadně zasílají informace o změnách a novinkách, používají e-mailovou adresu k ověření identity, obnově přihlašovacích údajů, apod. Jedná se tedy spíše o využití e-mailu jen jako kanálu k rutinnímu dorozumívání s uživatelem či ke sdílení obsahu. Někteří tvůrci groupware (viz \ref{groupware}) však jdou vstříc uživateli tím, že svůj program na elektronickou poštu navazují přímo. Rozšiřují jej o schopnost přijímat e-mailové zprávy a nějakým způsobem jim porozumnět. Např. již zmíněný Facebook umí lidem rozesílat e-mailová upozornění na komentáře z této sociální sítě. Málo známý fakt ovšem je, že na tyto lze přímo odpovědět -- e-mail je doručen na servery Facebooku, ty rozpoznají do jaké konverzace míří a přetvoří jej na komentář, jenž je k nerozeznání od jiných, ručně vepsaných ve webovém uživatelském rozhraní \cite{whitnah2010replying}. Obdobnou funkčnost nabízí také server pro vývojáře GitHub nebo aplikace pro projektový management BaseCamp (zmiňovaná také v \ref{37signals}).
 
+
 \section{Groupware}\label{groupware}
 Pojem CMC nás sice uvedl do různých typů komunikace přes počítač, ale ta samotná k naplnění úkolu organizovat skupiny lidí nestačí, byť je zajisté jeho významným prvkem -- je zřejmé, že lidé se mohou dorozumívat bez ohledu na to, zda něco společně připravují. Cohen, March a Olsen popisují organizaci jako {\it volby} vyhledávající problémy, {\it otázky a pocity} vyhledávající rozhodující situace, v nichž mohou být vyřešeny, {\it řešení} vyhledávající otázky, na které mohou být odpověďmi, a {\it lidé schopní rozhodování} vyhledávající práci \cite{cohen1972garbage} \cite{grudin1994groupware}.
 
@@ -143,19 +146,18 @@ Organizátor tedy může při standardní komunikaci postrádat různé pomocné
 
 Typické nástroje dostupné v groupware lze zařadit do několika kategorií, a to komunikace, kooperace a koordinace \cite{kunstova1999skupinova}. Komunikaci zajišťují různé mechanismy posílání zpráv, ať už vestavěné (např. diskusní fóra, {\it chat}, otázky a odpovědi), nebo přímo v podobě e-mailu či rychlých zpráv. Kooperaci potom podporují především různá úložiště dokumentů, např. {\it wiki systémy}. Mohou disponovat rozhraním pro kolektivní úpravy dokumentu, archivaci, vyhledávání, správu verzí apod. Nakonec pod koordinaci spadají nástroje navazující na pomůcky známé z tradičního reálného světa -- diáře, kalendáře, seznamy úkolů, adresáře kontaktů, nástěnky a další.
 
-\subsection{Kritická většina pro přijetí skupinou}
+\subsection{Kritická většina pro přijetí skupinou}\label{criticalMass}
 Důležitým aspektem tvorby, zavádění a práce s jakýmkoliv groupware či nástrojem pro dorozumívání je tzv. kritická většina (Jonathan Grudin problematiku popisuje jako {\it critical mass and prisoner's dilemma problems} \cite{grudin1994groupware}). V zásadě se jedná o problém, kdy lidé nejsou ochotni nástroj přijmout a používat, dokud jej nevyužívá i dostatečná, tzv. kritická většina jejich kolegů. Úspěch nástroje potom nestojí ani tolik na jeho přínosu a užitečnosti oproti stávajícím řešením, ale na zvyku a počtu uživatelů. Důležití jsou v tomto případě tzv. {\it early adopters}, tedy lidé, kteří si nástroj osvojili mezi prvními, rozšiřují o něm povědomí a nabádají k jeho použití ostatní. Jak zmiňuje Grudin, budeme-li prodávat běžný software pro jednoho uživatele (např. textový editor), který se zalíbí jednomu člověku z deseti, je to úspěch. Jestliže však chceme prosadit nový komunikační kanál nebo groupware v týmu deseti zdravotních sestřiček a ten se zalíbí devíti z nich, je pro tuto skupinu nepoužitelný.
 
 Překonávání kritické většiny šlo v minulých letech několikrát pozorovat i na českém internetu. Jako příklady mohou sloužit snahy o migraci uživatelů z ICQ na Jabber nebo počáteční nechuť mnoha uživatelů registrovat se na Facebook (viz \ref{facebook}) v počátcích jeho penetrace do českých končin.
 
 Na tezi, že lidé mají podobné zábrany využívat nových služeb, stojí i tato práce.
 
+
 \section{Moderní webové aplikace a sociální sítě}\label{web}
 Na HTTP, jednom z internetových protokolů, byl vystavěn celý obrovský ekosystém aplikací a služeb -- {\it World Wide Web}. Ač začal jako několik hypertextově spojených vědeckých dokumentů, vysoká adopce tohoto prostředí komerční sférou z něj vytvořila fenomén dnešní doby, jenž se velice rychle a dynamicky vyvíjí. Nejen že se postupně z jedné ze služeb internetu stává jeho jádro pohlcující většinu jeho agend, ale dokonce dochází i k postupnému prolínání tohoto virtuálního webového světa s naší každodenní realitou \cite{thurlow2004computer}.
 
 Na webu se rozvinulo mnoho aplikací vyloženě či alespoň částečně vhodných ke koordinaci a kooperaci skupin lidí. V poslední době lze navíc sledovat rozmach služeb, tzv. {\it sociálních sítí}, jež jsou na spolupráci lidí, komunikaci a sdílení obsahu mezi nimi přímo postavené. V následujících odstavcích zmíním nejvýznamnější představitele těchto sítí a jiných webových aplikací blízkých charakteristice groupware.
-
-% github? linkedin?
 
 \subsection{Facebook}\label{facebook}
 Facebook, dostupný na adrese \url{http://facebook.com}, je rozsáhlý webový systém určený ke komunikaci, sdílení obsahu, udržování vztahů a zábavě. Současně je dlouhodobě největší sociální sítí na světě \cite{kazeniac2009social} \cite{protalinski2012facebook}. Vzhledem k jeho vysoké adopci napříč obyvatelstvem \cite{docekal2011socialni} je jeho použití pro hodně lidí, především mladých, samozřejmé asi jako použití e-mailu. Také díky tomuto jevu dnes Facebook již netrpí nedostatkem kritické většiny a lidé se přes něj sami poměrně přirozeně organizují.
@@ -192,20 +194,19 @@ Kalendář z hlediska skupinové spolupráce nabízí hned několik funkcí. Už
 Klasické programy pro tvorbu dokumentů se většinou omezují v rámci spolupráce uživatelů na nástroje k připomínkování a poznámkování. Těmito funkcemi disponují webové Google Docs také, navíc ovšem nabízí možnost úprav jednoho dokumentu více lidmi přímo v reálném čase. Uživatel tak vidí, že právě otevřenou tabulku sledují i další dva kolegové a může okamžitě pozorovat i jejich úpravy. Oni samozřejmě stejným způsobem vidí veškerou jeho práci, dokonce i umístění kurzoru. Spolu s diskusí, jež je také v reálném čase\footnote{Tato diskuse ovšem nijak nesouvisí se službou Google Talk -- vztahuje se pouze ke konkrétnímu dokumentu a je přístupná jen z něj.} a kterou lze k dokumentu otevřít, je tento způsob kolaborace nad textem či tabulkou zcela ojedinělý a např. pro skupinově spravované texty velice nápomocný.
 
 \subsubsection*{Google+}
+Sociální síť, kterou Google otevřel světu v roce 2011, přišla hned se dvěma \uv{novými} prostředky k dorozumívání mezi uživateli. Zavedla skupinový chat s názvem {\it Huddle} (dnes již oficiálně {\it Messenger}) a videokonference {\it Hangouts} \cite{gundotra2010introducing}. První jmenovaný spojuje zasílání zpráv z telefonů (Android, iPhone, nebo jakýkoliv s podporou pro SMS) s instant messagingem. V podstatě se ovšem jedná o Google Talk integrovaný do webového rozhraní Google+. Kromě standardních funkcí sdílení obsahu, které se dnes již příliš neliší od konceptů známých z Facebooku, Google+ nepřináší žádné zásadní nástroje podporující organizaci skupin. Nejpřínosnější jsou v tomto ohledu skupinové videokonference Hangouts, jež však se samotnou sociální sítí nemají mnoho společného a mohly by existovat i samostatně jako vylepšení služby Google Talk.
 
 \subsubsection*{Google Apps}
+Balík Google Apps je určen především pro firmy, pro které představuje možnost provozovat většinu výše uvedených Google služeb na své vlastní internetové doméně (namísto standardní {\tt google.com}) a pod vlastním logem. Funkce takto využívaných aplikací bývají v zásadě stejné jako u jejich standardních verzí. Jelikož by mohly Google Apps budit dojem samostatné služby usnadňující práci ve skupině, pro úplnost zde uvádím jejich pravý význam.
 
 \subsection{Groupware společnosti 37signals}\label{37signals}
+37signals je firma, jež byla průkopníkem v tvorbě webových groupware aplikací. Namísto tradičního modelu, kdy si klient programy instaloval na své servery, 37signals zavedli software jako placenou službu zákazníkovi. V mnoha aspektech definovali postupy a zvyklosti, jaké dodnes formují trh webových aplikací, a stali se lídry svého oboru. Dá se říci, že groupware \uv{reformovali}.
 
-\subsubsection*{Projektový management}
+Vlajkovou lodí nabídky 37signals je Basecamp, služba určená pro projektový management. Středem všeho dění je zde komunikace ve skupině v podobě zpráv. Tyto lze zasílat i e-mailem (viz \ref{criticalMass}), takže uživatelům nedělá problém začít Basecamp okamžitě používat -- většinou totiž podobnou komunikaci stejně vedou e-mailem. Program dále nabízí seznamy úkolů, dokumenty, projektové stránky a další funkce, jež podporují organizaci skupiny a její koordinaci směrem k dokončení nějakého projektu.
 
-\subsubsection*{CRM}
+Kromě Basecampu 37signals nabízí také CRM\footnote{{\it Customer relationship management}, nebo také řízení vztahů se zákazníky, je aplikace, která firmě umožňuje pracovat s databází kontaktních údajů tak, aby mohla zlepšit své služby zákazníkům.} Highrise, firemní intranet Backpack, textové konference v reálném čase Campfire, a další. Aplikace Campfire je de facto webový chat, jaký je popsán v \ref{irc}, akorát zacílený na firemní potřeby.
 
-\subsubsection*{Firemní intranet}
-
-\subsubsection*{Textové konference v reálném čase}
-
-\subsubsection*{Dokumenty s možností spolupráce}
+Groupware od 37signals je tedy sada nástrojů velice dobře vhodných k organizaci skupin, především firem. Co se ovšem interoperability týče, až na integraci e-mailů do Basecampu jsou tyto nástroje od světa většinou odděleny bariérou v podobě uživatelského účtu. Kdo chce se skupinou spolupracovat, musí se naučit zmíněný software používat, přihlašovat se do něj a zvyknout si na něj. To lze poměrně snadno nařídit a zavést v prostředí firmy, pro nezávislé ad hoc skupiny je to však velká překážka.
 
 \subsection{Další služby s prvky skupinové spolupráce}
 
@@ -221,10 +222,12 @@ Klasické programy pro tvorbu dokumentů se většinou omezují v rámci spolupr
 
 % \footnote{Funkci sdílení či přeposílání úkolů mezi lidmi lze pozorovat např. u služby Remember The Milk dostupné na adrese \url{http://rememberthemilk.com}}.
 
+
 \section{Shrnutí možností organizace skupin}
 
 % shrnuti, jak lide mohou organizovat
 % Co už v oblasti mého zadání existuje? Jak to dělají jiní?
+
 
 \section{Průzkum mezi uživateli}\label{poll}
 % pruzkum, jak lide opravdu organizuji ... jakými lidé přes internet běžně
@@ -256,10 +259,12 @@ Klasické programy pro tvorbu dokumentů se většinou omezují v rámci spolupr
 % smysluplnost a uzitecnost nastroju, proc je to potrebne (vychazi z vysledku pruzkumu)
 % proc pro normalni lidi ne ale pro organizatory ano
 
+
 \section{Identifikace elementárních prvků komunikace}\label{communicationElements}
 % Podkapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
 % prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
 % integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
+
 
 \section{Realizovatelnost}\label{realizability}
 % z tohoto vyjde hypotéza, že by šlo vytvořit sjednocující systém
