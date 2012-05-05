@@ -193,7 +193,7 @@ Groupware od 37signals je tedy sada nástrojů velice dobře vhodných k organiz
 \subsection{Stránky událostí a pořádání konferencí}
 Sociální síť LinkedIn, v žebříčku stabilně mezi pěti největšími na světě \cite{kazeniac2009social}, se specializuje na profesní vztahy. Základním kamenem služby je vytvoření životopisu a jeho sdílení v rámci sítě kontaktů. Uživatelé si mezi sebou mohou posílat asynchronní zprávy, jejichž koncept se nijak neliší od podobných zpráv v jiných webových službách. Zajímavou funkcí z hlediska organizace lidí je však možnost vytváření stránek událostí v podobném stylu, jako to umožňuje Facebook \cite{linkedin2011networking}. Vytváření takových stránek slouží především k propagaci profesních setkání a konferencí.
 
-K tomuto účelu ovšem existují i zcela specializované služby, např. Lanyrd, jenž se prezentuje jako \uv{sociální adresář konferencí}. Zatímco LinkedIn oproti Facebooku přináší spíše jen několik statistických údajů o účastnících, Lanyrd umožňuje na stránce konference prezentovat celý program, videa přednášek nebo uveřejnit materiály z jednotlivých vystoupení.
+K tomuto účelu ovšem existují i zcela specializované služby, např. Lanyrd.com, jenž se prezentuje jako \uv{sociální adresář konferencí}. Zatímco LinkedIn oproti Facebooku přináší spíše jen několik statistických údajů o účastnících, Lanyrd.com umožňuje na stránce konference prezentovat celý program, videa přednášek nebo uveřejnit materiály z jednotlivých vystoupení.
 
 Na pravidelně se opakující setkávání z se zaměřuje česká webová služba Srazy, dostupná na adrese \url{http://srazy.info}. K základní funkčnosti stránek událostí přidává pořadatelům možnost zahájit mezi účastníky hlasování, poslat jim e-mail, tisknout jmenovky apod. Web se stal oblíbený především v okruhu českých programátorů -- objevují se na něm mnohá pravidelná setkání v různých českých městech, například příznivců jazyka Python nebo vývojářů mobilních aplikací (obojí z Brna).
 
@@ -202,11 +202,18 @@ Remember The~Milk je oblíbený interaktivní seznam úkolů. Jednou z jeho uži
 
 Služba integruje e-mail způsobem popsaným v \ref{emailWebApp} -- umožňuje jím zasílat úkoly. Každý v rámci Remember The Milk má přidělenou vlastní tajnou e-mailovou adresu a zprávy, které jsou na ni zaslány, se automaticky mění v nesplněné úkoly. Uživatel takto může například rodině nebo vybraným kolegům sdělit tuto svou tajnou adresu, aby mu mohli sami plnit seznam úkolů bez toho, že by museli být někde registrováni.
 
+Jistou formu sdílení úkolů můžeme najít i u jiných webových aplikací určených k posílení produktivity, např. Ta-da Lists od 37signals.
+
 \subsection{Domlouvání schůzek}
 Na adrese \url{http://doodle.com} je švýcarská služba pro domlouvání data konání schůzky či jiné události. Kdokoliv může na web přijít a vytvořit tam specializovanou \uv{anketu} ohledně data a času konání. Její adresu rozešle libovolným způsobem svým kolegům a ti potom bez potřeby jakékoliv registrace (vyplňují pouze jméno, které slouží k odlišení jednotlivých hlasování) zadávají informaci o tom, jaké časy jim přichází vhod a které nikoliv. Rozhraní ankety usnadňuje celý proces a zvýrazňuje dny, v nichž se shoduje většina hlasujících. Velkou výhodou služby je možnost využít ji bez vytváření uživatelského účtu. Pravděpodobně hlavně díky tomu a své jednoduchosti se služba těší velké oblibě.
 
 \subsection{Spolupráce při programování}
 Za názvem GitHub se skrývá server, kde si může programátor zdarma založit veřejný repozitář pro programový kód verzovaný gitem. Jako placenou službu nabízí autoři webu privátní repozitáře nebo sdružování vývojářů do organizací. Z hlediska tématu této práce je ovšem GitHub zajímavý tím, jakým způsobem je možné s repozitáři ve webovém rozhraní pracovat. Přidal totiž možnost komunikace pomocí komentářů a to přímo na úrovni zdrojového kódu -- lze například diskutovat nad kterýmkoliv jeho řádkem. Spolu s dalšími funkcemi, například nástroji pro evidenci chyb, se tak stal de facto obrovským groupware, jenž si pro jeho sociální rozměr oblíbily tisíce programátorů. GitHub implementuje také integraci e-mailu popsanou v \ref{emailWebApp}.
+
+\subsection{Sdílení souborů}
+Sdílení dokumentů, videí a fotografií je oblast, která je již nad rámec této práce. Dokument je možné ve skupině sdílet v rámci služeb Google Docs, Basecamp Writeboard, nebo vlastní wiki. Video lze nahrát na Facebook, YouTube, Vimeo, aj. služby, fotografie nejčastěji opět na Facebook, dále Google+ (Picasa Web Albums), Flickr a další. Jedná-li se o sociální sítě, jsou v rámci sdílení většinou přítomny funkce pro diskusi pod videem, označení osob na fotografii, apod.
+
+Z hlediska skupinové organizace je zajímavá především spolupráce na dokumentech a sdílení souborů po nějaké události. Jelikož jde o komplexní agendy, je vhodnější agregovat soubory z jiných služeb např. na stránku události, než vytvářet systém, který by sdílení sofistikovaně propojoval. Toto lze pozorovat např. u webu Lanyrd.com, který dovoluje ke stránce konference připojit videa nebo prezentace z jiných webových služeb.
 
 
 \section{Shrnutí možností organizace skupin}\label{optionsConclusion}
@@ -216,9 +223,9 @@ Začíná být pro lidi přirozenější otevřít si webový prohlížeč a vyb
 
 V rámci organizace skupin si lze všimnout nástupu různých forem webového groupware. Produkty z dílny 37signals nebo jim podobné, snažící se navázat na úspěch této společnosti, jdou cestou uzavřených specializovaných aplikací, přímo koncipovaných jako skupinový software. Na druhou stranu například u služeb firmy Google lze sledovat spíše prolnutí prvků podporujících spolupráci do tradičních programů, jako je e-mailový klient nebo kancelářská sada pro tvorbu dokumentů. Sociální sítě jsou zcela samostatnou kategorií -- většinou integrují mnoho dříve známých konceptů dohromady (blogování, komentáře, rychlé zprávy, asynchronní zprávy, aj.), aby se staly pomyslnými švýcarskými noži pro komunikaci, sdílení obsahu, organizaci a zábavu.
 
-V případě, že potřebuje organizovat kolektiv přes internet, má dnes uživatel několik možností. Může se spoléhat pouze na komunikační kanály a využít e-mail, instant messaging, nebo libovolnou formu textové konference. Určitým pokrokem jsou v takovém případě e-mailové skupiny, např. Google Groups. Zatouží-li po něčem víc, nabízí se mu široká škála webových nástrojů, ať už univerzálních (typicky Facebook), nebo zcela dedikovaných (např. Doodle). Zde však nastávají problémy, pokud se skupina nedokáže nebo nechce shodnout na společně využívané službě. Pokud má organizátor na starosti skupinu lidí, z nichž všichni používají Facebook, sáhne zcela určitě po něm -- nabízí nejkomplexnější sadu funkcí pod jednou střechou. Ve firmách, kde sociální sítě spíše rozptylují a je snazší dohodnout kompromis či jednotný systém nařídit, je ovšem vhodnější software od 37signals a jemu podobný. Člověk, který potřebuje organizovat nehomogenní zájmový klub, je ale odkázán na využívání různých aplikací zároveň. Spojující element přitom musí hrát tradiční CMC, tedy převážně e-mail, jenž používají v zásadě všichni.
+V případě, že potřebuje organizovat kolektiv přes internet, má dnes uživatel několik možností. Může se spoléhat pouze na komunikační kanály a využít e-mail, instant messaging, nebo libovolnou formu textové konference. Určitým pokrokem jsou v takovém případě e-mailové skupiny, např. Google Groups. Zatouží-li po něčem víc, nabízí se mu široká škála webových nástrojů, ať už univerzálních (typicky Facebook), nebo zcela dedikovaných (např. Doodle.com). Zde však nastávají problémy, pokud se skupina nedokáže nebo nechce shodnout na společně využívané službě. Pokud má organizátor na starosti skupinu lidí, z nichž všichni používají Facebook, sáhne zcela určitě po něm -- nabízí nejkomplexnější sadu funkcí pod jednou střechou. Ve firmách, kde sociální sítě spíše rozptylují a je snazší dohodnout kompromis či jednotný systém nařídit, je ovšem vhodnější software od 37signals a jemu podobný. Člověk, který potřebuje organizovat nehomogenní zájmový klub, je ale odkázán na využívání různých aplikací zároveň. Spojující element přitom musí hrát tradiční CMC, tedy převážně e-mail, jenž používají v zásadě všichni.
 
-Za povšimnutí stojí průnik jednotlivých služeb v oblasti správy událostí. Jak Facebook, tak LinkedIn, Lanyrd nebo české Srazy umožňují zřízení stránky pro pořádanou událost. Pořadatelé veřejných akcí často vytvářejí stránky událostí na všech těchto službách zároveň, aby maximalizovali publicitu mezi internetovými uživateli. Google kalendář se této funkčnosti blíží svými pozvánkami, ale ty vzhledem ke své povaze najdou využití spíše v okruhu přátel či kolegů, než u hromadných veřejných setkání.
+Za povšimnutí stojí průnik jednotlivých služeb v oblasti správy událostí. Jak Facebook, tak LinkedIn, Lanyrd.com nebo české Srazy.info umožňují zřízení stránky pro pořádanou událost. Pořadatelé veřejných akcí často vytvářejí stránky událostí na všech těchto službách zároveň, aby maximalizovali publicitu mezi internetovými uživateli. Google kalendář se této funkčnosti blíží svými pozvánkami, ale ty vzhledem ke své povaze najdou využití spíše v okruhu přátel či kolegů, než u hromadných veřejných setkání.
 
 
 \section{Průzkum mezi uživateli}\label{poll}
@@ -270,7 +277,7 @@ Dvanáct hlavních otázek nastiňovalo vždy nějakou situaci, kterou měl odpo
         Scénář líčí situaci v zájmovém kolektivu, což je opět příklad poměrně nezávislé, heterogenní skupiny. Cílem otázky je zjistit, jak taková skupina dokáže dělat společná rozhodnutí.
 
     \item \emph{Kdybych nedomlouval datum soustředění ale barvu závěsů do klubovny, na které se všichni shodnou alespoň většinově, co použiji?} --
-        Jelikož je z hlediska výběru vhodného data poměrně populární služba Doodle, dá se očekávat, že ovlivní odpovědi na předešlou otázku. Proto na ni tato navazuje a záměrně nastiňuje situaci, v níž Doodle použít nelze.
+        Jelikož je z hlediska výběru vhodného data poměrně populární služba Doodle.com, dá se očekávat, že ovlivní odpovědi na předešlou otázku. Proto na ni tato navazuje a záměrně nastiňuje situaci, v níž Doodle.com použít nelze.
 
     \item \emph{Chci zavolat kamarádovi. Tuším, že by mohl být online u počítače. Co udělám nejčastěji?} --
         Průzkum obecného přístupu lidí k CMC. V případě, že budou mít šanci v běžném denním provozu volat přes internet a zadarmo, učiní to, nebo zůstanou u tradičního telefonu, byť je placený? Zde účastníci dotazníku nedostali možnost doplnit vlastní odpověď, jelikož by to nebylo užitečné.
@@ -313,7 +320,7 @@ U této otázky téměř polovina respondentů hlasovala pro komunikaci nezprost
 V této otázce žádná konkrétní odpověď výrazně nepřevažuje, ale celkem v 65~\% případů jsou respondenti ochotní video sdílet na webových službách k tomu určených (Facebook, YouTube, Vimeo, aj.), než jej posílat či někam nahrávat v podobě obyčejných souborů. Z vlastních odpovědí se nejčastěji objevoval e-mail nebo přehrání při osobním setkání.
 
 \subsubsection*{\textbf{4. otázka:} \emph{Organizuji malou veřejnou událost, např. minikonferenci s přednáškami nebo místní mistrovství v házení šipek. Co použiji pro propagaci a evidenci?}}
-Zde se celých 60~\% účastníků dotazníku vyjádřilo pro stránku události na Facebooku. 19~\% hlasovalo pro možnost \uv{vylepím plakátky v okolí a pokusím se zajistit, aby o tom řekli v obecním rozhlase}. 6~\% respondentů by pro tento účel využilo českou službu Srazy. Ve vlastní odpovědi lidé nejčastěji zmiňovali kombinaci více možností. Snahu organizátora o co největší propagaci popsala jedna odpovídající přímo vyčerpávajícím způsobem:
+Zde se celých 60~\% účastníků dotazníku vyjádřilo pro stránku události na Facebooku. 19~\% hlasovalo pro možnost \uv{vylepím plakátky v okolí a pokusím se zajistit, aby o tom řekli v obecním rozhlase}. 6~\% respondentů by pro tento účel využilo českou službu Srazy.info. Ve vlastní odpovědi lidé nejčastěji zmiňovali kombinaci více možností. Snahu organizátora o co největší propagaci popsala jedna odpovídající přímo vyčerpávajícím způsobem:
 
 \begin{quotation}
     \emph{Dám to na web SU FI a na nástěnku SU FI. Někdo to většinou propaguje na Facebooku SU FI. Dám echo na Twitter (pokud se to hodí), udělám v Google kalendáři akci a případně nechám po FI či celé MU rozvěsit plakáty. Občas obepíšu své kontakty v LeMUr a muni a dalších studentských médiích (e-mailem) a jdu na rozhovor do rádia nebo mailem připravíme článek.}
@@ -326,10 +333,10 @@ V tomto případě zcela vítězí tradiční forma komunikace. 55~\% hlasů pro
 Nejvíce odpovídajících, konkrétně 59~\%, zvolilo prostý e-mail. 15~\% hlasovalo pro různá úložiště souborů (vlastní FTP, Dropbox, Ulož.to, LeteckáPošta.cz, aj.), 12~\% opět inklinovalo k tradiční komunikaci (možnost \uv{vytisknu dokument na korkovou nástěnku v předsíni}). Vlastní odpovědi obsahují formy osobního předání, občas zmiňují Google Docs. Je zajímavé pozorovat, že mnoho lidí, kteří v předešlé otázce neviděli žádný důvod pro použití počítače, bylo v případě sdílení dokumentu bez problémů ochotno využít elektronické pošty. Vytisknout dokument a pověsit jej na nástěnku je tedy pro velkou část respondentů o dost složitější než poslání jeho elektronické verze e-mailem a tím pádem jim tato forma komunikace přijde přirozená i v malých kolektivech -- obtížnější úkon snížil hranici užitečnosti CMC pro skupinu.
 
 \subsubsection*{\textbf{7. otázka:} \emph{Jsem předsedou místního klubu šachistů a potřebujeme se rozhodnout kdy pojedeme na soustředění do Jeseníků. Co pro společnou domluvu použiji?}}
-Lidé podle dotazníku použijí z 28~\% obyčejný e-mail, z 24~\% osobní setkání a z 23~\% Facebook. To jsou velice vyrovnané výsledky. Využití služby Doodle zmínilo 18~\% respondentů. Lze pozorovat, že Facebook opravdu ztrácí přízeň na úkor klasických metod komunikace v situacích, kdy je potřeba oslovit a organizovat všechny členy nějaké nesourodé volnočasové skupiny lidí. Jeden z odpovídajících přímo ve vlastní odpovědi napsal, že by rád Facebook použil, ale ne každý jím disponuje.
+Lidé podle dotazníku použijí z 28~\% obyčejný e-mail, z 24~\% osobní setkání a z 23~\% Facebook. To jsou velice vyrovnané výsledky. Využití služby Doodle.com zmínilo 18~\% respondentů. Lze pozorovat, že Facebook opravdu ztrácí přízeň na úkor klasických metod komunikace v situacích, kdy je potřeba oslovit a organizovat všechny členy nějaké nesourodé volnočasové skupiny lidí. Jeden z odpovídajících přímo ve vlastní odpovědi napsal, že by rád Facebook použil, ale ne každý jím disponuje.
 
 \subsubsection*{\textbf{8. otázka:} \emph{Kdybych nedomlouval datum soustředění ale barvu závěsů do klubovny, na které se všichni shodnou alespoň většinově, co použiji?}}
-Otázka, která měla původně jen vyřadit z odpovědí vliv Doodle, nakonec skončila tím, že nejvíce respondentů, 65~\%, by se sešlo osobně. Facebook zde ale se svými 20~\% překonává e-mail (11~\%). Výsledky si lze vyložit tak, že je takovéto kolektivní rozhodování na rozdíl od domlouvání data natolik jednoduchým úkonem, že většině lidí nepřijde vůbec užitečné jej řešit elektronicky. Vyšší hlasování pro Facebook mezi lidmi, kteří by tento problém pomocí CMC řešili, lze vysvětlit existencí Facebook Questions, dedikované funkčnosti pro pokládání otázek.
+Otázka, která měla původně jen vyřadit z odpovědí vliv Doodle.com, nakonec skončila tím, že nejvíce respondentů, 65~\%, by se sešlo osobně. Facebook zde ale se svými 20~\% překonává e-mail (11~\%). Výsledky si lze vyložit tak, že je takovéto kolektivní rozhodování na rozdíl od domlouvání data natolik jednoduchým úkonem, že většině lidí nepřijde vůbec užitečné jej řešit elektronicky. Vyšší hlasování pro Facebook mezi lidmi, kteří by tento problém pomocí CMC řešili, lze vysvětlit existencí Facebook Questions, dedikované funkčnosti pro pokládání otázek.
 
 \subsubsection*{\textbf{9. otázka:} \emph{Chci zavolat kamarádovi. Tuším, že by mohl být online u počítače. Co udělám nejčastěji?}}
 Výrazná většina dotazovaných (65~\%) by nevyužila možnosti volat zadarmo za cenu nižšího komfortu a místo toho by sáhli po klasickém mobilním telefonu. Lze pozorovat náklonnost vzorku ke klasickým metodám dorozumívání, ale také další faktory -- např. zvyk, jednoduchost a jistota. Lidé jsou na mobilní telefon zvyklí a použít něco nového je zdržuje. Úkon je rovněž pro mnohé jednodušší s telefonem. U něj nemusí být na jednom místě, připojovat mikrofon a vylaďovat spojení, jako je to běžné u počítače s programem Skype. Nakonec je významná i jistota spojení, jelikož přítel nemusí být dostupný nebo může dojít k selhávání kvality hovoru a potom by respondent vynaložil mnoho zbytečné práce navíc, aby se musel stejně vrátit k mobilnímu telefonu.
@@ -430,14 +437,16 @@ Vyjdeme-li z myšlenky na takovou aplikaci, můžeme nastolit dvě hypotézy:
 
 Následující části této kapitoly se zabývají návrhy na ověření těchto hypotéz.
 
-\section{Realizovatelnost sjednocujícího systému}
+
+\section{Realizovatelnost sjednocujícího systému}\label{realizability}
 Abychom mohli sjednocovat různé způsoby CMC nebo funkce software podporujícího organizaci skupin, potřebujeme mezi nimi najít společné rysy. Je zapotřebí identifikovat elementární prvky komunikace a organizace, které se v určitých formách opakují napříč spektrem nástrojů a služeb, a jež bude možné vzájemně propojit.
 
 Jestliže takovéto elementární prvky existují a jejich integrace by byla teoreticky možná, je nutné následně ověřit, zda existují také praktické cesty jak toho docílit. V případě klasických způsobů počítačem zprostředkované komunikace se jedná o existenci a propojitelnost standardizovaných protokolů. U webových služeb je zapotřebí prozkoumat možnosti jejich API.
 
 Ani v případě existence takových rozhraní však nemusí být požadované propojení realizovatelné. Mohou se vyskytnout nejrůznější další překážky, které je potřeba odhalit -- v cestě mohou stát licenční podmínky, obtížná pochopitelnost uživatelského rozhraní, aj.
 
-\section{Smysluplnost sjednocujícího systému}
+
+\section{Smysluplnost sjednocujícího systému}\label{meaningfulness}
 V případě této hypotézy lze v mnohém vycházet ze závěrů již proběhlé analýzy.
 
 Ve firmách by sjednocující systém nacházel uplatnění ztěžka -- jeho silná stránka není pro podnikový ekosystém nijak zvláště zajímavá. Naopak, integrace komunikačních kanálů by pouze komplikovala všechny procesy. Mnohé nástroje, které v existujícím podnikovém groupware těží z jednotného prostředí, by navíc pravděpodobně ani nebylo možné v takovémto systému plnohodnotně zhotovit.
@@ -449,28 +458,43 @@ Jasná cílová skupina a vycházení vstříc jejím požadavkům ale není jed
 
 
 \chapter{Ověření realizovatelnosti a užitečnosti integrace}
+Úkolem následujícího textu je ověření dvou hypotéz nastolených v předešlé kapitole. Jednotlivé oddíly tedy vycházejí z návrhů ve \ref{realizability} a \ref{meaningfulness} -- postupně se zabývají hledáním elementárních prvků komunikace a organizace vedené pomocí počítače, rozborem možností jejich propojování a nakonec reálnou užitečností výsledné integrace.
+
 
 \section{Identifikace elementárních prvků komunikace}\label{communicationElements}
+Na základě výše vedené podrobné analýzy lze jednotlivé formy dorozumívání a organizace rozebrat na elementární prvky. Tyto vždy představují určitou logickou jednotku komunikace či informace. Vybral jsem ty, jež se objevují opakovaně v různých službách, a seskupil je podle jejich potenciálu být nějakým způsobem vzájemně integrovány.
 
-% Podkapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
-% prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
-% integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
+\begin{description}
+    \item[Asynchronní zpráva jednomu člověku]
+        Delší zpráva mezi dvěma lidmi, při níž nemusí být oba na příjmu v tentýž čas. Představitelé: e-mail, Facebook Messages, jakékoliv jiné soukromé zprávy ve webových aplikacích (na Twitteru, na webových fórech, zprávy na LinkedIn, atd.).
 
-asynchronní zpráva (jednomu, mnoha)
+    \item[Asynchronní zpráva více lidem]
+        Tatáž zpráva, ale s více příjemci. Může mít nejen ad hoc charakter, ale i trvalejší podobu, kdy jsou příjemci přímo zaregistrováni k odebírání. Představitelé: e-mail s více příjemci, Facebook Messages s více příjemci, Google Groups, Usenet, webová fóra aj. diskusní skupiny. Částečně by zde šlo zařadit i veřejné zprávy na Twitteru.
 
-synchronní zpráva (jednomu, mnoha)
+    \item[Synchronní zpráva více lidem]
+        Krátká zpráva mezi dvěma lidmi, při níž si musí být oba k dispozici v tentýž čas. Představitelé: jakýkoliv instant messaging, tedy i Facebook Chat, Google Talk, Skype Chat, a další.
 
-obecná anketa
+    \item[Synchronní zpráva více lidem]
+        Stejná zpráva, ale v rámci vícečlenné konference. Představitelé: skupinový instant messaging (Skype Chat, Google Talk), Jabber konference, IRC, webový chat (Lidé.cz, Campfire).
 
-anketa na termín
+    \item[Obecná anketa]
+        Otázka pro návštěvníky s předdefinovanými odpověďmi, někdy i možností přidat při odpovídání vlastní. Představitelé: Facebook Questions, hlasování na Srazy.info.
 
-událost
+    \item[Anketa na termín]
+        Dotaz na vhodný termín, zamlouvání termínů. Představitelé: Doodle.com, Google Calendar se svými \emph{Appointment Slots}.
 
-dokument, soubor
+    \item[Událost]
+        Stránka události. Typicky sdružuje informace o místě a času konání a eviduje návštěvníky. Představitelé: Facebook Events, Lanyrd.com, LinkedIn Events, Srazy.info. Vzdáleně lze podobnou funkčnost pozorovat u jednotlivých záznamů v kalendáři v rámci Google Calendar.
 
-kontakt
+    \item[Kontakt]
+        Osoba v adresáři kontaktů. Představitelé: \uv{přátelé} na Facebooku, Google Contacts, kontakty z Twitteru či LinkedIn.
 
-úkol
+    \item[Úkol]
+        Úkol na seznamu toho, co je potřeba udělat. Představitelé: Remember The Milk, Ta-da Lists.
+\end{description}
+
+Existence takovýchto elementárních prvků je tedy ověřena a dává naději, že lze služby nějakým způsobem spojovat.
+
 
 \section{Praktické možnosti propojení}\label{practicalOptions}
 
