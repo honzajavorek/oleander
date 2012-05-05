@@ -64,23 +64,14 @@
 
 
 
-\chapter*{Úvod}\label{introduction}
+\chapter{Úvod}\label{introduction}
 Internet je fragmentovaný a decentralizovaný i dnes, v době velkých sociálních sítí typu Facebook. Málokdy se lidé při společné domluvě sejdou na stejné platformě a proto se následně uchylují k primitivním řešením, jako je e-mail. Tím se však připravují o určité pohodlí, jelikož nejedna internetová služba dnes nabízí bohatší nástroje pro účel organizace skupin, než pouhou výměnu zpráv -- např. speciální stránky událostí, stránky pro sběr anketních odpovědí a další. Bylo by možné vytvořit aplikaci, která pomůže lidi efektivněji a pohodlněji organizovat z pohledu pořadatele, ale přitom nevnucuje žádnou konkrétní službu či nové uživatelské účty samotným členům skupiny?
 
-Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dnešní formy počítačem zprostředkovávané komunikace a existující groupware, následně pak pomocí průzkumu zjišťuje, jaký k nim mají uživatelé vztah. Ověřuje doměnku, že je potřeba výše nastíněný problém interoperability řešit, zabývá se teoretickou realizovatelností řešení a pokračuje návrhem implementace. V návrhu se zabývá praktickými možnostmi propojení různých komunikačních kanálů, z nichž vychází realizace ukázkové aplikace se zaměřením na správu událostí. Práce končí popisem tvorby této aplikace a zhodnocením jejího provozu.
+Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dnešní formy počítačem zprostředkovávané komunikace a existující groupware, následně pak pomocí průzkumu zjišťuje, jaký k nim mají uživatelé vztah. Ověřuje doměnku, že je potřeba výše nastíněný problém interoperability řešit, zabývá se teoretickou realizovatelností řešení a pokračuje návrhem implementace. V návrhu se věnuje praktickým možnostem propojení různých komunikačních kanálů, z nichž vychází realizace ukázkové aplikace se zaměřením na správu událostí. Práce končí popisem tvorby této aplikace a zhodnocením jejího provozu.
 
 
 
-\chapter{Motivace}\label{motivation}
-Potřebujeme-li organizovat skupinu lidí, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme sice využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se totiž neradi přizpůsobují nebo registrují do nových služeb \cite{grudin1994groupware} \cite{kunstova1999skupinova} a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook, několik jednotlivců přes e-maily a zbytek snad přes Google Kalendář.
-
-Pořadateli by v tomto případě jiste přišla vhod služba, která by u\-mož\-ňo\-va\-la komunikovat s lidmi uceleně přes několik kanálů. Služba centralizující organizaci, ale zachovávající svobodu jednotlivců rozhodnout se pro takový komunikační kanál, jenž vyhovuje jim. Organizátor by přes zmíněný \emph{velín} mohl psát svým kontaktům zprávy a udržovat historii diskuse, vytvářet jednoduché stránky se souhrnem dohodnutých informací, činit rozhodnutí na anketách, nebo zakládat \emph{stránky událostí}, u nichž by lidé mohli potvrdit či zamítnout účast.
-
-Přitom běžný účastník domluvy by používal nástroje, na jaké je zvyklý a do organizační služby by se nemusel nijak registrovat nebo přihlašovat. Jestliže má účet na Facebooku, mohl by s organizátorem komunikovat pro\-střed\-nic\-tvím tohoto kanálu, pokud mu vyhovuje Google se svým kalendářem nebo prosté e-maily, mohl by je použít zrovna tak.
-
-
-
-\chapter{Analýza způsobů organizace přes internet}\label{analysis}
+\chapter{Analýza současných způsobů organizace}\label{analysis}
 Je-li naším cílem umožnit organizaci lidí bez toho, že bychom jednotlivcům vnucovali jeden společný způsob komunikace přes internet, potřebujeme nejdříve zjistit, jaké služby a nástroje již dnes běžně používají. V následujících odstavcích jsou vysvětleny pojmy \emph{počítačem zprostředkovaná komunikace} a \emph{groupware}. Jsou rozebrány současné způsoby komunikace přes internet, existující webový groupware a z nich plynoucí možnosti organizace skupin lidí. Analýza je doplněna průzkumem mezi uživateli.
 
 
@@ -385,7 +376,7 @@ Tento průzkum měl za úkol zmapovat situaci na poli rychlých zpráv. Mezi už
 \subsubsection*{\textbf{Počítačová gramotnost a pohlaví}}
 Výsledky těchto dvou otázek jsou podrobněji rozebrány v \ref{attendance}.
 
-\subsection{Shrnutí výsledků dotazníku}
+\subsection{Shrnutí výsledků dotazníku}\label{pollResults}
 Bohužel v průzkumu chyběl dotaz na stáří jeho účastníků, takže se lze pouze domnívat, jaké mohlo být zkreslení výsledků z hlediska věkových skupin. Jak ale vysvětluji v \ref{attendance}, lze předpokládat, že odpovídajícími byli většinou lidé mezi 20--30 lety a to vysoce počítačově gramotní. Jelikož se u takové skupiny předpokládá vyšší adopce nových technologií, dalo by se očekávat, že budou výsledky inklinovat k využívání sociálních sítí a nejnovějších webových aplikací.
 
 Odpovědi však překvapivě často jakékoliv moderní způsoby počítačové domluvy zavrhují. Lidé nejraději využívají prosté e-maily a přímou osobní komunikaci. Facebook významně figuruje v mnoha výsledcích, ale kromě organizace událostí a sdílení fotek nikde nepřevažuje. Lze soudit, že u širšího vzorku, zahrnující i méně pokročilé nebo starší uživatele počítačů, by byla tendence využívat osobní setkání a e-maily ještě větší.
@@ -397,60 +388,154 @@ Na mnoha otázkách je možné pozorovat existenci jakési \uv{hranice užitečn
     \item[Komunikace zprostředkovaná počítačem] Organizace události, dohoda termínu, sdílení videa, sdílení fotografií, sdílení dokumentů, volání více lidem.
 \end{description}
 
-Celkový propad Basecampu a jiného groupware ve výsledcích zcela koresponduje s neochotou zájmových skupin organizovat se sofistikovaněji (viz \ref{noOrganization}).
+Taková kategorizace koreluje s výsledky výzkumu rozdílů mezi CMC a komunikací tváří v tvář \cite{bordia1997face}:
+
+\begin{itemize}
+    \item Dokončení úkolu trvá déle u skupin komunikujících skrze počítač.
+    \item Při práci na úkolu si skupiny využívající CMC vedou lépe ve fázi generování nápadů.
+    \item V daném časovém úseku produkují kolektivy komunikující přes počítač méně připomínek a komentářů.
+    \item U CMC je mezi členy rovnoměrněji rozložena účast na plnění úkolů.
+    \item Je-li na úkol stanoven omezený čas, dosahují skupiny užívající CMC lepších výsledků při činnostech, které vyžadují nízkou úroveň socio-emocionální interakce a současně horších výsledků tehdy, kdy je vyžadována vysoká úroveň takové interakce. Při dostatečném čase je však výkon srovnatelný.
+    \item V rámci CMC je redukován normativní sociální a mezilidský tlak.
+    \item Vnímání a uvědomování si spolupracovníků nebo úkolu je silnější u komunikace vedené osobně.
+\end{itemize}
+
+Lidé podvedomě tyto rozdíly vnímají a vybírají si takový způsob dorozumívání, který z jejich pohledu vede k nejjednoduššímu a nejrychlejšímu splnění cíle. Nikdo nechce trávit komunikací delší dobu než je nutné -- čas věnovaný např. čtení a posílání e-mailů lidé považují za ztracený.
+
+Nakonec celkový propad Basecampu a jiného groupware ve výsledcích zcela koresponduje s neochotou zájmových skupin organizovat se sofistikovaněji (viz \ref{noOrganization}).
 
 
 
-% vyhodnoceni zajimavych vysledku v oblasti CMC vs FtF
-% http://wiki.knihovna.cz/index.php?title=Computer_mediated_communication#Pou.C5.BEit.C3.A1_literatura
+\chapter{Formulace problému interoperability CMC systémů}\label{interoperabilityProblem}
+Původní tezí této práce je myšlenka, že potřebujeme-li organizovat skupinu lidí, např. při pořádání nějaké události nebo domluvě na společném rozhodnutí, staneme před problémem jak je systematicky kontaktovat a jak efektivně sdílet dohodnuté informace. Můžeme totiž využít e-mailů, instantních zpráv nebo sociálních sítí, ale brzy zjistíme, že taková komunikace je velmi roztříštěná -- lidé se neradi přizpůsobují nebo registrují do nových služeb a tak skončíme v situaci, kdy polovinu známých organizujeme přes Facebook, několik jednotlivců přes e-maily a zbytek snad přes Google Calendar.
+
+Na základě analýzy je možné existenci tohoto problému potvrdit:
+
+\begin{itemize}
+    \item Lidé se opravdu neradi zapojují do organizace a zvláště mimo firemní prostředí jsou poměrně nepřizpůsobiví. (vychází z mnoha částí analýzy, konkrétně \ref{criticalMass}, \ref{noOrganization}, \ref{optionsConclusion} a \ref{pollResults}).
+    \item Nástrojů určených pro volně organizované kolektivy mnoho není. Lze využít především Facebook (viz \ref{optionsConclusion}).
+    \item Ne každý má na Facebooku profil, i jeho uživatelé přes něj však řeší jen málo agend skupinové organizace (vyplývá z výsledků dotazníku \ref{pollResults}), jeho použití převažuje pouze u organizace událostí a sdílení fotek.
+\end{itemize}
+
+Pořadateli by v tomto případě jiste přišla vhod služba, která by u\-mož\-ňo\-va\-la komunikovat s lidmi uceleně přes několik kanálů. Služba centralizující organizaci, ale zachovávající svobodu jednotlivců rozhodnout se pro takový komunikační kanál, jenž vyhovuje jim. Organizátor by přes zmíněný \emph{velín} mohl psát svým kontaktům zprávy a udržovat historii diskuse, vytvářet jednoduché stránky se souhrnem dohodnutých informací, činit rozhodnutí na anketách, nebo zakládat stránky událostí, u nichž by lidé mohli potvrdit či zamítnout účast.
+
+Přitom běžný účastník domluvy by používal nástroje, na jaké je zvyklý a do organizační služby by se nemusel nijak registrovat nebo přihlašovat. Jestliže má účet na Facebooku, mohl by s organizátorem komunikovat pro\-střed\-nic\-tvím tohoto kanálu, pokud mu vyhovuje Google se svým kalendářem nebo prosté e-maily, mohl by je použít zrovna tak.
+
+Vyjdeme-li z myšlenky na takovou aplikaci, můžeme nastolit dvě hypotézy:
+
+\begin{itemize}
+    \item Lze vytvořit sjednocující systém, který by problém uvedený výše řešil.
+    \item Tento systém by měl smysl a lidé by jej používali.
+\end{itemize}
+
+Následující části této kapitoly se zabývají návrhy na ověření těchto hypotéz.
+
+\section{Realizovatelnost sjednocujícího systému}
+Abychom mohli sjednocovat různé způsoby CMC nebo funkce software podporujícího organizaci skupin, potřebujeme mezi nimi najít společné rysy. Je zapotřebí identifikovat elementární prvky komunikace a organizace, které se v určitých formách opakují napříč spektrem nástrojů a služeb, a jež bude možné vzájemně propojit.
+
+Jestliže takovéto elementární prvky existují a jejich integrace by byla teoreticky možná, je nutné následně ověřit, zda existují také praktické cesty jak toho docílit. V případě klasických způsobů počítačem zprostředkované komunikace se jedná o existenci a propojitelnost standardizovaných protokolů. U webových služeb je zapotřebí prozkoumat možnosti jejich API.
+
+Ani v případě existence takových rozhraní však nemusí být požadované propojení realizovatelné. Mohou se vyskytnout nejrůznější další překážky, které je potřeba odhalit -- v cestě mohou stát licenční podmínky, obtížná pochopitelnost uživatelského rozhraní, aj.
+
+\section{Smysluplnost sjednocujícího systému}
+V případě této hypotézy lze v mnohém vycházet ze závěrů již proběhlé analýzy.
+
+Ve firmách by sjednocující systém nacházel uplatnění ztěžka -- jeho silná stránka není pro podnikový ekosystém nijak zvláště zajímavá. Naopak, integrace komunikačních kanálů by pouze komplikovala všechny procesy. Mnohé nástroje, které v existujícím podnikovém groupware těží z jednotného prostředí, by navíc pravděpodobně ani nebylo možné v takovémto systému plnohodnotně zhotovit.
+
+Smysl by tedy uvedený systém měl především pro volně organizované, např. zájmové skupiny. Jejich požadavky by přímo naplňoval -- jak již bylo zmíněno v předchozích kapitolách, kolektiv organizovaný ad hoc je často nepřizpůsobivý a organizátor by tedy těžil z možnosti kontaktovat členy skupiny bez ohledu na jejich preference v oblasti CMC. Na druhou stranu, člen skupiny zde není povinován žádnému explicitnímu vytváření účtů, přihlašování, zaučování do nových nástrojů, zadávání dat nebo jiné součinnosti, jež by ho mohla obtěžovat. Vyvážení užitku pro manažera i členy je podle Johnatana Grudina velice důležité pro přijetí jakéhokoliv groupware \cite{grudin1994groupware}.
+
+Jasná cílová skupina a vycházení vstříc jejím požadavkům ale není jedinou podmínkou pro smysluplnost takového systému. Je nutné se zamyslet rovněž nad užitečností. Pro jaké úkoly má smysl vůbec sjednocující systém tvořit? Jak víme z výsledků dotazníku \ref{pollResults}, lidé se k CMC vůbec neuchylují, pokud řeší velice jednoduchý problém, nebo je-li jejich kolektiv dostatečně malý. Je vhodné na základě vykonaného průzkumu vyřadit takové funkce, které by groupware řešil s horší pružností, než rychlý telefonát nebo dvě věty při osobním setkání. Jedinou obhajobou pro jejich existenci je využití skupinami, jež jsou geograficky odděleny, nebo víra, že systém je schopen je natolik zjednodušit, že posune onu hranici užitečnosti.
 
 
 
-
-
-
-
-\chapter{Problém interoperability systémů určených ke komunikaci}\label{interoperabilityProblem}
-% formulace problému
-% smysluplnost a uzitecnost nastroju, proc je to potrebne (vychazi z vysledku pruzkumu)
-% proc pro normalni lidi ne ale pro organizatory ano
-
+\chapter{Ověření realizovatelnosti a užitečnosti integrace}
 
 \section{Identifikace elementárních prvků komunikace}\label{communicationElements}
+
 % Podkapitola se snaží rozložit jednotlivé způsoby komunikace na elementární
 % prvky jako např. zpráva, vlákno, rozhodnutí, aj., které mají potenciál být
 % integrovány (např. události na Facebooku a záznamy v Google Kalendáři).
 
+asynchronní zpráva (jednomu, mnoha)
 
-\section{Realizovatelnost}\label{realizability}
-% z tohoto vyjde hypotéza, že by šlo vytvořit sjednocující systém
+synchronní zpráva (jednomu, mnoha)
 
-\subsection{Spojení synchronní a asynchronní komunikace}\label{syncAsync}
-Jako zajímavý příklad netradičního spojení v rámci CMC může posloužit Google Talk, který využívá svou sesterskou e-mailovou službu Gmail k doručení rychlé zprávy, není-li příjemce k dispozici (\emph{doručování offline zpráv}, \cite{lindberg2006offline}). Gmail na druhou stranu archivuje historii konverzací z Google Talk a uživateli je zpřístupňuje jakoby to byly e-mailové zprávy. Podobný způsob integrace asynchronních zpráv se synchronními lze vypozorovat také u sociální sítě Facebook, která se rovněž snaží stále více oba koncepty sbližovat. Uživateli je v takovém případě nabízeno různé rozhraní (jak e-mailové, tak v podobě rychlých zpráv), ale společný archiv vedené komunikace.
+obecná anketa
+
+anketa na termín
+
+událost
+
+dokument, soubor
+
+kontakt
+
+úkol
+
+\section{Praktické možnosti propojení}\label{practicalOptions}
+
+% \subsection{Spojení synchronní a asynchronní komunikace}\label{syncAsync}
+% Jako zajímavý příklad netradičního spojení v rámci CMC může posloužit Google Talk, který využívá svou sesterskou e-mailovou službu Gmail k doručení rychlé zprávy, není-li příjemce k dispozici (\emph{doručování offline zpráv}, \cite{lindberg2006offline}). Gmail na druhou stranu archivuje historii konverzací z Google Talk a uživateli je zpřístupňuje jakoby to byly e-mailové zprávy. Podobný způsob integrace asynchronních zpráv se synchronními lze vypozorovat také u sociální sítě Facebook, která se rovněž snaží stále více oba koncepty sbližovat. Uživateli je v takovém případě nabízeno různé rozhraní (jak e-mailové, tak v podobě rychlých zpráv), ale společný archiv vedené komunikace.
+
+e-mail (gmail) + facebook messages
+
+skupinový e-mail + google groups + skupinová facebook message, facebook groups (group mail)
+
+jabber + gtalk + facebook chat + (icq, aim, windows live, yahoo, myspace, gadu-gadu, skype chat, ...)
+
+jabber conference + gtalk conference + skupinový facebook chat, facebook groups
+
+facebook questions (group) + e-mail
+
+facebook questions (group) + appointment slots + doodle + e-mail
+
+facebook event, facebook groups event + srazy event + google cal event + lanyrd event + linkedin + e-mail
+
+facebook message attachment + facebook group docs + writeboard + wiki + e-mail attachment + flickr + picasa + vimeo + youtube + ...
+
+facebook friend + google contact + twitter contact + csv + vcard + linkedin contact
+
+rtm + google tasks + e-mail
+
+\section{Užitečnost jednotlivých funkcí}\label{utility}
+
+viz \url{https://docs.google.com/spreadsheet/ccc?key=0AslWC4m8bQgYdHN3blFhcjNORk1hVmFlQmxkY05CQVE&pli=1#gid=0}
+
+\section{Shrnutí}
+
+bla bla, dopadlo to tak a tak, smysl má dělat toto, toto, toto, zbytek je na prd z různých důvodů...
 
 
-\chapter{Specifikace požadavků a návrh řešení}
+
+\chapter{Specifikace požadavků na ukázkovou aplikaci}
 % Cílem této části je shrnout výzkum předešlých dvou kapitol a rámcově navrhnout řešení aplikace. Výsledkem této kapitoly by měla být především specifikace zadání, jeho doplnění, konkretizace toho co přesně bude implementováno v aplikaci a proč právě to (cílení projektu, realizovatelnost, apod.).
 
-\section{Požadavky na aplikaci}
 
-\section{Praktické možnosti propojení různých komunikačních kanálů}
 
-\section{Revize požadavků}
-
-\section{Návrh systému pro správu událostí}
+\chapter{Návrh nástroje pro správu událostí}
 % Přesný popis návrhu systému.
-
 % Zadaný problém by šel řešit tak a nebo tak, já k němu přistoupím tímto způsobem, protože na zvolené platformě je to nejefektivnější. Rozhodl jsem se. Vymyslel jsem. Rozvrhl jsem. Vypočítal jsem. Odvodil jsem. Zjednodušil jsem. Vylepšil jsem. Navrhl jsem. Zjistil jsem. Vyzkoumal jsem.
 
+\section{Integrované služby}
+
+\section{Struktura webové aplikace}
+
+\section{Uživatelské rozhraní}
+
+\section{Specifika práce s API}
+
+\section{Databáze}
 
 
-\chapter{Implementace nástroje pro nezávislou správu událostí}
+
+\chapter{Implementace nástroje pro správu událostí}
 % Pro implementaci jsem zvolil ty a ty nástroje, celý systém rozvrhl do takových modulů. Naprogramoval jsem. Posbíral jsem data. Pustil jsem to. Výsledky jsou takové. Je to tak a tak rychlé.
 % Popis výsledné implementace. Část kapitoly by se měla zaměřit na výběr zajímavých problémů, na které se při implementaci narazilo, spolu s jejich řešeními.
 
 \section{Použité technologie}
 % Zde by mělo být popsáno a rozebráno jaké nástroje a služby budou použity pro implementaci aplikace. U každého nástroje či služby by mělo být stručně vysvětleno k čemu slouží a z jakého důvodu došlo k výběru.
+
+\section{Detaily řešení vybraných problémů}
 
 \section{Vývoj a testování}
 % STRUČNÁ zpráva o tom jak probíhal vývoj aplikace (systém správy verzí, aj.) a jak byla testována (na kterých prohlížečích, platformách, co bylo testováno, co testováno nebylo a proč, unit testy, apod.).
@@ -459,12 +544,11 @@ Jako zajímavý příklad netradičního spojení v rámci CMC může posloužit
 
 \chapter{Zkušenosti z provozu}
 % Pokud dojde na včasné spuštění služby, bylo by možno napsat kapitolu o zkušenostech z jejího provozu. Systém může být skvěle naprogramovaný, ale nakonec se např. přijde na to, že lidé stejně mají nějaké zábrany jej z určitých důvodů používat (viz Google Wave). V takovém případě lze v této části navrhnout nějaké změny, které by mohly kladnému přijetí pomoci.
-
 % Výsledek je takhle rychlý, má takovou úspěšnost a reakce uživatelů jsou takové a takové.
 
 
 
-\chapter*{Závěr}
+\chapter{Závěr}
 % Jak píše docent Adam Herout: \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/} nebo \url{http://www.herout.net/blog/2012/03/struktura-diplomove-prace/}.
 
 % Se závěrem se to má podobně jako s úvodem: má se vejít na 1/2 – 1 stranu, nemá být strukturovaný a má práci shrnout, uzavřít, zhodnotit. U školní práce je rozumné v závěru reagovat na zadání a shrnout bod po bodu, že byl splněn a kterou kapitolou práce (ovšem nenásilně – nikoli například odrážkami). Recenzent čte závěr na konci a závěr tedy z velké části utváří dojem zanechaný prací pro hodnocení – nechte si na něm záležet.
