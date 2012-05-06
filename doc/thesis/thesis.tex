@@ -471,7 +471,7 @@ Na základě výše vedené podrobné analýzy lze jednotlivé formy dorozumív�
     \item[Asynchronní zpráva více lidem]
         Tatáž zpráva, ale s více příjemci. Může mít nejen ad hoc charakter, ale i trvalejší podobu, kdy jsou příjemci přímo zaregistrováni k odebírání. Představitelé: e-mail s více příjemci, Facebook Messages s více příjemci, Google Groups, Usenet, webová fóra aj. diskusní skupiny. Částečně by zde šlo zařadit i veřejné zprávy na Twitteru.
 
-    \item[Synchronní zpráva více lidem]
+    \item[Synchronní zpráva jednomu člověku]
         Krátká zpráva mezi dvěma lidmi, při níž si musí být oba k dispozici v tentýž čas. Představitelé: jakýkoliv instant messaging, tedy i Facebook Chat, Google Talk, Skype Chat, a další.
 
     \item[Synchronní zpráva více lidem]
@@ -497,29 +497,59 @@ Existence takovýchto elementárních prvků je tedy ověřena a dává naději,
 
 
 \section{Praktické možnosti propojení}\label{practicalOptions}
+Úkolem této části je odpovědět na otázku, zda je možné všechny výše zmíněné prvky komunikace propojit i v praxi a do jaké míry. Jednotlivé oddíly podrobně rozpracovávají každý z případů vzájemné integrace a hledají řešení, které bere největší ohledy na přirozenost a zřejmost používání. Jsou odhalovány a osvětlovány obstrukce, pro které nelze propojení realizovat.
 
-% \subsection{Spojení synchronní a asynchronní komunikace}\label{syncAsync}
-% Jako zajímavý příklad netradičního spojení v rámci CMC může posloužit Google Talk, který využívá svou sesterskou e-mailovou službu Gmail k doručení rychlé zprávy, není-li příjemce k dispozici (\emph{doručování offline zpráv}, \cite{lindberg2006offline}). Gmail na druhou stranu archivuje historii konverzací z Google Talk a uživateli je zpřístupňuje jakoby to byly e-mailové zprávy. Podobný způsob integrace asynchronních zpráv se synchronními lze vypozorovat také u sociální sítě Facebook, která se rovněž snaží stále více oba koncepty sbližovat. Uživateli je v takovém případě nabízeno různé rozhraní (jak e-mailové, tak v podobě rychlých zpráv), ale společný archiv vedené komunikace.
+\subsection{Spojení synchronní a asynchronní komunikace}\label{syncAsync}
+Jako zajímavý příklad realizace netradičního spojení v rámci CMC může posloužit Google Talk, který využívá svou sesterskou e-mailovou službu Gmail k doručení rychlé zprávy, není-li příjemce k dispozici (\emph{doručování offline zpráv}, \cite{lindberg2006offline}). Gmail na druhou stranu archivuje historii konverzací z Google Talk a uživateli je zpřístupňuje jakoby to byly e-mailové zprávy. Podobný způsob integrace asynchronních zpráv se synchronními lze vypozorovat také u sociální sítě Facebook, která se rovněž snaží stále více oba koncepty sbližovat. Uživateli je v takovém případě nabízeno různé rozhraní (jak e-mailové, tak v podobě rychlých zpráv), ale společný archiv vedené komunikace.
 
-e-mail (gmail) + facebook messages
+\subsection{Plošná integrace}
+Cílem sjednocujícího systému je plošná integrace. Následující příklad ji demonstruje na asynchronních zprávách.
 
-skupinový e-mail + google groups + skupinová facebook message, facebook groups (group mail)
+Organizátor odešle zprávu z integrujícího systému a očekává, že přijde kontaktům z LinkedIn jako tamnější soukromá zpráva, přátelům z Facebooku jako jedna z Messages a e-mailovým adresátům jako běžný e-mail. Uživatel z Facebooku, LinkedIn, nebo e-mailu pak na tuto zprávu odpoví zcela přirozeně v prostředí těchto služeb, text je doručen zpět do systému a rozeslán všem zúčastněným opět jako jimi preferovaný typ zprávy.
 
-jabber + gtalk + facebook chat + (icq, aim, windows live, yahoo, myspace, gadu-gadu, skype chat, ...)
+K takovému propojení je zapotřebí, aby organizátor do systému importoval své kontakty ze zapojených služeb a povolil aplikaci ovládání svých účtů na těchto službách. Jedině tak má totiž systém možnost jednat za něj a např. přijímat zprávy od ostatních, nic netušících uživatelů.
 
-jabber conference + gtalk conference + skupinový facebook chat, facebook groups
+Takovýto požadavek ovšem skýtá problémy -- organizátor nemusí souhlasit s tím, že má nějaký systém moc nad jeho osobním účtem např. na Facebooku, kde je často neveřejně uloženo mnoho privátních informací, zvláště potom v soukromých zprávách.
 
-facebook questions (group) + e-mail
+Aby mohlo být dosaženo takovéto plošné integrace, musí také iniciátor diskuse sám určit typ kontaktu při výběru příjemců. Importuje-li tedy přátele z Facebooku a kontakty z e-mailu, nesmí se tyto nijak sloučit v případě, že se v nich vyskytují tytéž osoby. Naopak, měly by být viditelně odděleny a u diskusí musí být organizátorovi jasno, jestli s konkrétním člověkem komunikuje přes Facebook nebo e-mail. Organizátor totiž sám nejlépe ví, na jakém kanále zastihne kolegu -- toto nelze určit žádným algoritmem.
 
-facebook questions (group) + appointment slots + doodle + e-mail
+\subsection{Asynchronní zpráva jednomu člověku}
+Pro člověka, který nepoužívá žádnou z moderních webových aplikací, je tato zpráva de facto ztotožnitelná s e-mailem. Je-li tedy úkolem oslovit co nejširší uživatelskou základnu, musíme ostatní služby integrovat s touto tradiční formou CMC. Mnohé z nich to již dělají -- např. Facebook dokáže za určitého nastavení e-mailové zprávy odesílat i přijímat a i mnohé jiné aplikace e-maily chápou jako \uv{prodlouženou ruku} svých interních zpráv mezi uživateli. Přes tato e-mailová upozornění ovšem nelze moc dobře integrovat zprávy plošně, takže je zapotřebí mít k nim přímý přístup přes API.
 
-facebook event, facebook groups event + srazy event + google cal event + lanyrd event + linkedin + e-mail
+% tady odsud to pisu jako clovek a potom to prepisu, nasrat
 
-facebook message attachment + facebook group docs + writeboard + wiki + e-mail attachment + flickr + picasa + vimeo + youtube + ...
+\begin{description}
+    \item[Funkce zapojených služeb]
 
-facebook friend + google contact + twitter contact + csv + vcard + linkedin contact
 
-rtm + google tasks + e-mail
+    \item[Reálné možnosti propojení]
+
+\end{description}
+
+\subsection{Asynchronní zpráva více lidem}
+% skupinový e-mail + google groups + skupinová facebook message, facebook groups (group mail)
+
+\subsection{Synchronní zpráva jednomu člověku}
+% jabber + gtalk + facebook chat + (icq, aim, windows live, yahoo, myspace, gadu-gadu, skype chat, ...)
+
+\subsection{Synchronní zpráva více lidem}
+% jabber conference + gtalk conference + skupinový facebook chat, facebook groups
+
+\subsection{Obecná anketa}
+% facebook questions (group) + e-mail
+
+\subsection{Anketa na termín}
+% facebook questions (group) + appointment slots + doodle + e-mail
+
+\subsection{Událost}
+% facebook event, facebook groups event + srazy event + google cal event + lanyrd event + linkedin + e-mail
+
+\subsection{Kontakt}
+% facebook friend + google contact + twitter contact + csv + vcard + linkedin contact
+
+\subsection{Úkol}
+% rtm + google tasks + e-mail
+
 
 \section{Užitečnost jednotlivých funkcí}\label{utility}
 
