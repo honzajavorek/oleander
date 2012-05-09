@@ -46,6 +46,39 @@ class EmailContactData(DataSet):
         user = UserData.honza
         email = 'zncyr@frmanz.pm'.decode('rot13')
 
+    class vasar:
+        name = 'Vasar'
+        user = UserData.honza
+        email = 'infne@frmanz.pm'.decode('rot13')
+
+    class milan:
+        name = u'Milča'
+        user = UserData.honza
+        email = 'zxbyvafxl@pragehz.pm'.decode('rot13')
+
+
+class GoogleContactData(DataSet):
+
+    class peta:
+        name = u'Peťa'
+        user = UserData.honza
+        email = 'cna.inpun@tznvy.pbz'.decode('rot13')
+
+    class misa:
+        name = u'Míša'
+        user = UserData.honza
+        email = 'cna.firp@tznvy.pbz'.decode('rot13')
+
+    class baki:
+        name = 'Baki'
+        user = UserData.honza
+        email = 'cna.onxrf@tznvy.pbz'.decode('rot13')
+
+    class ja:
+        name = 'Honza'
+        user = UserData.honza
+        email = 'wna.wniberx@tznvy.pbz'.decode('rot13')
+
 
 class EventData(DataSet):
 
@@ -58,5 +91,6 @@ class EventData(DataSet):
 all_data = (
     UserData,
     EmailContactData,
+    GoogleContactData,
     EventData,
 )

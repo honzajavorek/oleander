@@ -45,7 +45,7 @@
                     {% endfor %}
                 {% else %}
                     {% for error in field_errors %}
-                        <li><strong>{{ field_name.capitalize() }}</strong> {{ error }}</li>
+                        <li><strong>{{ field_name|capitalize }}</strong> {{ error }}</li>
                     {% endfor %}
                 {% endif %}
             {% endfor %}
@@ -80,7 +80,7 @@
                     {{ contact.identifier }}
                 {% endif %}
             </span>
-            <span class="type">{{ contact.label|lower }}</span>
+            <span class="type">{{ contact.label|capitalize }}</span>
         </div>
         {% if link and link_label %}
         <div class="icons">

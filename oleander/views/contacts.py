@@ -5,7 +5,13 @@ from flask import render_template, redirect, url_for
 from flask.ext.login import login_required, current_user
 from oleander import app, db
 from oleander.forms import EmailContactForm
-from oleander.models import Contact, EmailContact
+from oleander.models import Contact, GoogleContact, EmailContact
+
+
+def email_contact_factory(email):
+    if email.endswith('gmail.com', 'googlemail.com'):
+        return GoogleContact()
+    return EmailContact()
 
 
 @app.route('/contacts/', methods=('GET', 'POST'))
@@ -16,7 +22,7 @@ def contacts():
 
     if form.validate_on_submit():
         with db.transaction as session:
-            contact = EmailContact()
+            contact = email_contact_factory(form.email.data)
             form.populate_obj(contact)
             contact.user = current_user
             session.add(contact)

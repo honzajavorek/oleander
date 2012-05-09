@@ -23,6 +23,9 @@ $header-height: 60px;
 $logo-width: 150px;
 $spacing: 20px;
 $avatar-size: 50px;
+$google-color: #D14836;
+$facebook-color: #133783;
+$email-color: #1F273E;
 
 
 /* Links */
@@ -441,13 +444,29 @@ $contact-width: 250px;
     span { display: block; font-size: 90%; }
     strong, span { overflow: hidden; width: $width - (3 * $padding) - $avatar-size; }
 
+    .type {
+        display: block;
+        width: $avatar-size;
+        text-align: center;
+        font-size: 75%;
+        position: absolute;
+        overflow: hidden;
+        padding: 0 0 0.2em 0;
+        left: $padding; bottom: $padding + ($padding / 10);
+        color: #FFF;
+    }
+
+    &.google .type { background: $google-color; }
+    &.facebook .type { background: $facebook-color; }
+    &.email .type { background: $email-color; }
+
     &.highlighted {
         background: $mark-color;
     }
 }
 
 
-/* Groups, topics, messages */
+/* Events */
 
 .events_list {
     margin: 2 * $spacing 0;
