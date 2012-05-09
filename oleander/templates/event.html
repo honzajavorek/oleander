@@ -2,71 +2,157 @@
 {% from '_macros.html' import form_errors, contact_box, button_link, small_contact %}
 
 
+{% block title -%}
+    {{- event.name }}{% if current_user.is_authenticated() %} - Oleander{% endif -%}
+{%- endblock %}
+
+
+{% block header %}
+    {% if current_user.is_authenticated() %}{{ super() }}{% endif %}
+{% endblock %}
+
+
+{% block footer_contents %}
+    {% if current_user.is_anonymous() %}
+        <p>powered by {{ event.user.name }}'s {{ nav_link('index', 'Oleander') }}</p>
+    {% endif %}
+    {{ super() }}
+{% endblock %}
+
+
 {% block content %}
+{% if current_user.is_authenticated() %}
 <p class="breadcrumbs">
     <a href="{{ url_for('events') }}">Events</a> &raquo; {{ event.name }}
 </p>
+{% endif %}
 
-{% if action == 'edit' %}
-    <form action="{{ url_for('event', action='edit', id=event.id) }}" method="post">
-        {{ form_errors(form) }}
+<div class="event">
+<h1>{{ event.name }}</h1>
 
-        <h1>{{ form.name(placeholder=form.name.label.text) }}</h1>
-        <p><a href="{{ url_for('event', id=event.id) }}">Cancel</a> or <button type="submit">Save</button></p>
+{% if current_user.is_authenticated() %}
+<div class="action_area">
+    <p>{{ button_link(url_for('edit_event', id=event.id), 'Edit event details') }}</p>
+</div>
+{% endif %}
 
-        <h4>Members</h4>
-        {{ form.contact_ids_str() }}
-        <ul id="members">
-            {% for contact in event.contacts %}
-                <li>{% include '_contact.html' %}</li>
+<table>
+    <tr>
+        <th><label>When</label></th>
+        <td>
+            {% if event.starts_at %}
+                {{ event.starts_at|datetime }}
+            {% else %}
+                unknown (yet)
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th><label>Where</label></th>
+        <td>
+            {% if event.venue %}
+                {{ event.venue.name }} <small><a href="{{ event.venue.name|map_link }}" target="_blank">on map</a></small>
+            {% else %}
+                unknown (yet)
+            {% endif %}
+        </td>
+    </tr>
+    {% if event.description %}
+    <tr>
+        <th><label>What</label></th>
+        <td>
+            {{ event.description }}
+        </td>
+    </tr>
+    {% endif %}
+</table>
+
+<h2>Attendance</h2>
+<div class="attendance_group">
+{% set yes_contacts = event.contacts_maybe|list %}
+{% set yes_contacts_count = yes_contacts|length %}
+
+{% set maybe_contacts = event.contacts_maybe|list %}
+{% set maybe_contacts_count = maybe_contacts|length %}
+
+{% set no_contacts = event.contacts_maybe|list %}
+{% set no_contacts_count = no_contacts|length %}
+
+{% if attendance_group == 'maybe' %}
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('event', id=event.id, attendance_group='yes') }}">{{ yes_contacts_count }} going</a></li>
+            <li class="active"><h3>{{ maybe_contacts_count }} maybe</h3></li>
+            {% if no_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='no') }}">{{ no_contacts_count }} declined</a></li>{% endif %}
+        </ul>
+    </nav>
+
+    {% if maybe_contacts %}
+        <ul class="contacts_list">
+            {% for contact in maybe_contacts %}
+                <li>{{ contact_box(contact) }}</li>
             {% endfor %}
         </ul>
-        <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
-        <ul id="members-search-results"></ul>
+        <br class="cleaner">
+    {% else %}
+        <p>Nobody.</p>
+    {% endif %}
 
-        {{ form.csrf_token }}
-    </form>
+{% elif attendance_group == 'no' %}
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('event', id=event.id, attendance_group='yes') }}">{{ yes_contacts_count }} going</a></li>
+            {% if maybe_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='maybe') }}">{{ maybe_contacts_count }} maybe</a></li>{% endif %}
+            <li class="active"><h3>{{ no_contacts_count }} declined</h3></li>
+        </ul>
+    </nav>
+
+    {% if no_contacts %}
+        <ul class="contacts_list">
+            {% for contact in no_contacts %}
+                <li>{{ contact_box(contact) }}</li>
+            {% endfor %}
+        </ul>
+        <br class="cleaner">
+    {% else %}
+        <p>Nobody.</p>
+    {% endif %}
+
 {% else %}
-    <h1>{{ event.name }}</h1>
-    <p class="icons">
-        <a class="icon" href="{{ url_for('event', action='edit', id=event.id) }}" title="Edit event details, adjust members">Edit</a>
-    </p>
+    {% if yes_contacts_count or maybe_contacts_count or no_contacts_count %}
+    <nav>
+        <ul>
+            <li class="active"><h3>{{ yes_contacts_count }} going</h3></li>
+            {% if maybe_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='maybe') }}">{{ maybe_contacts_count }} maybe</a></li>{% endif %}
+            {% if no_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='no') }}">{{ no_contacts_count }} declined</a></li>{% endif %}
+        </ul>
+    </nav>
+    {% endif %}
 
-    {% with contacts = event.contacts|list %}
-        {% if contacts %}
-            <ul class="contacts_list">
-                {% for contact in contacts %}
-                    <li>{{ contact_box(contact) }}</li>
-                {% endfor %}
-            </ul>
-            <br class="cleaner">
-        {% else %}
-            <p>Empty event.</p>
-        {% endif %}
-    {% endwith %}
-{% endif %}
-
-{% if not action %}
+    {% if current_user.is_authenticated() %}
     <div class="action_area">
-        <p>{{ button_link(url_for('new_topic', event_id=event.id), 'Start a new topic') }}</p>
+        {% with invite_link = '#' %}
+            {% if yes_contacts %}
+                <p>{{ button_link(invite_link, 'Invite more contacts') }}</p>
+            {% else %}
+                <p>{{ button_link(invite_link, 'Invite contacts') }}</p>
+            {% endif %}
+        {% endwith %}
     </div>
-    <table class="topics_list">
-    {% for topic in event.topics %}
-        <tr class="topic">
-            <th class="legend"><a href="{{ url_for('topic', id=topic.id, event_id=event.id) }}">{{ topic.subject }}</a></th>
-            <td>
-                {% for contact in topic.contacts %}
-                    {{ small_contact(contact, size=20) }}
-                {% endfor %}
-            </td>
-            <td title="Last updated">
-                {{ topic.updated_at|datetime }}
-            </td>
-            <td title="Messages">
-                <strong>{{ topic.messages|list|length }}</strong>
-            </td>
-        </tr>
-    {% endfor %}
-    </table>
+    {% endif %}
+
+    {% if yes_contacts %}
+        <ul class="contacts_list">
+            {% for contact in yes_contacts %}
+                <li>{{ contact_box(contact) }}</li>
+            {% endfor %}
+        </ul>
+        <br class="cleaner">
+    {% else %}
+        <p>Nobody.</p>
+    {% endif %}
+
 {% endif %}
+</div>
+</div>
 {% endblock %}

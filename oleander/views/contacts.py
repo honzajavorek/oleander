@@ -9,7 +9,7 @@ from oleander.models import Contact, GoogleContact, EmailContact
 
 
 def email_contact_factory(email):
-    if email.endswith('gmail.com', 'googlemail.com'):
+    if email.endswith(('gmail.com', 'googlemail.com')):
         return GoogleContact()
     return EmailContact()
 

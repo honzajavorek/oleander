@@ -60,7 +60,7 @@
 {%- endmacro %}
 
 
-{% macro contact_box(contact, term=None, link=None, link_label=None, link_title=None) %}
+{% macro contact_box(contact, term=None, link=None, link_label=None, link_title=None, hide_identifier=False) %}
     {#- Contaxt box. If searched term given, marks it with HTML5 <mark> element. -#}
 
     <div class="contact_box">
@@ -73,13 +73,15 @@
                     {{ contact.name }}
                 {% endif %}
             </strong>
-            <span class="identifier">
-                {% if term %}
-                    {{ contact.identifier|mark(term, pattern='^%(term)s') }}
-                {% else %}
-                    {{ contact.identifier }}
-                {% endif %}
-            </span>
+            {% if not hide_identifier %}
+                <span class="identifier">
+                    {% if term %}
+                        {{ contact.identifier|mark(term, pattern='^%(term)s') }}
+                    {% else %}
+                        {{ contact.identifier }}
+                    {% endif %}
+                </span>
+            {% endif %}
             <span class="type">{{ contact.label|capitalize }}</span>
         </div>
         {% if link and link_label %}

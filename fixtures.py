@@ -4,6 +4,8 @@
 from fixture import DataSet, SQLAlchemyFixture
 from fixture.style import NamedDataStyle
 import oleander.models as models
+import times
+from datetime import timedelta
 
 
 def install(session, *datasets):
@@ -15,6 +17,9 @@ def install(session, *datasets):
 
 # emails are rot13 encoded not to be readable by spamming bots
 # (who knows where this source code can appear once)
+
+
+now = times.now()
 
 
 class UserData(DataSet):
@@ -83,9 +88,14 @@ class GoogleContactData(DataSet):
 class EventData(DataSet):
 
     class happyevent:
-        name = 'Happy Event'
+        name = u'Happy Event'
+        description = u'Happy event for happy people!'
+        venue = models.Venue(name='Kaverna, Brno', lat=49.19921, lng=16.60208)
         user = UserData.honza
         contacts = [EmailContactData.zuzejk, EmailContactData.maple]
+        created_at = now
+        updated_at = now
+        starts_at = now + timedelta(days=5, hours=5)
 
 
 all_data = (

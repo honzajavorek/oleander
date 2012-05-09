@@ -451,7 +451,7 @@ $contact-width: 250px;
         font-size: 75%;
         position: absolute;
         overflow: hidden;
-        padding: 0 0 0.2em 0;
+        padding: 1px 0 2px 0;
         left: $padding; bottom: $padding + ($padding / 10);
         color: #FFF;
     }
@@ -481,6 +481,55 @@ $contact-width: 250px;
 
     table {
         margin: $spacing 0;
+    }
+
+    th, td {
+        padding: $spacing / 2;
+
+        small { margin-left: $spacing / 2; }
+    }
+
+    th {
+        min-width: 40%;
+    }
+}
+
+.attendance_group {
+    padding-bottom: $spacing;
+
+    nav li, nav h3 {
+        display: inline;
+        padding: 0; margin: 0;
+    }
+
+    nav {
+        $li-vertical-padding: ($spacing / 4);
+
+        text-align: right;
+        border-bottom: 1px solid $decorative-grey-color;
+        margin: (-1.5 * $spacing) 0 $spacing 0;
+        padding-right: ($spacing / 4);
+
+        li {
+            border: 1px solid $decorative-grey-color;
+            border-bottom: none;
+            padding: $li-vertical-padding ($li-vertical-padding * 2);
+            border-radius: 3px 3px 0 0;
+            position: relative; bottom: $li-vertical-padding;
+            background: #FFF;
+        }
+
+        li.active {
+            border-bottom: none;
+            bottom: $li-vertical-padding - 1;
+        }
+    }
+
+    .action_area {
+        #content & {
+            width: auto;
+            position: static;
+        }
     }
 }
 

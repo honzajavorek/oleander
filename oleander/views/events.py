@@ -39,6 +39,7 @@ def events(action=None, id=None):
 
 @app.route('/events/search-contacts/<string:term>')
 @ajax_only
+@login_required
 def search_contacts(term):
     contacts = []
     for contact in current_user.search_contacts(term, limit=6):
@@ -59,19 +60,26 @@ def delete_event(id):
     return redirect(url_for('events'))
 
 
-@app.route('/event/<int:id>')
-@app.route('/event/<any(edit):action>/<int:id>', methods=('GET', 'POST'))
+@app.route('/event/<int:id>', defaults={'attendance_group': 'yes'})
+@app.route('/event/<int:id>/rsvp/<any(maybe,no):attendance_group>')
+def event(id, attendance_group):
+    """Public event page."""
+    event = Event.fetch_or_404(id)
+    return render_template('event.html', event=event, attendance_group=attendance_group)
+
+
+@app.route('/event/edit/<int:id>', methods=('GET', 'POST'))
 @login_required
-def event(id, action=None):
-    """Event page."""
+def edit_event(id):
+    """Event editing."""
     event = current_user.event_or_404(id)
-    form = EventForm(obj=event) if action else None
+    form = EventForm(obj=event)
 
     if form and form.validate_on_submit():
         with db.transaction as session:
             form.populate_obj(event)
         return redirect(url_for('event', id=id))
 
-    return render_template('event.html', event=event, action=action, form=form)
+    return render_template('edit_event.html', event=event, action='edit', form=form)
 
 

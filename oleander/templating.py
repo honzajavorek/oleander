@@ -5,6 +5,7 @@ from oleander import app
 from flask.ext.login import current_user
 from jinja2 import Markup
 import re
+import urllib2
 import times
 
 
@@ -18,8 +19,13 @@ def mark(s, term, pattern=r'%(term)'):
 @app.template_filter('datetime')
 def datetime(dt):
     """Formats datetime objects."""
-    # TODO dynamic datetime formatting (see how Gmail does it)
-    return times.format(dt, current_user.timezone or app.config['DEFAULT_TIMEZONE'], '%H:%M')
+    return times.format(dt, getattr(current_user, 'timezone', app.config['DEFAULT_TIMEZONE']), '%x, %H:%M')
+
+
+@app.template_filter('map_link')
+def map_link(place_name):
+    """Returns URL to maps."""
+    return 'https://maps.google.com/maps?q=' + urllib2.quote(place_name)
 
 
 from oleander.letters import groupby as groupby_alphabet

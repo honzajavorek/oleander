@@ -4,15 +4,17 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}{% endblock %}Oleander</title>
+        <title>{% block title %}Oleander{% endblock %}</title>
         <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"></link>
         <script src="{{ url_for('static', filename='js/modernizr-2.5.3.js') }}"></script>
     </head>
 <body>
     <div id="document">
+        {% block header %}
         <header class="top_bar">
             <h1>{{ nav_link('index', 'Oleander') }}</h1>
         </header>
+        {% endblock %}
         <div id="content">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -42,9 +44,11 @@
             </aside>
         {% endif %}
         <footer>
+            {% block footer_contents %}
             <p>&copy;2012 <a href="http://www.honzajavorek.cz">Honza Javorek</a></p>
             <p>Master's thesis project from <a href="http://www.fi.muni.cz">FI MU</a></p>
             <p><a href="https://github.com/honzajavorek/oleander">Oleander grew on GitHub</a></p>
+            {% endblock %}
         </footer>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>

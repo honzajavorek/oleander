@@ -7,6 +7,7 @@ from random import choice
 import hashlib
 import string
 import operator
+from datetime import timedelta
 
 
 class GravatarMixin(object):
@@ -75,6 +76,9 @@ class User(db.Model, UserMixin, GravatarMixin):
         """Returns user's event by given ID or aborts the request."""
         return self.events.filter(Event.id == id).first_or_404()
 
+    def __repr__(self):
+        return '<User %r (%r)>' % (self.name, self.email)
+
 
 class ContactMixin(object):
     """Mixin for all contacts."""
@@ -93,6 +97,9 @@ class ContactMixin(object):
 
     def __hash__(self):
         return hash(self.identifier)
+
+    def __repr__(self):
+        return '<%s %r (%r)>' % (self.__class__.__name__, self.name, self.identifier)
 
 
 class UserContact(ContactMixin):
@@ -218,18 +225,55 @@ attendance = db.Table('attendance',
 )
 
 
+class Venue(object):
+    """Simple data container representing an event's venue."""
+
+    def __init__(self, name=None, lat=None, lng=None):
+        self.name = name
+        self.lat = lat
+        self.lng = lng
+
+    @property
+    def coords(self):
+        return (self.lat, self.lng)
+
+    @coords.setter
+    def coords(self, value):
+        self.lat, self.lng = value
+
+    def to_dict(self):
+        return dict(
+            name=self.name,
+            lat=self.lat,
+            lng=self.lng
+        )
+
+    def __repr__():
+        return '<Venue %r (%r;%r)>' % (self.name, self.lat, self.lng)
+
+
 class Event(db.Model):
     """Event."""
 
+    default_end_time_offset = 2 # in hours
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text())
+    _venue_name = db.Column('venue_name', db.String(200))
+    _venue_lat = db.Column('venue_lat', db.Float())
+    _venue_lng = db.Column('venue_lng', db.Float())
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('events', cascade='all', lazy='dynamic'))
     contacts = db.relationship('Contact', secondary=attendance, backref=db.backref('events', lazy='dynamic'))
-    updated_at = None # todo
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
+    cancelled_at = db.Column(db.DateTime())
+    starts_at = db.Column(db.DateTime())
+    _ends_at = db.Column('ends_at', db.DateTime())
 
     __mapper_args__ = {
-        'order_by': name,
+        'order_by': db.desc(created_at),
     }
 
     def contacts_by_type(self, type):
@@ -267,3 +311,54 @@ class Event(db.Model):
                 return contact
         return None
 
+    @property
+    def is_cancelled(self):
+        return self.cancelled_at is not None
+
+    @property
+    def ends_at(self):
+        if self._ends_at:
+            return self._ends_at
+        if self.starts_at:
+            return (
+                self.starts_at + timedelta(hours=self.default_end_time_offset)
+            )
+        return None
+
+    @ends_at.setter
+    def ends_at(self, value):
+        self._ends_at = value
+
+    def _are_valid_coords(self, lat, lng):
+        return lat is not None and lng is not None
+
+    @property
+    def venue(self):
+        has_name = self._venue_name
+        has_valid_coords = self._are_valid_coords(self._venue_lat, self._venue_lng)
+
+        if has_name or has_valid_coords:
+            venue = Venue()
+            if has_name:
+                venue.name = self._venue_name
+            if has_valid_coords:
+                venue.lat = self._venue_lat
+                venue.lng = self._venue_lng
+            return venue
+        return None
+
+    @venue.setter
+    def venue(self, value):
+        if value.name:
+            self._venue_name = value.name
+        if self._are_valid_coords(value.lat, value.lng):
+            self._venue_lat = value.lat
+            self._venue_lng = value.lng
+
+    @classmethod
+    def fetch_or_404(self, id):
+        """Returns event by given ID or aborts the request."""
+        return Event.query.filter(Event.id == id).first_or_404()
+
+    def __repr__(self):
+        return '<Event %r>' % self.name

@@ -1,0 +1,88 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box, button_link, small_contact %}
+
+
+{% block content %}
+<p class="breadcrumbs">
+    <a href="{{ url_for('events') }}">Events</a> &raquo; {{ event.name }}
+</p>
+
+<h1>{{ event.name }}</h1>
+
+<div class="action_area">
+    <p>{{ button_link(url_for('edit_event', id=event.id), 'Edit event details') }}</p>
+</div>
+
+<table>
+    <tr>
+        <th><label>When</label></th>
+        <td>
+            {% if event.starts_at %}
+                {{ event.starts_at|datetime }}
+            {% else %}
+                unknown (yet)
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th><label>Where</label></th>
+        <td>
+            {% if event.venue %}
+                {{ event.venue.name }}
+            {% else %}
+                unknown (yet)
+            {% endif %}
+        </td>
+    </tr>
+    {% if event.description %}
+    <tr>
+        <th><label>What</label></th>
+        <td>
+            {{ event.description }}
+        </td>
+    </tr>
+    {% endif %}
+</table>
+
+{% with contacts = event.contacts|list %}
+    {% if contacts %}
+        <ul class="contacts_list">
+            {% for contact in contacts %}
+                <li>{{ contact_box(contact) }}</li>
+            {% endfor %}
+        </ul>
+        <br class="cleaner">
+    {% else %}
+        <p>Empty event.</p>
+    {% endif %}
+{% endwith %}
+
+
+
+
+
+
+{% if action == 'edit' %}
+    <form action="{{ url_for('edit_event', id=event.id) }}" method="post">
+        {{ form_errors(form) }}
+
+        <h1>{{ form.name(placeholder=form.name.label.text) }}</h1>
+        <p><a href="{{ url_for('event', id=event.id) }}">Cancel</a> or <button type="submit">Save</button></p>
+
+        <h4>Members</h4>
+        {{ form.contact_ids_str() }}
+        <ul id="members">
+            {% for contact in event.contacts %}
+                <li>{% include '_contact.html' %}</li>
+            {% endfor %}
+        </ul>
+        <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
+        <ul id="members-search-results"></ul>
+
+        {{ form.csrf_token }}
+    </form>
+{% else %}
+
+{% endif %}
+
+{% endblock %}
