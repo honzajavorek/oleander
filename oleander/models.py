@@ -24,10 +24,44 @@ class User(db.Model, UserMixin, GravatarMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
     password_hash = db.Column(db.String(40), nullable=False)
     password_salt = db.Column(db.String(10), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default=app.config['DEFAULT_TIMEZONE'])
+
+    def _get_contact(self, type):
+        return self.contacts.filter(Contact.type == type)\
+            .filter(Contact.belongs_to_user == True)\
+            .order_by(db.desc(Contact.is_primary))\
+            .first()
+
+    def _set_contact(self, type, field_name, field_value, as_primary=False):
+        contact = self.contacts.filter(Contact.type == type)\
+            .filter(getattr(Contact, field_name) == field_value)\
+            .first()
+        if not contact:
+            contact = Contact()
+            contact.type = type
+            contact.user = self
+            setattr(contact, field_name, field_value)
+        contact.belongs_to_user = True
+        if as_primary:
+            contact.set_as_primary()
+
+    @property
+    def email(self):
+        return getattr(self._get_contact('email'), 'email', None)
+
+    @email.setter
+    def email(self, value):
+        self._set_contact('email', field_name='email', field_value=value)
+
+    @property
+    def primary_email(self):
+        return self.email
+
+    @primary_email.setter
+    def primary_email(self, value):
+        self._set_contact('email', field_name='email', field_value=value, as_primary=True)
 
     def _generate_salt(self, length=10, chars=string.letters + string.digits):
         """Generates random alphanumeric string of specified length."""
@@ -68,10 +102,6 @@ class User(db.Model, UserMixin, GravatarMixin):
         # union of results
         return by_name.union(by_email, by_id_or_username).order_by(Contact.name).limit(limit)
 
-    @property
-    def contact_types(self):
-        return ['email']
-
     def event_or_404(self, id):
         """Returns user's event by given ID or aborts the request."""
         return self.events.filter(Event.id == id).first_or_404()
@@ -99,21 +129,6 @@ class ContactMixin(object):
         return hash(self.identifier)
 
 
-class UserContact(ContactMixin):
-    """Contact created from User instance."""
-
-    def __init__(self, type, user):
-        self.type = type
-        self.name = user.name
-        self.avatar = user.avatar
-        self.user = user
-
-        if type == 'email':
-            self.identifier = user.email
-        else:
-            raise NotImplementedError("Type '%s' is not supported yet" % type)
-
-
 class DeletedContact(ContactMixin):
     """Contact representing a previously deleted one."""
 
@@ -124,17 +139,22 @@ class DeletedContact(ContactMixin):
         self.avatar = avatar or None
 
 
-
 class Contact(db.Model, ContactMixin):
     """Base contact model class."""
 
-    contact_types = {'email': u'E-mail', 'facebook': u'Facebook', 'google': u'Google'}
+    contact_types = {
+        'email': u'E-mail',
+        'facebook': u'Facebook',
+        'google': u'Google',
+    }
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     type = db.Column(db.Enum(*contact_types.keys(), name='contact_types'), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('contacts', cascade='all', lazy='dynamic'))
+    belongs_to_user = db.Column(db.Boolean(), nullable=False, default=False)
+    is_primary = db.Column(db.Boolean(), nullable=False, default=False)
     attendance = db.relationship('Attendance')
 
     __mapper_args__ = {
@@ -148,6 +168,12 @@ class Contact(db.Model, ContactMixin):
             .first()
         att = att or Attendance(contact=self, event=event)
         att.type = type
+
+    def set_as_primary(self):
+        Contact.query.filter(Contact.user_id == self.user_id)\
+            .filter(Contact.is_primary == True)\
+            .update({Contact.is_primary: False})
+        self.is_primary = True
 
     def __repr__(self):
         return '<%s %r (%r)>' % (self.__class__.__name__, self.name, self.identifier)

@@ -26,14 +26,12 @@ class UserData(DataSet):
 
     class honza:
         name = 'Honza'
-        email = 'ubamn@wniberx.arg'.decode('rot13')
         password_hash = '8358b0f41a589539c6f8d5f36089c82a437f014c'
         password_salt = 'ig9iEWdO3p'
         timezone = 'UTC'
 
     class zuzejk:
         name = 'Zuzejk'
-        email = 'creqnf@frmanz.pm'.decode('rot13')
         password_hash = '39c4e794f8aaba7fb388dd6691050de3f06f9e5b'
         password_salt = 'aYf2Ju3uNV'
         timezone = 'Europe/Prague'
@@ -41,10 +39,24 @@ class UserData(DataSet):
 
 class EmailContactData(DataSet):
 
-    class zuzejk:
+    class me:
+        name = 'Honza'
+        user = UserData.honza
+        email = 'ubamn@wniberx.arg'.decode('rot13')
+        belongs_to_user = True
+        is_primary = True
+
+    class muj_zuzejk:
         name = 'Zuzejk'
         user = UserData.honza
         email = 'creqnf@frmanz.pm'.decode('rot13')
+
+    class jeji_zuzejk:
+        name = 'Zuzejk'
+        user = UserData.zuzejk
+        email = 'creqnf@frmanz.pm'.decode('rot13')
+        belongs_to_user = True
+        is_primary = True
 
     class maple:
         name = 'Maple'
@@ -64,6 +76,12 @@ class EmailContactData(DataSet):
 
 class GoogleContactData(DataSet):
 
+    class me:
+        name = 'Honza'
+        user = UserData.honza
+        email = 'wna.wniberx@tznvy.pbz'.decode('rot13')
+        belongs_to_user = True
+
     class peta:
         name = u'Peťa'
         user = UserData.honza
@@ -78,11 +96,6 @@ class GoogleContactData(DataSet):
         name = 'Baki'
         user = UserData.honza
         email = 'cna.onxrf@tznvy.pbz'.decode('rot13')
-
-    class ja:
-        name = 'Honza'
-        user = UserData.honza
-        email = 'wna.wniberx@tznvy.pbz'.decode('rot13')
 
 
 class EventData(DataSet):

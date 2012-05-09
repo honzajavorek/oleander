@@ -60,7 +60,7 @@
 {%- endmacro %}
 
 
-{% macro contact_box(contact, term=None, link=None, link_label=None, link_title=None, hide_identifier=False) %}
+{% macro contact_box(contact, term=None, link=None, link_label=None, link_title=None, hide_identifier=False, current_user=None) %}
     {#- Contaxt box. If searched term given, marks it with HTML5 <mark> element. -#}
 
     <div class="contact_box">
@@ -69,6 +69,8 @@
             <strong class="name">
                 {% if term %}
                     {{ contact.name|mark(term, pattern='^%(term)s') }}
+                {% elif contact.belongs_to_user and contact.user == current_user %}
+                    me
                 {% else %}
                     {{ contact.name }}
                 {% endif %}
@@ -81,6 +83,9 @@
                         {{ contact.identifier }}
                     {% endif %}
                 </span>
+            {% endif %}
+            {% if contact.is_primary and contact.user == current_user %}
+                <small class="info">my primary contact</small>
             {% endif %}
             <span class="type">{{ contact.label|capitalize }}</span>
         </div>

@@ -42,7 +42,15 @@
             <ul class="contacts_list">
             {% for contact in group.list %}
                 <li>
-                    {{ contact_box(contact, link=url_for('delete_contact', id=contact.id), link_label='Delete', link_title='Delete from directory') }}
+                    {{
+                        contact_box(
+                            contact,
+                            link=url_for('delete_contact', id=contact.id),
+                            link_label='Delete',
+                            link_title='Delete from directory',
+                            current_user=current_user
+                        )
+                    }}
                 </li>
             {% endfor %}
             </ul>
