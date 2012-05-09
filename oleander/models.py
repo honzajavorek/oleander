@@ -98,9 +98,6 @@ class ContactMixin(object):
     def __hash__(self):
         return hash(self.identifier)
 
-    def __repr__(self):
-        return '<%s %r (%r)>' % (self.__class__.__name__, self.name, self.identifier)
-
 
 class UserContact(ContactMixin):
     """Contact created from User instance."""
@@ -138,14 +135,22 @@ class Contact(db.Model, ContactMixin):
     type = db.Column(db.Enum(*contact_types.keys(), name='contact_types'), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('contacts', cascade='all', lazy='dynamic'))
+    attendance = db.relationship('Attendance')
 
     __mapper_args__ = {
         'polymorphic_on': type,
         'with_polymorphic': '*',
     }
 
+    def set_attendance(self, event, type):
+        att = Attendance.query.filter(Attendance.contact_id == self.id)\
+            .filter(Attendance.event_id == event.id)\
+            .first()
+        att = att or Attendance(contact=self, event=event)
+        att.type = type
+
     def __repr__(self):
-        return '<%s %r>' % (self.__class__.__name__, self.name)
+        return '<%s %r (%r)>' % (self.__class__.__name__, self.name, self.identifier)
 
     def to_dict(self):
         return dict(
@@ -219,10 +224,14 @@ class GoogleContact(GravatarMixin, Contact):
         return self.email
 
 
-attendance = db.Table('attendance',
-    db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
-    db.Column('contact_id', db.Integer, db.ForeignKey('contact.id'))
-)
+class Attendance(db.Model):
+    """Attendance of contacts to events."""
+
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), primary_key=True)
+    event = db.relationship('Event')
+    contact_id = db.Column(db.Integer, db.ForeignKey('contact.id'), primary_key=True)
+    contact = db.relationship('Contact')
+    type = db.Column(db.Enum(*['yes', 'maybe', 'no'], name='attendance_types'), nullable=False)
 
 
 class Venue(object):
@@ -265,7 +274,7 @@ class Event(db.Model):
     _venue_lng = db.Column('venue_lng', db.Float())
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('events', cascade='all', lazy='dynamic'))
-    contacts = db.relationship('Contact', secondary=attendance, backref=db.backref('events', lazy='dynamic'))
+    attendance = db.relationship('Attendance')
     created_at = db.Column(db.DateTime(), nullable=False)
     updated_at = db.Column(db.DateTime(), nullable=False)
     cancelled_at = db.Column(db.DateTime())
@@ -276,40 +285,28 @@ class Event(db.Model):
         'order_by': db.desc(created_at),
     }
 
-    def contacts_by_type(self, type):
-        return filter(lambda contact: contact.type == type, self.contacts)
+    def set_attendance(self, contact, type):
+        att = Attendance.query.filter(Attendance.contact_id == contact.id)\
+            .filter(Attendance.event_id == self.id)\
+            .first()
+        att = att or Attendance(contact=contact, event=self)
+        att.type = type
 
     @property
-    def contact_ids(self):
-        return [contact.id for contact in self.contacts]
-
-    @contact_ids.setter
-    def contact_ids(self, ids):
-        self.contacts = list(Contact.query.filter(Contact.id.in_(ids)))
+    def contacts(self):
+        return Contact.query.join(Attendance).filter(Attendance.event_id == self.id)
 
     @property
-    def contact_ids_str(self):
-        return ','.join(map(str, self.contact_ids))
-
-    @contact_ids_str.setter
-    def contact_ids_str(self, ids_str):
-        ids = map(int, set(filter(None, ids_str.split(','))))
-        self.contact_ids = ids
+    def contacts_yes(self):
+        return self.contacts.filter(Attendance.type == 'yes')
 
     @property
-    def members(self):
-        contacts = list(self.contacts)
-        for type in self.user.contact_types:
-            contacts.append(
-                UserContact(type, self.user)
-            )
-        return sorted(contacts, key=lambda c: c.name)
+    def contacts_maybe(self):
+        return self.contacts.filter(Attendance.type == 'maybe')
 
-    def member_by_identifier(self, identifier):
-        for contact in self.members:
-            if contact.identifier == identifier:
-                return contact
-        return None
+    @property
+    def contacts_no(self):
+        return self.contacts.filter(Attendance.type == 'no')
 
     @property
     def is_cancelled(self):

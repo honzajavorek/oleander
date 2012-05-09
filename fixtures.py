@@ -92,7 +92,6 @@ class EventData(DataSet):
         description = u'Happy event for happy people!'
         venue = models.Venue(name='Kaverna, Brno', lat=49.19921, lng=16.60208)
         user = UserData.honza
-        contacts = [EmailContactData.zuzejk, EmailContactData.maple]
         created_at = now
         updated_at = now
         starts_at = now + timedelta(days=5, hours=5)
