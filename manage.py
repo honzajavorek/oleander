@@ -20,7 +20,7 @@ def runtests():
     """Runs unit tests."""
     # http://packages.python.org/Flask-Script/
     # http://readthedocs.org/docs/nose/en/latest/usage.html
-    return nose.run(argv=['tests']) # argv=[test_module]
+    return nose.run(argv=['oleander.tests']) # argv=[test_module]
 
 
 @manager.command
