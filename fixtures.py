@@ -47,10 +47,10 @@ class EmailContactData(DataSet):
         email = 'zncyr@frmanz.pm'.decode('rot13')
 
 
-class GroupData(DataSet):
+class EventData(DataSet):
 
-    class penoclan:
-        name = 'Peno Clan'
+    class happyevent:
+        name = 'Happy Event'
         user = UserData.honza
         contacts = [EmailContactData.zuzejk, EmailContactData.maple]
 
@@ -58,5 +58,5 @@ class GroupData(DataSet):
 all_data = (
     UserData,
     EmailContactData,
-    GroupData,
+    EventData,
 )

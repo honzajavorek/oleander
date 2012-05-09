@@ -4,10 +4,8 @@
 modules = [
     'auth',
     'contacts',
-    'groups',
+    'events',
     'index',
-    'mail',
-    'messaging',
     'settings',
 ]
 

@@ -3,25 +3,25 @@
 
 
 {% block content %}
-<h1>Groups</h1>
+<h1>Events</h1>
 
 
 {% if action != 'new' %}
     <div class="action_area">
-        <p>{{ button_link(url_for('groups', action='new'), 'Create new') }}</p>
+        <p>{{ button_link(url_for('events', action='new'), 'Create new') }}</p>
     </div>
 {% endif %}
 
 
-<div class="groups_list">
+<div class="events_list">
     {% if action == 'new' %}
-        <div class="group">
-            <form action="{{ url_for('groups', action='new') }}" method="post">
+        <div class="event">
+            <form action="{{ url_for('events', action='new') }}" method="post">
                 {{ form_errors(form) }}
 
                 <h3 class="legend">{{ form.name(placeholder=form.name.label.text) }}</h3>
                 <p class="icons">
-                    <a href="{{ url_for('groups') }}">Cancel</a> or <button type="submit">Save</button>
+                    <a href="{{ url_for('events') }}">Cancel</a> or <button type="submit">Save</button>
                 </p>
 
                 {{ form.contact_ids_str() }}
@@ -42,20 +42,20 @@
         </div>
     {% endif %}
 
-    {% for group in groups %}
-    <div class="group">
-        {% if edited_group == group %}
-            <form action="{{ url_for('groups', action='edit', id=group.id) }}" method="post">
+    {% for event in events %}
+    <div class="event">
+        {% if edited_event == event %}
+            <form action="{{ url_for('events', action='edit', id=event.id) }}" method="post">
                 {{ form_errors(form) }}
 
                 <h3 class="legend">{{ form.name(placeholder=form.name.label.text) }}</h3>
                 <p class="icons">
-                    <a href="{{ url_for('groups') }}">Cancel</a> or <button type="submit">Save</button>
+                    <a href="{{ url_for('events') }}">Cancel</a> or <button type="submit">Save</button>
                 </p>
 
                 {{ form.contact_ids_str() }}
                 <ul id="members" class="contacts_list">
-                    {% for contact in group.contacts %}
+                    {% for contact in event.contacts %}
                         <li>{% include '_contact_box.html' %}</li>
                     {% endfor %}
                 </ul>
@@ -73,12 +73,12 @@
                 {{ form.csrf_token }}
             </form>
         {% else %}
-            <h3 class="legend"><a href="{{ url_for('group', id=group.id) }}">{{ group.name }}</a></h3>
+            <h3 class="legend"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></h3>
             <p class="icons">
-                <a class="icon" href="{{ url_for('groups', action='edit', id=group.id) }}" title="Edit group details, adjust members">Edit</a>
+                <a class="icon" href="{{ url_for('events', action='edit', id=event.id) }}" title="Edit event details, adjust members">Edit</a>
             </p>
 
-            {% with contacts = group.contacts|list %}
+            {% with contacts = event.contacts|list %}
                 {% if contacts %}
                     <ul class="contacts_list">
                         {% for contact in contacts %}
@@ -87,7 +87,7 @@
                     </ul>
                     <br class="cleaner">
                 {% else %}
-                    <p>Empty group.</p>
+                    <p>Empty event.</p>
                 {% endif %}
             {% endwith %}
         {% endif %}
@@ -120,7 +120,7 @@
             $ul.empty();
 
             if (term) {
-                var uri = '/groups/search-contacts/' + encodeURIComponent(term);
+                var uri = '/events/search-contacts/' + encodeURIComponent(term);
                 lastXhr = $.getJSON(uri, function(data, status, xhr) {
                     if (xhr === lastXhr) {
                         $.each(data.contacts, function(i, contact) {

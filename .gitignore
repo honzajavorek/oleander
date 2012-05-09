@@ -3,6 +3,7 @@
 env
 settings/*
 !settings/sample_settings.py
+!settings/test*.py
 .coverage
 *.egg-info
 .sass-cache

@@ -4,20 +4,20 @@
 
 {% block content %}
 <p class="breadcrumbs">
-    <a href="{{ url_for('groups') }}">Groups</a> &raquo; {{ group.name }}
+    <a href="{{ url_for('events') }}">Events</a> &raquo; {{ event.name }}
 </p>
 
 {% if action == 'edit' %}
-    <form action="{{ url_for('group', action='edit', id=group.id) }}" method="post">
+    <form action="{{ url_for('event', action='edit', id=event.id) }}" method="post">
         {{ form_errors(form) }}
 
         <h1>{{ form.name(placeholder=form.name.label.text) }}</h1>
-        <p><a href="{{ url_for('group', id=group.id) }}">Cancel</a> or <button type="submit">Save</button></p>
+        <p><a href="{{ url_for('event', id=event.id) }}">Cancel</a> or <button type="submit">Save</button></p>
 
         <h4>Members</h4>
         {{ form.contact_ids_str() }}
         <ul id="members">
-            {% for contact in group.contacts %}
+            {% for contact in event.contacts %}
                 <li>{% include '_contact.html' %}</li>
             {% endfor %}
         </ul>
@@ -27,12 +27,12 @@
         {{ form.csrf_token }}
     </form>
 {% else %}
-    <h1>{{ group.name }}</h1>
+    <h1>{{ event.name }}</h1>
     <p class="icons">
-        <a class="icon" href="{{ url_for('group', action='edit', id=group.id) }}" title="Edit group details, adjust members">Edit</a>
+        <a class="icon" href="{{ url_for('event', action='edit', id=event.id) }}" title="Edit event details, adjust members">Edit</a>
     </p>
 
-    {% with contacts = group.contacts|list %}
+    {% with contacts = event.contacts|list %}
         {% if contacts %}
             <ul class="contacts_list">
                 {% for contact in contacts %}
@@ -41,19 +41,19 @@
             </ul>
             <br class="cleaner">
         {% else %}
-            <p>Empty group.</p>
+            <p>Empty event.</p>
         {% endif %}
     {% endwith %}
 {% endif %}
 
 {% if not action %}
     <div class="action_area">
-        <p>{{ button_link(url_for('new_topic', group_id=group.id), 'Start a new topic') }}</p>
+        <p>{{ button_link(url_for('new_topic', event_id=event.id), 'Start a new topic') }}</p>
     </div>
     <table class="topics_list">
-    {% for topic in group.topics %}
+    {% for topic in event.topics %}
         <tr class="topic">
-            <th class="legend"><a href="{{ url_for('topic', id=topic.id, group_id=group.id) }}">{{ topic.subject }}</a></th>
+            <th class="legend"><a href="{{ url_for('topic', id=topic.id, event_id=event.id) }}">{{ topic.subject }}</a></th>
             <td>
                 {% for contact in topic.contacts %}
                     {{ small_contact(contact, size=20) }}

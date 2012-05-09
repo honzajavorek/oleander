@@ -16,5 +16,3 @@ MAIL_USERNAME = 'username'
 MAIL_PASSWORD = '********'
 
 
-MAIL_SERVER_RECEIVING = 'mail.honzajavorek.cz'
-

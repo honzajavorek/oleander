@@ -5,33 +5,31 @@
 {% block content %}
     <h1>Welcome, {{ current_user.name }}</h1>
 
-    {% with topics = topics|list %}
-        {% if topics|length %}
-            <table class="topics_list">
-            {% for topic in topics %}
-                <tr class="topic">
+    {% with events = events|list %}
+        {% if events|length %}
+            <table class="events_list">
+            {% for event in events %}
+                <tr class="event">
                     <th>
-                        <a href="{{ url_for('group', id=topic.group_id) }}">{{ topic.group.name }}</a>
-                        &raquo;
-                        <a href="{{ url_for('topic', id=topic.id, group_id=topic.group_id) }}">{{ topic.subject }}</a>
+                        <a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a>
                     </th>
                     <td>
-                        {% for contact in topic.contacts %}
+                        {% for contact in event.contacts %}
                             {{ small_contact(contact, size=20) }}
                         {% endfor %}
                     </td>
                     <td title="Last updated">
-                        {{ topic.updated_at|datetime }}
+                        {{ event.updated_at|datetime }}
                     </td>
-                    <td title="Messages">
-                        <strong>{{ topic.messages|list|length }}</strong>
+                    <td title="Attendees">
+                        <strong>{{ event.contacts|list|length }}</strong>
                     </td>
                 </tr>
             {% endfor %}
             </table>
         {% else %}
             <div class="action_area">
-                <p>{{ button_link(url_for('groups'), 'Review groups') }} <span class="separator">or</span> {{ button_link(url_for('contacts'), 'Manage contacts') }}</p>
+                <p>{{ button_link(url_for('events'), 'Review events') }} <span class="separator">or</span> {{ button_link(url_for('contacts'), 'Manage contacts') }}</p>
             </div>
         {% endif %}
     {% endwith %}

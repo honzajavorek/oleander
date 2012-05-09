@@ -68,30 +68,12 @@ class User(db.Model, UserMixin, GravatarMixin):
         return by_name.union(by_email, by_id_or_username).order_by(Contact.name).limit(limit)
 
     @property
-    def current_topics(self):
-        """Returns user's current topics."""
-        return Topic.query\
-            .join(Group)\
-            .filter(Group.user == self)\
-            .order_by(db.desc(Topic.updated_at))
-
-    @property
     def contact_types(self):
         return ['email']
 
-    def group_or_404(self, id):
-        """Returns user's group by given ID or aborts the request."""
-        return self.groups.filter(Group.id == id).first_or_404()
-
-    def topic_or_404(self, id, group_id=None):
-        """Returns user's topic by given IDs or aborts the request."""
-        query = Topic.query\
-            .join(Group)\
-            .filter(Group.user == self)\
-            .filter(Topic.id == id)
-        if group_id:
-            query = query.filter(Group.id == group_id)
-        return query.first_or_404()
+    def event_or_404(self, id):
+        """Returns user's event by given ID or aborts the request."""
+        return self.events.filter(Event.id == id).first_or_404()
 
 
 class ContactMixin(object):
@@ -230,20 +212,21 @@ class GoogleContact(GravatarMixin, Contact):
         return self.email
 
 
-grouping = db.Table('grouping',
-    db.Column('group_id', db.Integer, db.ForeignKey('group.id')),
+attendance = db.Table('attendance',
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
     db.Column('contact_id', db.Integer, db.ForeignKey('contact.id'))
 )
 
 
-class Group(db.Model):
-    """Group of contacts."""
+class Event(db.Model):
+    """Event."""
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
-    user = db.relationship('User', backref=db.backref('groups', cascade='all', lazy='dynamic'))
-    contacts = db.relationship('Contact', secondary=grouping, backref=db.backref('groups', lazy='dynamic'))
+    user = db.relationship('User', backref=db.backref('events', cascade='all', lazy='dynamic'))
+    contacts = db.relationship('Contact', secondary=attendance, backref=db.backref('events', lazy='dynamic'))
+    updated_at = None # todo
 
     __mapper_args__ = {
         'order_by': name,
@@ -284,98 +267,3 @@ class Group(db.Model):
                 return contact
         return None
 
-
-class Topic(db.Model):
-    """Discussion topic."""
-
-    id = db.Column(db.Integer, primary_key=True)
-    subject = db.Column(db.String(200), nullable=False)
-    group_id = db.Column(db.Integer(), db.ForeignKey('group.id', ondelete='cascade'), nullable=False)
-    group = db.relationship('Group', backref=db.backref('topics', cascade='all', lazy='dynamic'))
-    created_at = db.Column(db.DateTime(), nullable=False)
-    updated_at = db.Column(db.DateTime(), nullable=False)
-    _hash = db.Column('hash', db.String(32), nullable=True)
-
-    __mapper_args__ = {
-        'order_by': db.desc(updated_at),
-    }
-
-    @property
-    def contacts(self):
-        return sorted(list(set(message.contact for message in self.messages)), key=lambda c: c.name)
-
-    def generate_hash(self):
-        if self.subject is None or self.id is None:
-            raise ValueError('Missing topic subject or ID.')
-        id = str(self.id)
-        salt = self.subject.encode('utf-8')
-        self._hash = hashlib.md5(id + '/' + salt).hexdigest()
-
-    @property
-    def hash(self):
-        if not self._hash:
-            self.generate_hash()
-        return self._hash
-
-
-class TopicModel(object):
-    """Topic model."""
-
-    def get_by_hash(hash, or_404=False):
-        query = Topic.query.filter(Topic._hash == hash)
-        if or_404:
-            return query.first_or_404()
-        return query.first()
-
-
-class Message(db.Model):
-    """Message in topic."""
-
-    id = db.Column(db.Integer, primary_key=True)
-    topic_id = db.Column(db.Integer(), db.ForeignKey('topic.id', ondelete='cascade'), nullable=False)
-    topic = db.relationship('Topic', backref=db.backref('messages', cascade='all', lazy='dynamic'))
-    _user_id = db.Column('user_id', db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=True)
-    _user = db.relationship('User', backref=db.backref('messages', cascade='all', lazy='dynamic'))
-    _contact_id = db.Column('contact_id', db.Integer(), db.ForeignKey('contact.id', ondelete='cascade'), nullable=True)
-    _contact_name = db.Column('contact_name', db.String(200), nullable=False)
-    _contact_identifier = db.Column('contact_identifier', db.String(200), nullable=False)
-    _contact_avatar = db.Column('contact_avatar', db.String(500), nullable=False)
-    _contact = db.relationship('Contact', backref=db.backref('messages', cascade='all', lazy='dynamic'))
-    type = db.Column(db.Enum(*Contact.contact_types, name='contact_types'))
-    content = db.Column(db.Text(), nullable=False)
-    posted_at = db.Column(db.DateTime(), nullable=False)
-
-    __mapper_args__ = {
-        'order_by': posted_at,
-    }
-
-    @property
-    def contact(self):
-        if self._user_id or self._contact_id:
-            return UserContact(self.type, self._user) or self._contact
-
-        # contact doesn't exist anymore
-        return DeletedContact(
-            self.type,
-            self._contact_name,
-            self._contact_identifier,
-            self._contact_avatar
-        )
-
-        return None
-
-    @contact.setter
-    def contact(self, contact):
-        self._user = getattr(contact, 'user', None)
-        self._contact = contact if hasattr(contact, 'id') else None
-
-        if contact is None:
-            self.type = None
-            self._contact_name = None
-            self._contact_identifier = None
-            self._contact_avatar = None
-        else:
-            self.type = contact.type
-            self._contact_name = contact.name
-            self._contact_identifier = contact.identifier
-            self._contact_avatar = contact.avatar

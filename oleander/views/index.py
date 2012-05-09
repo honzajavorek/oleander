@@ -10,4 +10,4 @@ from oleander import app
 @login_required
 def index():
     """Index view, dashboard."""
-    return render_template('index.html', topics=current_user.current_topics)
+    return render_template('index.html', topics=current_user.events)
