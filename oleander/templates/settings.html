@@ -1,0 +1,51 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, form_help, avatar, button_link %}
+
+
+{% block content %}
+<h1>Settings</h1>
+
+<form method="post" action="" class="main_form">
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <legend>Basic info</legend>
+        <table>
+            <tr>
+                <th>{{ form.name.label }}</th>
+                <td>{{ form.name(size=20) }} {{ form_help(form.name) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form.email.label }}</th>
+                <td>{{ form.email(size=20) }}</td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>Avatar picture</legend>
+        <p>Your current &rarr; {{ avatar(current_user.avatar) }}</p>
+        <p>{{ button_link('http://gravatar.com/emails/', 'Change my avatar on Gravatar.com') }}</p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Password</legend>
+        <p>{{ button_link(url_for('change_password'), 'Change my password') }}</p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Preferences</legend>
+        <table>
+            <tr>
+                <th>{{ form.timezone.label }}</th>
+                <td>{{ form.timezone }}</td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <div class="action_area">
+        {{ form.csrf_token }}
+        <button type="submit">Save changes</button> or <a href="{{ url_for('settings') }}">Cancel</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,100 @@
+
+
+{% macro nav_link(endpoint, name, title=None) %}
+    {#- Navigation link. Requires access to context. -#}
+
+    {%- with path = url_for(endpoint) -%}
+        {%- if path == request.path -%}
+            <strong>{{ name }}</strong>
+        {%- else -%}
+            <a href="{{ path }}"{% if title %} title="{{ title }}"{% endif %}>{{ name }}</a>
+        {%- endif -%}
+    {%- endwith -%}
+{%- endmacro %}
+
+
+{% macro avatar(avatar_url, size=50, alt=None) -%}
+    {%- if avatar_url -%}
+        <img class="avatar" src="{{ avatar_url }}"
+            width="{{ size }}" height="{{ size }}"{% if alt %} alt="{{ alt }}"{% endif %}>
+    {%- else -%}
+        <img class="avatar" src="{{ url_for('static', filename='images/default_avatar.jpg') }}"
+            width="{{ size }}" height="{{ size }}"{% if alt %} alt="{{ alt }}"{% endif %}>
+    {%- endif -%}
+{%- endmacro %}
+
+
+{% macro button_link(url, text) -%}
+    <a class="button" href="{{ url }}"><button type="button">{{ text }}</button></a>
+{%- endmacro %}
+
+
+{% macro form_errors(form) %}
+    {#- Rendering of form errors. -#}
+
+    {% with errors = form.errors %}
+        {% if errors %}
+        <h3>Sorry, something isn't all right</h3>
+        <ol>
+            {% for field_name, field_errors in errors.items() %}
+                {% if field_name == 'csrf' %}
+                    <li><strong>Safety check</strong> It seems you didn't use button to submit the form.</li>
+                {% elif field_name in form %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ form[field_name].label }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for error in field_errors %}
+                        <li><strong>{{ field_name.capitalize() }}</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ol>
+        {% endif %}
+    {% endwith %}
+{% endmacro %}
+
+
+{% macro form_help(field) -%}
+    <small class="help">{{ field.description }}</small>
+{%- endmacro %}
+
+
+{% macro contact_box(contact, term=None, link=None, link_label=None, link_title=None) %}
+    {#- Contaxt box. If searched term given, marks it with HTML5 <mark> element. -#}
+
+    <div class="contact_box">
+        <div class="contact {{ contact.type }}" data-contact-id="{{ contact.id }}">
+            {{ avatar(contact.avatar) }}
+            <strong class="name">
+                {% if term %}
+                    {{ contact.name|mark(term, pattern='^%(term)s') }}
+                {% else %}
+                    {{ contact.name }}
+                {% endif %}
+            </strong>
+            <span class="identifier">
+                {% if term %}
+                    {{ contact.identifier|mark(term, pattern='^%(term)s') }}
+                {% else %}
+                    {{ contact.identifier }}
+                {% endif %}
+            </span>
+            <span class="type">{{ contact.label|lower }}</span>
+        </div>
+        {% if link and link_label %}
+        <div class="icons">
+            {% if link %}
+                <a class="icon"{% if link_title %} title="{{ link_title }}"{% endif %} href="{{ link }}">{{ link_label }}</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro small_contact(contact, size=50) %}
+    <span class="small_contact" title="{{ contact.name }} ({{ contact.identifier }})">
+        {{ avatar(contact.avatar, alt=contact.name, size=size) }}
+    </span>
+{% endmacro %}

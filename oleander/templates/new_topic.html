@@ -1,0 +1,28 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box %}
+
+
+{% block content %}
+<p class="breadcrumbs">
+    <a href="{{ url_for('groups') }}">Groups</a> &raquo; <a href="{{ url_for('group', id=group.id) }}">{{ group.name }}</a> &raquo; New topic
+</p>
+
+<h1>Start a new topic</h1>
+
+<form action="" method="post">
+<div class="message last_message" id="message-new">
+    <p class="author">{{ avatar(current_user.avatar) }} me</p>
+    <p class="datetime">{{ now|datetime }}</p>
+        {{ form_errors(form) }}
+        <blockquote>
+            {{ form.subject(size=70, placeholder=form.subject.label.text) }}
+            {{ form.message(cols=50, rows=10) }}
+        </blockquote>
+        {{ form.csrf_token }}
+</div>
+<div class="action_area">
+    <p><button type="submit">Send!</button> or <a href="{{ url_for('group', id=group.id) }}">Cancel</a></p>
+</div>
+</form>
+
+{% endblock %}

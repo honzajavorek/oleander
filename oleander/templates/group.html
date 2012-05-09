@@ -1,0 +1,72 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box, button_link, small_contact %}
+
+
+{% block content %}
+<p class="breadcrumbs">
+    <a href="{{ url_for('groups') }}">Groups</a> &raquo; {{ group.name }}
+</p>
+
+{% if action == 'edit' %}
+    <form action="{{ url_for('group', action='edit', id=group.id) }}" method="post">
+        {{ form_errors(form) }}
+
+        <h1>{{ form.name(placeholder=form.name.label.text) }}</h1>
+        <p><a href="{{ url_for('group', id=group.id) }}">Cancel</a> or <button type="submit">Save</button></p>
+
+        <h4>Members</h4>
+        {{ form.contact_ids_str() }}
+        <ul id="members">
+            {% for contact in group.contacts %}
+                <li>{% include '_contact.html' %}</li>
+            {% endfor %}
+        </ul>
+        <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
+        <ul id="members-search-results"></ul>
+
+        {{ form.csrf_token }}
+    </form>
+{% else %}
+    <h1>{{ group.name }}</h1>
+    <p class="icons">
+        <a class="icon" href="{{ url_for('group', action='edit', id=group.id) }}" title="Edit group details, adjust members">Edit</a>
+    </p>
+
+    {% with contacts = group.contacts|list %}
+        {% if contacts %}
+            <ul class="contacts_list">
+                {% for contact in contacts %}
+                    <li>{{ contact_box(contact) }}</li>
+                {% endfor %}
+            </ul>
+            <br class="cleaner">
+        {% else %}
+            <p>Empty group.</p>
+        {% endif %}
+    {% endwith %}
+{% endif %}
+
+{% if not action %}
+    <div class="action_area">
+        <p>{{ button_link(url_for('new_topic', group_id=group.id), 'Start a new topic') }}</p>
+    </div>
+    <table class="topics_list">
+    {% for topic in group.topics %}
+        <tr class="topic">
+            <th class="legend"><a href="{{ url_for('topic', id=topic.id, group_id=group.id) }}">{{ topic.subject }}</a></th>
+            <td>
+                {% for contact in topic.contacts %}
+                    {{ small_contact(contact, size=20) }}
+                {% endfor %}
+            </td>
+            <td title="Last updated">
+                {{ topic.updated_at|datetime }}
+            </td>
+            <td title="Messages">
+                <strong>{{ topic.messages|list|length }}</strong>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box, form_help %}
+
+
+{% block content %}
+<h1>Contacts</h1>
+
+<ul class="contacts_directory_alphabet">
+    {% for group in contacts|groupby_alphabet('name', full_alphabet=True) -%}
+        <li>
+            {%- if group.list -%}
+                <a href="#contacts-{{ group.grouper.name }}">{{ group.grouper }}</a>
+            {%- else -%}
+                <span>{{ group.grouper }}</span>
+            {%- endif -%}
+        </li>
+    {%- endfor %}
+</ul>
+
+<form method="post" action="" class="main_form">
+    <h2 class="legend">Add contact</h2>
+    {{ form_errors(form) }}
+    <table>
+        <tr>
+            <th>{{ form.name.label }}</th>
+            <td>{{ form.name(size=20) }} {{ form_help(form.name) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form.email.label }}</th>
+            <td>{{ form.email(size=20) }}</td>
+        </tr>
+    </table>
+
+    {{ form.csrf_token }}
+    <p><button type="submit">Add contact</button></p>
+</form>
+
+<ul class="contacts_directory">
+    {% for group in contacts|groupby_alphabet('name') %}
+        <li class="contacts_group" id="contacts-{{ group.grouper.name }}">
+            <h2>{{ group.grouper }}</h2>
+            <ul class="contacts_list">
+            {% for contact in group.list %}
+                <li>
+                    {{ contact_box(contact, link=url_for('delete_contact', id=contact.id), link_label='Delete', link_title='Delete from directory') }}
+                </li>
+            {% endfor %}
+            </ul>
+            <br class="cleaner">
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

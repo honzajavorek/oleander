@@ -1,0 +1,66 @@
+{% from '_macros.html' import avatar, nav_link with context -%}
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}Oleander</title>
+        <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"></link>
+        <script src="{{ url_for('static', filename='js/modernizr-2.5.3.js') }}"></script>
+    </head>
+<body>
+    <div id="document">
+        <header class="top_bar">
+            <h1>{{ nav_link('index', 'Oleander') }}</h1>
+        </header>
+        <div id="content">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+        {% if current_user.is_authenticated() %}
+            <nav class="top_bar">
+                <ul>
+                    <li>{{ nav_link('index', 'Dashboard', title='See what\'s new') }}</li>{# to prevent whitespace -#}
+                    <li>{{ nav_link('groups', 'Groups', title='Manage your groups') }}</li>{# to prevent whitespace -#}
+                    <li>{{ nav_link('contacts', 'Contacts', title='Manage your contacts') }}</li>
+                </ul>
+            </nav>
+            <aside class="current_user top_bar">
+                <h3>
+                    <a href="{{ url_for('settings') }}" title="Settings">{{ avatar(current_user.avatar) }} {{ current_user.name }}</a>
+                </h3>
+                <nav>
+                    <p><a href="{{ url_for('sign_out') }}" title="Leave Oleander">Sign out</a></p>
+                </nav>
+            </aside>
+        {% endif %}
+        <footer>
+            <p>&copy;2012 <a href="http://www.honzajavorek.cz">Honza Javorek</a></p>
+            <p>Master's thesis project from <a href="http://www.fi.muni.cz">FI MU</a></p>
+            <p><a href="https://github.com/honzajavorek/oleander">Oleander grew on GitHub</a></p>
+        </footer>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}">\x3C/script>');</script>
+    <script src="{{ url_for('static', filename='js/jquery.tipsy.js') }}"></script>
+    <script>
+        $('header a[title], #document > nav a[title]').tipsy({opacity: 1});
+        $('aside a[title]').tipsy({gravity: 'w', opacity: 1});
+        $('input, select, textarea').tipsy({
+            gravity: 'w', trigger: 'focus', opacity: 1, html: true,
+            title: function() { return $(this).siblings('.help').html() || ''; }
+        });
+        $('a.icon[title]').tipsy({opacity: 1});
+        $('.small_contact[title]').tipsy({opacity: 1});
+        $('td[title]').tipsy({opacity: 1});
+        $('.message .author[title]').tipsy({gravity: 's', opacity: 1});
+    </script>
+    {% block script %}{% endblock %}
+</body>
