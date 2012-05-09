@@ -15,8 +15,8 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 ## Postup práce
 
 - <del>Prostudujte problematiku běžné organizace malých skupin lidí přes internet s důrazem na nástroje a služby, které jsou využívané pro komunikaci a organizaci.</del>
-- <del>Na základě průzkumu</del> navrhněte řešení, jak propojit používané služby tak, aby mezi sebou lidé mohli komunikovat a sdílet organizační informace i bez toho, že by používali stejné komunikační platformy.
-- Podrobně rozpracujte každý z těchto případů a snažte se o nalezení takového, které bude brát největší ohledy na přirozenost a zřejmost používaní (zvažte např. možnosti udržovaní vláken diskusí napříč všemi systémy apod.).
-- Vysvětlete, proč jsou některé tyto problémy nerealizovatelné, narazíte-li na nějaké takové.
+- <del>Na základě průzkumu navrhněte řešení, jak propojit používané služby tak, aby mezi sebou lidé mohli komunikovat a sdílet organizační informace i bez toho, že by používali stejné komunikační platformy.</del>
+- <del>Podrobně rozpracujte každý z těchto případů a snažte se o nalezení takového, které bude brát největší ohledy na přirozenost a zřejmost používaní (zvažte např. možnosti udržovaní vláken diskusí napříč všemi systémy apod.).</del>
+- <del>Vysvětlete, proč jsou některé tyto problémy nerealizovatelné, narazíte-li na nějaké takové.</del>
 - Realizujte ukázkovou webovou aplikaci uvedených vlastností.
 - Na závěr zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
