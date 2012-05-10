@@ -145,6 +145,18 @@ class User(db.Model, UserMixin, GravatarMixin):
             .filter(Contact.user == self)\
             .delete()
 
+    @classmethod
+    def fetch_by_email(self, email):
+        contact = Contact.query.filter(
+                db.or_(
+                    EmailContact.email == email,
+                    GoogleContact.email == email
+                )
+            )\
+            .filter(Contact.belongs_to_user == True)\
+            .first()
+        return contact.user
+
     def __repr__(self):
         return '<User %r (%r)>' % (self.name, self.email)
 

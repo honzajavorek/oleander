@@ -26,14 +26,18 @@ def sign_up():
     form = SignUpForm()
 
     if form.validate_on_submit():
-        user = User()
-        with db.transaction as session:
-            user.name = form.name.data
-            user.password = form.password.data
-            session.add(user)
-        with db.transaction:
-            user.primary_email = form.primary_email.data
-        return redirect(url_for('sign_in'))
+        user = User.fetch_by_email(form.primary_email.data)
+        if user:
+            form.add_error('email', 'User with such e-mail address already exists.')
+        else:
+            user = User()
+            with db.transaction as session:
+                user.name = form.name.data
+                user.password = form.password.data
+                session.add(user)
+            with db.transaction:
+                user.primary_email = form.primary_email.data
+            return redirect(url_for('sign_in'))
 
     return render_template('sign_up.html', form=form)
 
@@ -44,7 +48,7 @@ def sign_in():
     form = SignInForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.fetch_by_email(form.email.data)
         if not user:
             form.add_error('email', 'There is no such user.')
         elif not user.check_password(form.password.data):
