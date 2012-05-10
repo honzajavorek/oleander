@@ -9,80 +9,137 @@
 
 <h1>{{ event.name }}</h1>
 
-<div class="action_area">
-    <p>{{ button_link(url_for('edit_event', id=event.id), 'Edit event details') }}</p>
-</div>
+<form action="{{ url_for('edit_event', id=event.id) }}" method="post">
 
+{{ form_errors(form) }}
 <table>
     <tr>
-        <th><label>When</label></th>
-        <td>
-            {% if event.starts_at %}
-                {{ event.starts_at|datetime }}
-            {% else %}
-                unknown (yet)
-            {% endif %}
-        </td>
+        <th>{{ form.name.label }}</th>
+        <td>{{ form.name(size=50) }}</td>
     </tr>
     <tr>
-        <th><label>Where</label></th>
-        <td>
-            {% if event.venue %}
-                {{ event.venue.name }}
-            {% else %}
-                unknown (yet)
-            {% endif %}
-        </td>
+        <th>{{ form.starts_at.label }}</th>
+        <td>{{ form.starts_at }}</td>
     </tr>
-    {% if event.description %}
     <tr>
-        <th><label>What</label></th>
-        <td>
-            {{ event.description }}
-        </td>
+        <th>{{ form.venue.label }}</th>
+        <td>{{ form.venue(size=30) }}</td>
     </tr>
-    {% endif %}
+    <tr>
+        <th>{{ form.description.label }}</th>
+        <td>{{ form.description(rows=5, cols=50) }}</td>
+    </tr>
 </table>
 
-{% with contacts = event.contacts|list %}
-    {% if contacts %}
-        <ul class="contacts_list">
-            {% for contact in contacts %}
-                <li>{{ contact_box(contact) }}</li>
-            {% endfor %}
-        </ul>
-        <br class="cleaner">
-    {% else %}
-        <p>Empty event.</p>
-    {% endif %}
-{% endwith %}
+<h2>Invitations</h2>
+{{ form.contacts_invited_ids_str() }}
+<ul id="members" class="contacts_list">
+    {% for contact in event.contacts_invited %}
+        <li>{{ contact_box(contact) }}</li>
+    {% endfor %}
+</ul>
+<br class="cleaner">
+<table>
+    <tr><th>
+        <label for="members_add">Add member</label>
+    </th><td>
+        <input id="members_add" type="search" placeholder="Type to search">
+    </td></tr>
+</table>
+<ul id="members_search_results" class="contacts_list"></ul>
+<br class="cleaner">
+
+<div class="action_area">
+    {{ form.csrf_token }}
+    <button type="submit">Save</button> or <a href="{{ url_for('events') }}">Cancel</a>
+</div>
+
+{{ form.csrf_token }}
+</form>
+{% endblock %}
 
 
+{% block script %}
+<script>
+    var lastXhr;
 
+    updateContactsField = function() {
+        var ids = [];
+        $('#members').find('li').each(function(i, element) {
+            ids.push($(element).find('.contact').attr('data-contact-id'));
+        });
+        $('#contacts_invited_ids_str').val(ids.join(','));
+    }
 
+    $(document).ready(function() {
+        $('#members_add').keyup(function(event) {
+            var term = $(this).val();
+            var $ul = $('#members_search_results');
 
+            if (lastXhr) {
+                lastXhr.abort();
+            }
+            $ul.empty();
 
-{% if action == 'edit' %}
-    <form action="{{ url_for('edit_event', id=event.id) }}" method="post">
-        {{ form_errors(form) }}
+            if (term) {
+                var uri = '/events/search-contacts/' + encodeURIComponent(term);
+                lastXhr = $.getJSON(uri, function(data, status, xhr) {
+                    if (xhr === lastXhr) {
+                        $.each(data.contacts, function(i, contact) {
+                            var $li = $('<li>', {'html': contact.html_search_result});
+                            $li.appendTo($ul);
+                            $('a.icon[title]', $li).tipsy({opacity: 1});
+                            $li.data('contact', contact);
+                        });
+                    }
+                });
+            }
+        });
+        $('#members_add').keyup();
 
-        <h1>{{ form.name(placeholder=form.name.label.text) }}</h1>
-        <p><a href="{{ url_for('event', id=event.id) }}">Cancel</a> or <button type="submit">Save</button></p>
+        $members = $('#members');
+        $searchResults = $('#members_search_results');
 
-        <h4>Members</h4>
-        {{ form.contact_ids_str() }}
-        <ul id="members">
-            {% for contact in event.contacts %}
-                <li>{% include '_contact.html' %}</li>
-            {% endfor %}
-        </ul>
-        <p><label for="members-add">Add member</label> <input id="members-add" type="search"></p>
-        <ul id="members-search-results"></ul>
+        $('li a', $searchResults).live('click', function(event) {
+            event.preventDefault();
 
-        {{ form.csrf_token }}
-    </form>
-{% else %}
+            var $searchResult = $(this).closest('li');
+            var contact = $searchResult.data('contact');
 
-{% endif %}
+            var alreadyAdded = false;
+            $members.find('li').each(function(i, element) {
+                if ($(element).find('.contact').attr('data-contact-id') == contact.id) {
+                    alreadyAdded = true;
+                    return false;
+                }
+            });
 
+            if (!alreadyAdded) {
+                var $li = $('<li>', {'html': contact.html});
+                $li.data('contact', contact);
+                $('a.icon[title]', $li).tipsy({opacity: 1});
+                $li.appendTo($members);
+
+                updateContactsField();
+            }
+
+            $('.contact[data-contact-id="' + contact.id + '"]', $members)
+                .addClass('highlighted')
+                .delay(500)
+                .queue(function(next){
+                    $(this).removeClass('highlighted');
+                    next();
+                });
+        });
+
+        $('li a', $members).live('click', function(event) {
+            event.preventDefault();
+
+            $(this).tipsy('hide');
+            $(this).closest('li').remove();
+
+            updateContactsField();
+        });
+    });
+</script>
 {% endblock %}

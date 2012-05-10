@@ -18,24 +18,6 @@ import times
 @login_required
 def events():
     """Events index."""
-    # event = current_user.event_or_404(id) if id else None
-    # form = EventForm(obj=event)
-
-    # if form.validate_on_submit():
-    #     with db.transaction as session:
-    #         if event:
-    #             # editation
-    #             form.populate_obj(event)
-
-    #         else:
-    #             # creation
-    #             event = Event()
-    #             form.populate_obj(event)
-    #             event.user = current_user
-    #             session.add(event)
-
-    #     return redirect(url_for('events'))
-
     events = {
         'events_active': current_user.events_active.limit(3),
         'events_upcoming': current_user.events_upcoming,
@@ -48,7 +30,7 @@ def events():
 
 @app.route('/events/new/', methods=('GET', 'POST'))
 @login_required
-def new_event():
+def create_event():
     form = EventForm()
 
     if form.validate_on_submit():
@@ -70,9 +52,7 @@ def new_event():
         dt = datetime.datetime.combine(dt.date(), datetime.time(20, 00, 00))
         form.starts_at.data = dt
 
-    # times.format(dt, getattr(current_user, 'timezone', app.config['DEFAULT_TIMEZONE']), '%x, %H:%M')
-
-    return render_template('new_event.html', form=form)
+    return render_template('create_event.html', form=form)
 
 
 @app.route('/events/search-contacts/<string:term>')
@@ -123,10 +103,11 @@ def edit_event(id):
     event = current_user.event_or_404(id)
     form = EventForm(obj=event)
 
-    if form and form.validate_on_submit():
+    if form.validate_on_submit():
         with db.transaction as session:
             form.populate_obj(event)
-        return redirect(url_for('event', id=id))
+            event.starts_at = times.to_universal(form.starts_at.data, current_user.timezone)
+        return redirect(url_for('event', id=event.id))
 
     return render_template('edit_event.html', event=event, action='edit', form=form)
 

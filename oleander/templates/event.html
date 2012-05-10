@@ -30,10 +30,9 @@
 <div class="event{% if event.is_cancelled %} cancelled{% endif %}">
 <h1>{{ event.verbose_name }}</h1>
 
-<form class="main_form">
 {% set contacts = event.contacts|list %}
 
-<table>
+<table class="main_form">
     <tr>
         <th><label>When</label></th>
         <td>
@@ -138,6 +137,7 @@
 {% endif %}
 
 {% if current_user.is_authenticated() %}
+<form class="main_form">
     <div class="action_area">
         <p>
             {{ button_link(url_for('edit_event', id=event.id), 'Edit event details') }}
@@ -151,7 +151,7 @@
             {% endif %}
         </p>
     </div>
-{% endif %}
 </form>
+{% endif %}
 </div>
 {% endblock %}

@@ -25,7 +25,7 @@ def datetime(dt):
 @app.template_filter('map_link')
 def map_link(place_name):
     """Returns URL to maps."""
-    return 'https://maps.google.com/maps?q=' + urllib2.quote(place_name)
+    return 'https://maps.google.com/maps?q=' + urllib2.quote(place_name.encode('utf-8'))
 
 
 from oleander.letters import groupby as groupby_alphabet
