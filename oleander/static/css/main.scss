@@ -492,6 +492,10 @@ $contact-width: 250px;
     th {
         min-width: 40%;
     }
+
+    #content &.cancelled h1 {
+        background: $text-color;
+    }
 }
 
 .attendance_group {

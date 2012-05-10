@@ -3,7 +3,7 @@
 
 
 {% block title -%}
-    {{- event.name }}{% if current_user.is_authenticated() %} - Oleander{% endif -%}
+    {{- event.verbose_name }}{% if current_user.is_authenticated() %} - Oleander{% endif -%}
 {%- endblock %}
 
 
@@ -27,8 +27,8 @@
 </p>
 {% endif %}
 
-<div class="event">
-<h1>{{ event.name }}</h1>
+<div class="event{% if event.is_cancelled %} cancelled{% endif %}">
+<h1>{{ event.verbose_name }}</h1>
 
 {% if current_user.is_authenticated() %}
 <div class="action_area">
@@ -69,21 +69,21 @@
 
 <h2>Attendance</h2>
 <div class="attendance_group">
-{% set yes_contacts = event.contacts_maybe|list %}
-{% set yes_contacts_count = yes_contacts|length %}
+{% set going_contacts = event.contacts_maybe|list %}
+{% set going_contacts_count = going_contacts|length %}
 
 {% set maybe_contacts = event.contacts_maybe|list %}
 {% set maybe_contacts_count = maybe_contacts|length %}
 
-{% set no_contacts = event.contacts_maybe|list %}
-{% set no_contacts_count = no_contacts|length %}
+{% set declined_contacts = event.contacts_maybe|list %}
+{% set declined_contacts_count = declined_contacts|length %}
 
 {% if attendance_group == 'maybe' %}
     <nav>
         <ul>
-            <li><a href="{{ url_for('event', id=event.id, attendance_group='yes') }}">{{ yes_contacts_count }} going</a></li>
+            <li><a href="{{ url_for('event', id=event.id, attendance_group='going') }}">{{ going_contacts_count }} going</a></li>
             <li class="active"><h3>{{ maybe_contacts_count }} maybe</h3></li>
-            {% if no_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='no') }}">{{ no_contacts_count }} declined</a></li>{% endif %}
+            {% if declined_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='declined') }}">{{ declined_contacts_count }} declined</a></li>{% endif %}
         </ul>
     </nav>
 
@@ -98,18 +98,18 @@
         <p>Nobody.</p>
     {% endif %}
 
-{% elif attendance_group == 'no' %}
+{% elif attendance_group == 'declined' %}
     <nav>
         <ul>
-            <li><a href="{{ url_for('event', id=event.id, attendance_group='yes') }}">{{ yes_contacts_count }} going</a></li>
+            <li><a href="{{ url_for('event', id=event.id, attendance_group='going') }}">{{ going_contacts_count }} going</a></li>
             {% if maybe_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='maybe') }}">{{ maybe_contacts_count }} maybe</a></li>{% endif %}
-            <li class="active"><h3>{{ no_contacts_count }} declined</h3></li>
+            <li class="active"><h3>{{ declined_contacts_count }} declined</h3></li>
         </ul>
     </nav>
 
-    {% if no_contacts %}
+    {% if declined_contacts %}
         <ul class="contacts_list">
-            {% for contact in no_contacts %}
+            {% for contact in declined_contacts %}
                 <li>{{ contact_box(contact) }}</li>
             {% endfor %}
         </ul>
@@ -119,12 +119,12 @@
     {% endif %}
 
 {% else %}
-    {% if yes_contacts_count or maybe_contacts_count or no_contacts_count %}
+    {% if going_contacts_count or maybe_contacts_count or declined_contacts_count %}
     <nav>
         <ul>
-            <li class="active"><h3>{{ yes_contacts_count }} going</h3></li>
+            <li class="active"><h3>{{ going_contacts_count }} going</h3></li>
             {% if maybe_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='maybe') }}">{{ maybe_contacts_count }} maybe</a></li>{% endif %}
-            {% if no_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='no') }}">{{ no_contacts_count }} declined</a></li>{% endif %}
+            {% if declined_contacts_count %}<li><a href="{{ url_for('event', id=event.id, attendance_group='declined') }}">{{ declined_contacts_count }} declined</a></li>{% endif %}
         </ul>
     </nav>
     {% endif %}
@@ -132,7 +132,7 @@
     {% if current_user.is_authenticated() %}
     <div class="action_area">
         {% with invite_link = '#' %}
-            {% if yes_contacts %}
+            {% if going_contacts %}
                 <p>{{ button_link(invite_link, 'Invite more contacts') }}</p>
             {% else %}
                 <p>{{ button_link(invite_link, 'Invite contacts') }}</p>
@@ -141,9 +141,9 @@
     </div>
     {% endif %}
 
-    {% if yes_contacts %}
+    {% if going_contacts %}
         <ul class="contacts_list">
-            {% for contact in yes_contacts %}
+            {% for contact in going_contacts %}
                 <li>{{ contact_box(contact) }}</li>
             {% endfor %}
         </ul>
@@ -154,5 +154,17 @@
 
 {% endif %}
 </div>
+
+{% if current_user.is_authenticated() %}
+<div class="action_area">
+    <p>
+    {% if event.is_cancelled %}
+        {{ button_link(url_for('revive_event', id=event.id), 'Revive this event') }}
+    {% else %}
+        {{ button_link(url_for('cancel_event', id=event.id), 'Cancel this event') }}
+    {% endif %}
+    </p>
+</div>
+{% endif %}
 </div>
 {% endblock %}

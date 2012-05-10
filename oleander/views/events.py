@@ -7,6 +7,7 @@ from oleander import app, db
 from oleander.ajax import ajax_only, template_to_html
 from oleander.models import Event
 from oleander.forms import EventForm
+import times
 
 
 @app.route('/events/')
@@ -51,17 +52,28 @@ def search_contacts(term):
 
 
 
-@app.route('/events/delete/<int:id>')
+@app.route('/events/cancel/<int:id>')
 @login_required
-def delete_event(id):
-    """Removes event by ID."""
+def cancel_event(id):
+    """Canceles event by ID."""
+    event = current_user.event_or_404(id)
     with db.transaction as session:
-        current_user.event_or_404(id).delete()
+        event.cancelled_at = times.now()
     return redirect(url_for('events'))
 
 
-@app.route('/event/<int:id>', defaults={'attendance_group': 'yes'})
-@app.route('/event/<int:id>/rsvp/<any(maybe,no):attendance_group>')
+@app.route('/events/revive/<int:id>')
+@login_required
+def revive_event(id):
+    """Canceles event by ID."""
+    event = current_user.event_or_404(id)
+    with db.transaction as session:
+        event.cancelled_at = None
+    return redirect(url_for('event', id=id))
+
+
+@app.route('/event/<int:id>', defaults={'attendance_group': 'going'})
+@app.route('/event/<int:id>/rsvp/<any(maybe,declined):attendance_group>')
 def event(id, attendance_group):
     """Public event page."""
     event = Event.fetch_or_404(id)

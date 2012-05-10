@@ -9,6 +9,7 @@ import string
 import operator
 import sqlalchemy
 from datetime import timedelta
+import times
 
 
 class GravatarMixin(object):
@@ -143,6 +144,7 @@ class User(db.Model, UserMixin, GravatarMixin):
         Contact.query.with_polymorphic(Contact)\
             .filter(Contact.id == id)\
             .filter(Contact.user == self)\
+            .filter(Contact.is_primary == False)\
             .delete()
 
     @classmethod
@@ -326,7 +328,7 @@ class Attendance(db.Model):
     event = db.relationship('Event')
     contact_id = db.Column(db.Integer, db.ForeignKey('contact.id'), primary_key=True)
     contact = db.relationship('Contact')
-    type = db.Column(db.Enum(*['yes', 'maybe', 'no'], name='attendance_types'), nullable=False)
+    type = db.Column(db.Enum(*['going', 'maybe', 'declined', 'invited'], name='attendance_types'), nullable=False)
 
 
 class Venue(object):
@@ -371,7 +373,7 @@ class Event(db.Model):
     user = db.relationship('User', backref=db.backref('events', cascade='all', lazy='dynamic'))
     attendance = db.relationship('Attendance')
     created_at = db.Column(db.DateTime(), nullable=False)
-    updated_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False, onupdate=lambda: times.now())
     cancelled_at = db.Column(db.DateTime())
     starts_at = db.Column(db.DateTime())
     _ends_at = db.Column('ends_at', db.DateTime())
@@ -446,6 +448,13 @@ class Event(db.Model):
         if self._are_valid_coords(value.lat, value.lng):
             self._venue_lat = value.lat
             self._venue_lng = value.lng
+
+    @property
+    def verbose_name(self):
+        verbose_name = self.name
+        if self.is_cancelled:
+            verbose_name += ' (cancelled)'
+        return verbose_name
 
     @classmethod
     def fetch_or_404(self, id):

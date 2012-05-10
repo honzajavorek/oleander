@@ -42,6 +42,14 @@
             <ul class="contacts_list">
             {% for contact in group.list %}
                 <li>
+                    {% if contact.is_primary %}
+                    {{
+                        contact_box(
+                            contact,
+                            current_user=current_user
+                        )
+                    }}
+                    {% else %}
                     {{
                         contact_box(
                             contact,
@@ -51,6 +59,7 @@
                             current_user=current_user
                         )
                     }}
+                    {% endif %}
                 </li>
             {% endfor %}
             </ul>

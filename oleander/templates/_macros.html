@@ -69,8 +69,6 @@
             <strong class="name">
                 {% if term %}
                     {{ contact.name|mark(term, pattern='^%(term)s') }}
-                {% elif contact.belongs_to_user and contact.user == current_user %}
-                    me
                 {% else %}
                     {{ contact.name }}
                 {% endif %}
@@ -84,8 +82,14 @@
                     {% endif %}
                 </span>
             {% endif %}
-            {% if contact.is_primary and contact.user == current_user %}
-                <small class="info">my primary contact</small>
+            {% if contact.user == current_user and contact.belongs_to_user %}
+                <small class="info">
+                {% if contact.is_primary %}
+                    me &ndash; primary contact
+                {% else %}
+                    me
+                {% endif %}
+                </small>
             {% endif %}
             <span class="type">{{ contact.label|capitalize }}</span>
         </div>
