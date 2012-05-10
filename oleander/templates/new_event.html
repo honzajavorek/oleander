@@ -1,0 +1,141 @@
+{% extends '_layout.html' %}
+{% from '_macros.html' import form_errors, contact_box, button_link, small_contact %}
+
+
+{% block content %}
+<p class="breadcrumbs">
+    <a href="{{ url_for('events') }}">Events</a> &raquo; New event
+</p>
+
+<h1>New event</h1>
+
+<form action="{{ url_for('new_event') }}" method="post">
+
+{{ form_errors(form) }}
+<table>
+    <tr>
+        <th>{{ form.name.label }}</th>
+        <td>{{ form.name(size=50) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form.starts_at.label }}</th>
+        <td>{{ form.starts_at(placeholder=now) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form.venue.label }}</th>
+        <td>{{ form.venue(size=30) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form.description.label }}</th>
+        <td>{{ form.description(rows=5, cols=50) }}</td>
+    </tr>
+</table>
+
+<h2>Invitations</h2>
+{{ form.contacts_invited_ids_str() }}
+<ul id="members" class="contacts_list"></ul>
+<br class="cleaner">
+<table>
+    <tr><th>
+        <label for="members_add">Add member</label>
+    </th><td>
+        <input id="members_add" type="search" placeholder="Type to search">
+    </td></tr>
+</table>
+<ul id="members_search_results" class="contacts_list"></ul>
+<br class="cleaner">
+
+<div class="action_area">
+    {{ form.csrf_token }}
+    <button type="submit">Save</button> or <a href="{{ url_for('events') }}">Cancel</a>
+</div>
+
+{{ form.csrf_token }}
+</form>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    var lastXhr;
+
+    updateContactsField = function() {
+        var ids = [];
+        $('#members').find('li').each(function(i, element) {
+            ids.push($(element).find('.contact').attr('data-contact-id'));
+        });
+        $('#contacts_invited_ids_str').val(ids.join(','));
+    }
+
+    $(document).ready(function() {
+        $('#members_add').keyup(function(event) {
+            var term = $(this).val();
+            var $ul = $('#members_search_results');
+
+            if (lastXhr) {
+                lastXhr.abort();
+            }
+            $ul.empty();
+
+            if (term) {
+                var uri = '/events/search-contacts/' + encodeURIComponent(term);
+                lastXhr = $.getJSON(uri, function(data, status, xhr) {
+                    if (xhr === lastXhr) {
+                        $.each(data.contacts, function(i, contact) {
+                            var $li = $('<li>', {'html': contact.html_search_result});
+                            $li.appendTo($ul);
+                            $('a.icon[title]', $li).tipsy({opacity: 1});
+                            $li.data('contact', contact);
+                        });
+                    }
+                });
+            }
+        });
+        $('#members_add').keyup();
+
+        $members = $('#members');
+        $searchResults = $('#members_search_results');
+
+        $('li a', $searchResults).live('click', function(event) {
+            event.preventDefault();
+
+            var $searchResult = $(this).closest('li');
+            var contact = $searchResult.data('contact');
+
+            var alreadyAdded = false;
+            $members.find('li').each(function(i, element) {
+                if ($(element).find('.contact').attr('data-contact-id') == contact.id) {
+                    alreadyAdded = true;
+                    return false;
+                }
+            });
+
+            if (!alreadyAdded) {
+                var $li = $('<li>', {'html': contact.html});
+                $li.data('contact', contact);
+                $('a.icon[title]', $li).tipsy({opacity: 1});
+                $li.appendTo($members);
+
+                updateContactsField();
+            }
+
+            $('.contact[data-contact-id="' + contact.id + '"]', $members)
+                .addClass('highlighted')
+                .delay(500)
+                .queue(function(next){
+                    $(this).removeClass('highlighted');
+                    next();
+                });
+        });
+
+        $('li a', $members).live('click', function(event) {
+            event.preventDefault();
+
+            $(this).tipsy('hide');
+            $(this).closest('li').remove();
+
+            updateContactsField();
+        });
+    });
+</script>
+{% endblock %}

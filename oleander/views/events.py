@@ -36,12 +36,11 @@ def events():
 
     #     return redirect(url_for('events'))
 
-    limit = 5
     events = {
-        'events_active': current_user.events_active.limit(limit),
-        'events_upcoming': current_user.events_upcoming.limit(limit),
-        'events_past': current_user.events_past.limit(limit),
-        'events_cancelled': current_user.events_cancelled.limit(limit),
+        'events_active': current_user.events_active.limit(3),
+        'events_upcoming': current_user.events_upcoming,
+        'events_past': current_user.events_past,
+        'events_cancelled': current_user.events_cancelled,
     }
     events_count = sum(len(list(l)) for l in events.values())
     return render_template('events.html', events_count=events_count, **events)
@@ -68,7 +67,7 @@ def new_event():
         # default starts_at
         td = datetime.timedelta(days=1)
         dt = times.to_local(times.now(), current_user.timezone) + td
-        dt = datetime.datetime.combine(dt.date(), datetime.time(20, 00))
+        dt = datetime.datetime.combine(dt.date(), datetime.time(20, 00, 00))
         form.starts_at.data = dt
 
     # times.format(dt, getattr(current_user, 'timezone', app.config['DEFAULT_TIMEZONE']), '%x, %H:%M')
@@ -110,12 +109,11 @@ def revive_event(id):
     return redirect(url_for('event', id=id))
 
 
-@app.route('/event/<int:id>', defaults={'attendance_group': 'going'})
-@app.route('/event/<int:id>/rsvp/<any(maybe,declined):attendance_group>')
-def event(id, attendance_group):
+@app.route('/event/<int:id>')
+def event(id):
     """Public event page."""
     event = Event.fetch_or_404(id)
-    return render_template('event.html', event=event, attendance_group=attendance_group)
+    return render_template('event.html', event=event)
 
 
 @app.route('/event/edit/<int:id>', methods=('GET', 'POST'))

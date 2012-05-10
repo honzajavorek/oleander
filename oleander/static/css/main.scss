@@ -489,7 +489,7 @@ $contact-width: 250px;
     margin-bottom: 2 * $spacing;
 
     h3 {
-        margin-bottom: 0;
+        margin-bottom: $spacing / 2;
     }
 
     table {

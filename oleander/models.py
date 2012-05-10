@@ -144,14 +144,14 @@ class User(db.Model, UserMixin, GravatarMixin):
     def events_active(self):
         return self.events\
             .filter(Event.cancelled_at == None)\
-            .order_by(db.desc(Event.updated_at))
+            .order_by(db.desc(Event.updated_at), Event.name)
 
     @property
     def events_upcoming(self):
         return self.events\
             .filter(Event.starts_at > times.now())\
             .filter(Event.cancelled_at == None)\
-            .order_by(db.desc(Event.starts_at))
+            .order_by(Event.starts_at, Event.name)
 
     @property
     def events_current(self):
@@ -160,20 +160,20 @@ class User(db.Model, UserMixin, GravatarMixin):
             .filter(Event.starts_at < now)\
             .filter(Event.ends_at > now)\
             .filter(Event.cancelled_at == None)\
-            .order_by(Event.starts_at)
+            .order_by(Event.starts_at, Event.name)
 
     @property
     def events_past(self):
         return self.events\
             .filter(Event.starts_at < times.now())\
             .filter(Event.cancelled_at == None)\
-            .order_by(Event.starts_at)
+            .order_by(Event.starts_at, Event.name)
 
     @property
     def events_cancelled(self):
         return self.events\
             .filter(Event.cancelled_at != None)\
-            .order_by(db.desc(Event.cancelled_at))
+            .order_by(db.desc(Event.cancelled_at), Event.name)
 
     def delete_contact(self, id):
         Contact.query.with_polymorphic(Contact)\
@@ -359,9 +359,9 @@ class GoogleContact(GravatarMixin, Contact):
 class Attendance(db.Model):
     """Attendance of contacts to events."""
 
-    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), primary_key=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id', ondelete='cascade'), primary_key=True)
     event = db.relationship('Event')
-    contact_id = db.Column(db.Integer, db.ForeignKey('contact.id'), primary_key=True)
+    contact_id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     contact = db.relationship('Contact')
     type = db.Column(db.Enum(*['going', 'maybe', 'declined', 'invited'], name='attendance_types'), nullable=False)
 
