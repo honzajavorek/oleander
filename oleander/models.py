@@ -7,6 +7,7 @@ from random import choice
 import hashlib
 import string
 import operator
+import sqlalchemy
 from datetime import timedelta
 
 
@@ -23,27 +24,44 @@ class User(db.Model, UserMixin, GravatarMixin):
     """User model class."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    _name = db.Column('name', db.String(100), nullable=False)
     password_hash = db.Column(db.String(40), nullable=False)
     password_salt = db.Column(db.String(10), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default=app.config['DEFAULT_TIMEZONE'])
 
     def _get_contact(self, type):
-        return self.contacts.filter(Contact.type == type)\
-            .filter(Contact.belongs_to_user == True)\
-            .order_by(db.desc(Contact.is_primary))\
-            .first()
+        try:
+            return self.contacts.filter(Contact.type == type)\
+                .filter(Contact.belongs_to_user == True)\
+                .order_by(db.desc(Contact.is_primary))\
+                .first()
+        except sqlalchemy.orm.exc.DetachedInstanceError:
+            return None
 
     def _set_contact(self, type, field_name, field_value, as_primary=False):
-        contact = self.contacts.filter(Contact.type == type)\
-            .filter(getattr(Contact, field_name) == field_value)\
-            .first()
+        # no fun when name is missing
+        if not self.name:
+            raise ValueError("Can't create dependent contacts without name.")
+
+        cls = _contact_type_factory(type)
+        try:
+            contact = cls.query.filter(cls.belongs_to_user == True)\
+                .filter(cls.user == self)\
+                .filter(cls.type == type)\
+                .filter_by(**{field_name: field_value})\
+                .first()
+        except sqlalchemy.orm.exc.DetachedInstanceError:
+            contact = None
+
         if not contact:
-            contact = Contact()
+            contact = cls()
             contact.type = type
             contact.user = self
             setattr(contact, field_name, field_value)
+
+        contact.name = self.name
         contact.belongs_to_user = True
+
         if as_primary:
             contact.set_as_primary()
 
@@ -62,6 +80,21 @@ class User(db.Model, UserMixin, GravatarMixin):
     @primary_email.setter
     def primary_email(self, value):
         self._set_contact('email', field_name='email', field_value=value, as_primary=True)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+        try:
+            Contact.query.with_polymorphic(Contact)\
+                .filter(Contact.belongs_to_user == True)\
+                .filter(Contact.user == self)\
+                .update({Contact.name: value})
+        except sqlalchemy.orm.exc.DetachedInstanceError:
+            pass
 
     def _generate_salt(self, length=10, chars=string.letters + string.digits):
         """Generates random alphanumeric string of specified length."""
@@ -106,8 +139,29 @@ class User(db.Model, UserMixin, GravatarMixin):
         """Returns user's event by given ID or aborts the request."""
         return self.events.filter(Event.id == id).first_or_404()
 
+    def delete_contact(self, id):
+        Contact.query.with_polymorphic(Contact)\
+            .filter(Contact.id == id)\
+            .filter(Contact.user == self)\
+            .delete()
+
     def __repr__(self):
         return '<User %r (%r)>' % (self.name, self.email)
+
+
+def _contact_type_factory(type):
+    if type == 'email':
+        return EmailContact
+    if type == 'google':
+        return GoogleContact
+    if type == 'facebook':
+        return FacebookContact
+    raise TypeError("No contact type associated with '%s'." % type)
+
+
+def create_contact(type):
+    cls = _contact_type_factory(type)
+    return cls()
 
 
 class ContactMixin(object):
@@ -170,9 +224,12 @@ class Contact(db.Model, ContactMixin):
         att.type = type
 
     def set_as_primary(self):
-        Contact.query.filter(Contact.user_id == self.user_id)\
+        primary_contact = Contact.query\
+            .filter(Contact.user_id == self.user_id)\
             .filter(Contact.is_primary == True)\
-            .update({Contact.is_primary: False})
+            .first()
+        if primary_contact:
+            primary_contact.is_primary = False
         self.is_primary = True
 
     def __repr__(self):

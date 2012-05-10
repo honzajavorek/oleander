@@ -37,7 +37,7 @@ class SignUpForm(Form):
         wtf.Required(),
         wtf.Length(max=100),
     ], description='e.g. Johnny')
-    email = wtf.TextField('E-mail', validators=[
+    primary_email = wtf.TextField('E-mail', validators=[
         wtf.Required(),
         wtf.Email(),
         wtf.Length(max=100),

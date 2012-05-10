@@ -3,7 +3,7 @@
 
 from flask import render_template, redirect, url_for, request
 from flask.ext.login import login_required, login_user, logout_user, LoginManager
-from oleander import app
+from oleander import app, db
 from oleander.forms import SignUpForm, SignInForm
 from oleander.models import User
 
@@ -28,8 +28,11 @@ def sign_up():
     if form.validate_on_submit():
         user = User()
         with db.transaction as session:
-            form.populate_obj(user)
+            user.name = form.name.data
+            user.password = form.password.data
             session.add(user)
+        with db.transaction:
+            user.primary_email = form.primary_email.data
         return redirect(url_for('sign_in'))
 
     return render_template('sign_up.html', form=form)

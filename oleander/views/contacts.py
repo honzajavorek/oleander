@@ -8,7 +8,7 @@ from oleander.forms import EmailContactForm
 from oleander.models import Contact, GoogleContact, EmailContact
 
 
-def email_contact_factory(email):
+def create_email_contact(email):
     if email.endswith(('gmail.com', 'googlemail.com')):
         return GoogleContact()
     return EmailContact()
@@ -22,7 +22,7 @@ def contacts():
 
     if form.validate_on_submit():
         with db.transaction as session:
-            contact = email_contact_factory(form.email.data)
+            contact = create_email_contact(form.email.data)
             form.populate_obj(contact)
             contact.user = current_user
             session.add(contact)
@@ -37,5 +37,5 @@ def contacts():
 def delete_contact(id):
     """Removes contact by ID."""
     with db.transaction as session:
-        Contact.query.with_polymorphic(Contact).filter(Contact.id == id).filter(Contact.user == current_user).delete()
+        current_user.delete_contact(id)
     return redirect(url_for('contacts'))
