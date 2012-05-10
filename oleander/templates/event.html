@@ -14,7 +14,7 @@
 
 {% block footer_contents %}
     {% if current_user.is_anonymous() %}
-        <p>powered by {{ event.user.name }}'s {{ nav_link('index', 'Oleander') }}</p>
+        <p>powered by {{ event.user.name }}'s {{ nav_link('events', 'Oleander') }}</p>
     {% endif %}
     {{ super() }}
 {% endblock %}

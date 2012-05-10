@@ -12,7 +12,7 @@
     <div id="document">
         {% block header %}
         <header class="top_bar">
-            <h1>{{ nav_link('index', 'Oleander') }}</h1>
+            <h1>{{ nav_link('events', 'Oleander') }}</h1>
         </header>
         {% endblock %}
         <div id="content">
@@ -29,9 +29,9 @@
         {% if current_user.is_authenticated() %}
             <nav class="top_bar">
                 <ul>
-                    <li>{{ nav_link('index', 'Dashboard', title='See what\'s new') }}</li>{# to prevent whitespace -#}
                     <li>{{ nav_link('events', 'Events', title='Manage your events') }}</li>{# to prevent whitespace -#}
-                    <li>{{ nav_link('contacts', 'Contacts', title='Manage your contacts') }}</li>
+                    <li>{{ nav_link('contacts', 'Contacts', title='Manage your contacts') }}</li>{# to prevent whitespace -#}
+                    <li>{{ nav_link('settings', 'Settings', title='Adjust your settings') }}</li>
                 </ul>
             </nav>
             <aside class="current_user top_bar">

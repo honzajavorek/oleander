@@ -10,7 +10,7 @@ from oleander.forms import EventForm
 import times
 
 
-@app.route('/events/')
+@app.route('/')
 @app.route('/events/<any(new):action>/', methods=('GET', 'POST'))
 @app.route('/events/<any(edit):action>/<int:id>', methods=('GET', 'POST'))
 @login_required

@@ -5,7 +5,6 @@ modules = [
     'auth',
     'contacts',
     'events',
-    'index',
     'settings',
 ]
 
