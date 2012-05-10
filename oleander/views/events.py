@@ -7,35 +7,43 @@ from oleander import app, db
 from oleander.ajax import ajax_only, template_to_html
 from oleander.models import Event
 from oleander.forms import EventForm
+import operator
 import times
 
 
 @app.route('/')
-@app.route('/events/<any(new):action>/', methods=('GET', 'POST'))
-@app.route('/events/<any(edit):action>/<int:id>', methods=('GET', 'POST'))
+# @app.route('/events/<any(new):action>/', methods=('GET', 'POST'))
+# @app.route('/events/<any(edit):action>/<int:id>', methods=('GET', 'POST'))
 @login_required
-def events(action=None, id=None):
+def events():
     """Events index."""
-    event = current_user.event_or_404(id) if id else None
-    form = EventForm(obj=event)
+    # event = current_user.event_or_404(id) if id else None
+    # form = EventForm(obj=event)
 
-    if form.validate_on_submit():
-        with db.transaction as session:
-            if event:
-                # editation
-                form.populate_obj(event)
+    # if form.validate_on_submit():
+    #     with db.transaction as session:
+    #         if event:
+    #             # editation
+    #             form.populate_obj(event)
 
-            else:
-                # creation
-                event = Event()
-                form.populate_obj(event)
-                event.user = current_user
-                session.add(event)
+    #         else:
+    #             # creation
+    #             event = Event()
+    #             form.populate_obj(event)
+    #             event.user = current_user
+    #             session.add(event)
 
-        return redirect(url_for('events'))
+    #     return redirect(url_for('events'))
 
-    events = current_user.events
-    return render_template('events.html', action=action, edited_event=event, events=events, form=form)
+    limit = 5
+    events = {
+        'events_active': current_user.events_active.limit(limit),
+        'events_upcoming': current_user.events_upcoming.limit(limit),
+        'events_past': current_user.events_past.limit(limit),
+        'events_cancelled': current_user.events_cancelled.limit(limit),
+    }
+    events_count = sum(len(list(l)) for l in events.values())
+    return render_template('events.html', events_count=events_count, **events)
 
 
 @app.route('/events/search-contacts/<string:term>')

@@ -109,3 +109,44 @@
         {{ avatar(contact.avatar, alt=contact.name, size=size) }}
     </span>
 {% endmacro %}
+
+
+{% macro events_table(header, events) %}
+    {% set events = events|list %}
+    {% if events|length %}
+        <h2>{{ header }}</h2>
+        <table class="events_list">
+        {% for event in events %}
+            <tr class="event">
+                <th class="date">
+                    {% if event.starts_at %}
+                        {{ event.starts_at|datetime }}
+                    {% else %}
+                        unknown
+                    {% endif %}
+                </th>
+                <th>
+                    <a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a>
+                </th>
+                <td>
+                    {% set contacts = event.contacts|list %}
+                    {% for contact in contacts[10:] %}
+                        {{ small_contact(contact, size=20) }}
+                    {% endfor %}
+                </td>
+                <td title="Attendees">
+                    <strong>
+                    {% with going_count = event.contacts_going|list|length, maybe_count = event.contacts_maybe|list|length %}
+                        {% if going_count != maybe_count %}
+                            {{ going_count }}&ndash;{{ maybe_count }}
+                        {% else %}
+                            {{ going_count }}
+                        {% endif %}
+                    {% endwith %}
+                    </strong>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endmacro %}

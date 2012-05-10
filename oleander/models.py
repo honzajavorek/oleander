@@ -140,6 +140,41 @@ class User(db.Model, UserMixin, GravatarMixin):
         """Returns user's event by given ID or aborts the request."""
         return self.events.filter(Event.id == id).first_or_404()
 
+    @property
+    def events_active(self):
+        return self.events\
+            .filter(Event.cancelled_at == None)\
+            .order_by(db.desc(Event.updated_at))
+
+    @property
+    def events_upcoming(self):
+        return self.events\
+            .filter(Event.starts_at > times.now())\
+            .filter(Event.cancelled_at == None)\
+            .order_by(db.desc(Event.starts_at))
+
+    @property
+    def events_current(self):
+        now = times.now()
+        return self.events\
+            .filter(Event.starts_at < now)\
+            .filter(Event.ends_at > now)\
+            .filter(Event.cancelled_at == None)\
+            .order_by(Event.starts_at)
+
+    @property
+    def events_past(self):
+        return self.events\
+            .filter(Event.starts_at < times.now())\
+            .filter(Event.cancelled_at == None)\
+            .order_by(Event.starts_at)
+
+    @property
+    def events_cancelled(self):
+        return self.events\
+            .filter(Event.cancelled_at != None)\
+            .order_by(db.desc(Event.cancelled_at))
+
     def delete_contact(self, id):
         Contact.query.with_polymorphic(Contact)\
             .filter(Contact.id == id)\

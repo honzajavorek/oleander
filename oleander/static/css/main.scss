@@ -469,7 +469,18 @@ $contact-width: 250px;
 /* Events */
 
 .events_list {
-    margin: 2 * $spacing 0;
+    margin: $spacing 0;
+    width: 100%;
+
+    td, th {
+        padding: ($spacing / 2) $spacing;
+        border-bottom: 1px $decorative-grey-color dotted;
+    }
+
+    th { @extend .legend; background: none; }
+    td { text-align: center; width: 15%; }
+    strong { padding: 0.3em 0.55em 0.3em 0.5em; background: $background-color; color: #FFF; border-radius: 3px; }
+    th.date { min-width: 15%; }
 }
 
 .event {

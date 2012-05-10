@@ -1,15 +1,23 @@
 {% extends '_layout.html' %}
-{% from '_macros.html' import form_errors, contact_box, button_link %}
+{% from '_macros.html' import form_errors, small_contact, contact_box, button_link, events_table %}
 
 
 {% block content %}
 <h1>Events</h1>
 
-{% if events|list %}
+{% if events_count %}
     <div class="action_area">
         <p>{{ button_link(url_for('events', action='new'), 'Create new') }}</p>
     </div>
 
+    {# events_table('Active', events_active) #}
+    {{ events_table('Upcoming', events_upcoming) }}
+    {{ events_table('Past', events_past) }}
+    {{ events_table('Cancelled', events_cancelled) }}
+
+
+
+{#
     <div class="events_list">
         {% for event in events %}
         <div class="event">
@@ -42,27 +50,14 @@
                     {{ form.csrf_token }}
                 </form>
             {% else %}
-                <h3 class="legend"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></h3>
-                <p class="icons">
-                    <a class="icon" href="{{ url_for('events', action='edit', id=event.id) }}" title="Edit event details, adjust members">Edit</a>
-                </p>
 
-                {% with contacts = event.contacts|list %}
-                    {% if contacts %}
-                        <ul class="contacts_list">
-                            {% for contact in contacts %}
-                                <li>{{ contact_box(contact) }}</li>
-                            {% endfor %}
-                        </ul>
-                        <br class="cleaner">
-                    {% else %}
-                        <p>Empty event.</p>
-                    {% endif %}
-                {% endwith %}
             {% endif %}
         </div>
         {% endfor %}
     </div>
+#}
+
+
 
 {% else %}
     <div class="action_area">
