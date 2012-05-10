@@ -110,9 +110,14 @@ class EmailContactForm(Form):
 class EventForm(Form):
     """Form to create or edit an event."""
 
-    name = wtf.TextField('Event name', validators=[
+    name = wtf.TextField('Name', validators=[
         wtf.Required(),
         wtf.Length(max=200),
     ])
-    contact_ids_str = wtf.HiddenField()
+    starts_at = wtf.DateTimeField('When', format='%Y-%m-%d %H:%M')
+    venue = wtf.TextField('Where', validators=[
+        wtf.Length(max=200),
+    ])
+    description = wtf.TextAreaField('What')
+    contacts_invited_ids_str = wtf.HiddenField()
 

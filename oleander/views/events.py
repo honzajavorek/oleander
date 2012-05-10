@@ -8,6 +8,7 @@ from oleander.ajax import ajax_only, template_to_html
 from oleander.models import Event
 from oleander.forms import EventForm
 import operator
+import datetime
 import times
 
 
@@ -44,6 +45,35 @@ def events():
     }
     events_count = sum(len(list(l)) for l in events.values())
     return render_template('events.html', events_count=events_count, **events)
+
+
+@app.route('/events/new/', methods=('GET', 'POST'))
+@login_required
+def new_event():
+    form = EventForm()
+
+    if form.validate_on_submit():
+        event = Event()
+        with db.transaction as session:
+            event.name = form.name.data
+            event.venue = form.venue.data
+            event.user = current_user
+            event.starts_at = times.to_universal(form.starts_at.data, current_user.timezone)
+            session.add(event)
+        with db.transaction:
+            event.contacts_invited_ids_str = form.contacts_invited_ids_str.data
+        return redirect(url_for('event', id=event.id))
+
+    else:
+        # default starts_at
+        td = datetime.timedelta(days=1)
+        dt = times.to_local(times.now(), current_user.timezone) + td
+        dt = datetime.datetime.combine(dt.date(), datetime.time(20, 00))
+        form.starts_at.data = dt
+
+    # times.format(dt, getattr(current_user, 'timezone', app.config['DEFAULT_TIMEZONE']), '%x, %H:%M')
+
+    return render_template('new_event.html', form=form)
 
 
 @app.route('/events/search-contacts/<string:term>')

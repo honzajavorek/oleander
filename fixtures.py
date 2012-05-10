@@ -103,7 +103,7 @@ class EventData(DataSet):
     class happyevent:
         name = u'Happy Event'
         description = u'Happy event for happy people!'
-        venue = models.Venue(name='Kaverna, Brno', lat=49.19921, lng=16.60208)
+        venue = 'Kaverna, Brno'
         user = UserData.honza
         created_at = now
         updated_at = now

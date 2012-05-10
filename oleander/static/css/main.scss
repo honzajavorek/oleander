@@ -95,13 +95,15 @@ td, th { vertical-align: top; text-align: left; }
 .js form .help { position: absolute; left: -38000px; }
 
 form table {
+    margin: 0 0 $spacing 0;
+
     td, th {
         line-height: 2em;
     }
 
     th {
-        vertical-align: middle;
-        padding-right: 0.5em;
+        vertical-align: top;
+        padding-right: 0.5em; padding-top: 0.15em;
         min-width: 5em;
     }
 }

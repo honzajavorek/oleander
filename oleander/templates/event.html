@@ -51,7 +51,7 @@
         <th><label>Where</label></th>
         <td>
             {% if event.venue %}
-                {{ event.venue.name }} <small><a href="{{ event.venue.name|map_link }}" target="_blank">on map</a></small>
+                {{ event.venue }} <small><a href="{{ event.venue|map_link }}" target="_blank">on map</a></small>
             {% else %}
                 unknown (yet)
             {% endif %}

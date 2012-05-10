@@ -8,7 +8,7 @@ import hashlib
 import string
 import operator
 import sqlalchemy
-from datetime import timedelta
+import datetime
 import times
 
 
@@ -365,32 +365,8 @@ class Attendance(db.Model):
     contact = db.relationship('Contact')
     type = db.Column(db.Enum(*['going', 'maybe', 'declined', 'invited'], name='attendance_types'), nullable=False)
 
-
-class Venue(object):
-    """Simple data container representing an event's venue."""
-
-    def __init__(self, name=None, lat=None, lng=None):
-        self.name = name
-        self.lat = lat
-        self.lng = lng
-
-    @property
-    def coords(self):
-        return (self.lat, self.lng)
-
-    @coords.setter
-    def coords(self, value):
-        self.lat, self.lng = value
-
-    def to_dict(self):
-        return dict(
-            name=self.name,
-            lat=self.lat,
-            lng=self.lng
-        )
-
-    def __repr__():
-        return '<Venue %r (%r;%r)>' % (self.name, self.lat, self.lng)
+    def __repr__(self):
+        return '<Attendance %r @ %r (%s)>' % (self.contact, self.event, self.type)
 
 
 class Event(db.Model):
@@ -401,14 +377,12 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text())
-    _venue_name = db.Column('venue_name', db.String(200))
-    _venue_lat = db.Column('venue_lat', db.Float())
-    _venue_lng = db.Column('venue_lng', db.Float())
+    venue = db.Column(db.String(200))
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('events', cascade='all', lazy='dynamic'))
     attendance = db.relationship('Attendance')
-    created_at = db.Column(db.DateTime(), nullable=False)
-    updated_at = db.Column(db.DateTime(), nullable=False, onupdate=lambda: times.now())
+    created_at = db.Column(db.DateTime(), nullable=False, default=lambda: times.now())
+    updated_at = db.Column(db.DateTime(), nullable=False, default=lambda: times.now(), onupdate=lambda: times.now())
     cancelled_at = db.Column(db.DateTime())
     starts_at = db.Column(db.DateTime())
     _ends_at = db.Column('ends_at', db.DateTime())
@@ -421,24 +395,46 @@ class Event(db.Model):
         att = Attendance.query.filter(Attendance.contact_id == contact.id)\
             .filter(Attendance.event_id == self.id)\
             .first()
-        att = att or Attendance(contact=contact, event=self)
-        att.type = type
+        if not att:
+            att = Attendance(contact=contact, event=self)
+            att.type = type
+            db.session.add(att)
+        else:
+            att.type = type
 
     @property
     def contacts(self):
         return Contact.query.join(Attendance).filter(Attendance.event_id == self.id)
 
     @property
-    def contacts_yes(self):
-        return self.contacts.filter(Attendance.type == 'yes')
+    def contacts_invited(self):
+        return self.contacts.filter(Attendance.type == 'invited')
+
+    @contacts_invited.setter
+    def contacts_invited(self, contacts):
+        for contact in contacts:
+            self.set_attendance(contact, 'invited')
+
+    @property
+    def contacts_invited_ids_str(self):
+        return ','.join([c.id for c in self.contacts_invited])
+
+    @contacts_invited_ids_str.setter
+    def contacts_invited_ids_str(self, ids_str):
+        ids = set(filter(None, ids_str.split(',')))
+        self.contacts_invited = list(Contact.query.filter(Contact.id.in_(ids)))
+
+    @property
+    def contacts_going(self):
+        return self.contacts.filter(Attendance.type == 'going')
 
     @property
     def contacts_maybe(self):
         return self.contacts.filter(Attendance.type == 'maybe')
 
     @property
-    def contacts_no(self):
-        return self.contacts.filter(Attendance.type == 'no')
+    def contacts_declined(self):
+        return self.contacts.filter(Attendance.type == 'declined')
 
     @property
     def is_cancelled(self):
@@ -450,7 +446,7 @@ class Event(db.Model):
             return self._ends_at
         if self.starts_at:
             return (
-                self.starts_at + timedelta(hours=self.default_end_time_offset)
+                self.starts_at + datetime.timedelta(hours=self.default_end_time_offset)
             )
         return None
 
@@ -460,29 +456,6 @@ class Event(db.Model):
 
     def _are_valid_coords(self, lat, lng):
         return lat is not None and lng is not None
-
-    @property
-    def venue(self):
-        has_name = self._venue_name
-        has_valid_coords = self._are_valid_coords(self._venue_lat, self._venue_lng)
-
-        if has_name or has_valid_coords:
-            venue = Venue()
-            if has_name:
-                venue.name = self._venue_name
-            if has_valid_coords:
-                venue.lat = self._venue_lat
-                venue.lng = self._venue_lng
-            return venue
-        return None
-
-    @venue.setter
-    def venue(self, value):
-        if value.name:
-            self._venue_name = value.name
-        if self._are_valid_coords(value.lat, value.lng):
-            self._venue_lat = value.lat
-            self._venue_lng = value.lng
 
     @property
     def verbose_name(self):

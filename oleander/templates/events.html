@@ -7,7 +7,7 @@
 
 {% if events_count %}
     <div class="action_area">
-        <p>{{ button_link(url_for('events', action='new'), 'Create new') }}</p>
+        <p>{{ button_link(url_for('new_event'), 'Create new') }}</p>
     </div>
 
     {# events_table('Active', events_active) #}
@@ -15,140 +15,10 @@
     {{ events_table('Past', events_past) }}
     {{ events_table('Cancelled', events_cancelled) }}
 
-
-
-{#
-    <div class="events_list">
-        {% for event in events %}
-        <div class="event">
-            {% if edited_event == event %}
-                <form action="{{ url_for('events', action='edit', id=event.id) }}" method="post">
-                    {{ form_errors(form) }}
-
-                    <h3 class="legend">{{ form.name(placeholder=form.name.label.text) }}</h3>
-                    <p class="icons">
-                        <a href="{{ url_for('events') }}">Cancel</a> or <button type="submit">Save</button>
-                    </p>
-
-                    {{ form.contact_ids_str() }}
-                    <ul id="members" class="contacts_list">
-                        {% for contact in event.contacts %}
-                            <li>{% include '_contact_box.html' %}</li>
-                        {% endfor %}
-                    </ul>
-                    <br class="cleaner">
-                    <table>
-                        <tr><th>
-                            <label for="members_add">Add member</label>
-                        </th><td>
-                            <input id="members_add" type="search" placeholder="Type to search">
-                        </td></tr>
-                    </table>
-                    <ul id="members_search_results" class="contacts_list"></ul>
-                    <br class="cleaner">
-
-                    {{ form.csrf_token }}
-                </form>
-            {% else %}
-
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-#}
-
-
-
 {% else %}
     <div class="action_area">
         <p>{{ button_link(url_for('events', action='new'), 'Create new event') }} <span class="separator">or</span> {{ button_link(url_for('contacts'), 'Manage contacts') }}</p>
     </div>
 {% endif %}
-{% endblock %}
-
-
-{% block script %}
-<script>
-    var lastXhr;
-
-    updateContactsField = function() {
-        var ids = [];
-        $('#members').find('li').each(function(i, element) {
-            ids.push($(element).find('.contact').attr('data-contact-id'));
-        });
-        $('#contact_ids_str').val(ids.join(','));
-    }
-
-    $(document).ready(function() {
-        $('#members_add').keyup(function(event) {
-            var term = $(this).val();
-            var $ul = $('#members_search_results');
-
-            if (lastXhr) {
-                lastXhr.abort();
-            }
-            $ul.empty();
-
-            if (term) {
-                var uri = '/events/search-contacts/' + encodeURIComponent(term);
-                lastXhr = $.getJSON(uri, function(data, status, xhr) {
-                    if (xhr === lastXhr) {
-                        $.each(data.contacts, function(i, contact) {
-                            var $li = $('<li>', {'html': contact.html_search_result});
-                            $li.appendTo($ul);
-                            $('a.icon[title]', $li).tipsy({opacity: 1});
-                            $li.data('contact', contact);
-                        });
-                    }
-                });
-            }
-        });
-        $('#members_add').keyup();
-
-        $members = $('#members');
-        $searchResults = $('#members_search_results');
-
-        $('li a', $searchResults).live('click', function(event) {
-            event.preventDefault();
-
-            var $searchResult = $(this).closest('li');
-            var contact = $searchResult.data('contact');
-
-            var alreadyAdded = false;
-            $members.find('li').each(function(i, element) {
-                if ($(element).find('.contact').attr('data-contact-id') == contact.id) {
-                    alreadyAdded = true;
-                    return false;
-                }
-            });
-
-            if (!alreadyAdded) {
-                var $li = $('<li>', {'html': contact.html});
-                $li.data('contact', contact);
-                $('a.icon[title]', $li).tipsy({opacity: 1});
-                $li.appendTo($members);
-
-                updateContactsField();
-            }
-
-            $('.contact[data-contact-id="' + contact.id + '"]', $members)
-                .addClass('highlighted')
-                .delay(500)
-                .queue(function(next){
-                    $(this).removeClass('highlighted');
-                    next();
-                });
-        });
-
-        $('li a', $members).live('click', function(event) {
-            event.preventDefault();
-
-            $(this).tipsy('hide');
-            $(this).closest('li').remove();
-
-            updateContactsField();
-        });
-    });
-</script>
 {% endblock %}
 
