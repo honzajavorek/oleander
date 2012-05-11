@@ -3,7 +3,7 @@
 
 from flask import render_template, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
-from oleander import app, db
+from oleander import app, db, facebook
 from oleander.ajax import ajax_only, template_to_html
 from oleander.models import Event
 from oleander.forms import EventForm
@@ -28,7 +28,7 @@ def events():
     return render_template('events.html', events_count=events_count, **events)
 
 
-@app.route('/events/new/', methods=('GET', 'POST'))
+@app.route('/events/create/', methods=('GET', 'POST'))
 @login_required
 def create_event():
     form = EventForm()
@@ -38,11 +38,15 @@ def create_event():
         with db.transaction as session:
             event.name = form.name.data
             event.venue = form.venue.data
+            event.description = form.description.data
             event.user = current_user
             event.starts_at = times.to_universal(form.starts_at.data, current_user.timezone)
             session.add(event)
         with db.transaction:
             event.contacts_invited_ids_str = form.contacts_invited_ids_str.data
+        if event.contacts_facebook_to_invite:
+            return redirect(url_for('facebook_event', id=event.id))
+
         return redirect(url_for('event', id=event.id))
 
     else:
@@ -53,6 +57,30 @@ def create_event():
         form.starts_at.data = dt
 
     return render_template('create_event.html', form=form)
+
+
+@app.route('/events/facebook/<int:id>')
+@login_required
+def facebook_event(id):
+    event = current_user.event_or_404(id)
+    try:
+        graph = facebook.create_api()
+        data = graph.post(
+            path='/events',
+            name=event.name,
+            description=event.description or '',
+            location=event.venue or '',
+            start_time=times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S')
+        )
+        print data
+        return redirect(url_for('event', id=event.id))
+
+    except facebook.OAuthError:
+        return redirect(facebook.create_authorize_url(
+            action_url=url_for('facebook_event', id=event.id),
+            error_url=url_for('edit_event', id=event.id),
+            scope='create_event'
+        ))
 
 
 @app.route('/events/search-contacts/<string:term>')

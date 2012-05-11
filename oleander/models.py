@@ -373,6 +373,7 @@ class Attendance(db.Model):
     contact_id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     contact = db.relationship('Contact')
     type = db.Column(db.Enum(*types, name='attendance_types'), nullable=False)
+    invitation_sent = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return '<Attendance %r @ %r (%s)>' % (self.contact, self.event, self.type)
@@ -413,7 +414,14 @@ class Event(db.Model):
 
     @property
     def contacts(self):
-        return Contact.query.join(Attendance).filter(Attendance.event_id == self.id)
+        return Contact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id)
+
+    @property
+    def contacts_facebook_to_invite(self):
+        return FacebookContact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id)\
+            .filter(Attendance.invitation_sent == False)
 
     @property
     def contacts_invited(self):
@@ -462,9 +470,6 @@ class Event(db.Model):
     @ends_at.setter
     def ends_at(self, value):
         self._ends_at = value
-
-    def _are_valid_coords(self, lat, lng):
-        return lat is not None and lng is not None
 
     @property
     def verbose_name(self):

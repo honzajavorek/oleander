@@ -6,6 +6,7 @@ modules = [
     'contacts',
     'events',
     'settings',
+    'facebook',
 ]
 
 
