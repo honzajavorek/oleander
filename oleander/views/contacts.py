@@ -38,8 +38,14 @@ def contacts():
 @login_required
 def delete_contact(id):
     """Removes contact by ID."""
-    with db.transaction as session:
-        current_user.delete_contact(id)
+    contact = current_user.get_contact_or_404(id)
+    if contact.is_primary:
+        flash('Cannot delete primary contact.')
+    elif list(contact.attendance):
+        flash('Cannot delete contact involved in events.')
+    else:
+        with db.transaction as session:
+            current_user.delete_contact(id)
     return redirect(url_for('contacts'))
 
 

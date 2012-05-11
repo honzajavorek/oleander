@@ -179,13 +179,15 @@ class User(db.Model, UserMixin, GravatarMixin):
         Contact.query.with_polymorphic(Contact)\
             .filter(Contact.id == id)\
             .filter(Contact.user == self)\
-            .filter(Contact.is_primary == False)\
             .delete()
 
     def find_facebook_contact(self, facebook_id):
         return FacebookContact.query.filter(FacebookContact.facebook_id == facebook_id)\
             .filter(FacebookContact.user == self)\
             .first()
+
+    def get_contact_or_404(self, id):
+        return self.contacts.filter(Contact.id == id).first_or_404()
 
     @classmethod
     def fetch_by_email(self, email):
@@ -364,11 +366,13 @@ class GoogleContact(GravatarMixin, Contact):
 class Attendance(db.Model):
     """Attendance of contacts to events."""
 
+    types = ['going', 'maybe', 'declined', 'invited']
+
     event_id = db.Column(db.Integer, db.ForeignKey('event.id', ondelete='cascade'), primary_key=True)
     event = db.relationship('Event')
     contact_id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
     contact = db.relationship('Contact')
-    type = db.Column(db.Enum(*['going', 'maybe', 'declined', 'invited'], name='attendance_types'), nullable=False)
+    type = db.Column(db.Enum(*types, name='attendance_types'), nullable=False)
 
     def __repr__(self):
         return '<Attendance %r @ %r (%s)>' % (self.contact, self.event, self.type)
