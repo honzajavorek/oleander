@@ -74,13 +74,13 @@
 {% if contacts %}
     <h2>Attendance</h2>
 
-    {% set going_contacts = event.contacts_maybe|list %}
+    {% set going_contacts = event.contacts_going|list %}
     {% set going_contacts_count = going_contacts|length %}
 
     {% set maybe_contacts = event.contacts_maybe|list %}
     {% set maybe_contacts_count = maybe_contacts|length %}
 
-    {% set declined_contacts = event.contacts_maybe|list %}
+    {% set declined_contacts = event.contacts_declined|list %}
     {% set declined_contacts_count = declined_contacts|length %}
 
     {% set invited_contacts = event.contacts_invited|list %}

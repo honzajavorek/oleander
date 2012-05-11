@@ -367,6 +367,10 @@ class Attendance(db.Model):
     """Attendance of contacts to events."""
 
     types = ['going', 'maybe', 'declined', 'invited']
+    types_mapping = {
+        'going': 'going', 'maybe': 'maybe', 'declined': 'declined', 'invited': 'invited', # original
+        'attending': 'going', 'unsure': 'maybe', 'not_replied': 'invited', # fb
+    }
 
     event_id = db.Column(db.Integer, db.ForeignKey('event.id', ondelete='cascade'), primary_key=True)
     event = db.relationship('Event')
@@ -413,6 +417,13 @@ class Event(db.Model):
         else:
             att.type = type
 
+    def set_invitation_sent(self, contact):
+        att = Attendance.query.filter(Attendance.contact_id == contact.id)\
+            .filter(Attendance.event_id == self.id)\
+            .first()
+        if att:
+            att.invitation_sent = True
+
     @property
     def contacts(self):
         return Contact.query.join(Attendance)\
@@ -427,6 +438,7 @@ class Event(db.Model):
     def contacts_facebook_to_invite(self):
         return FacebookContact.query.join(Attendance)\
             .filter(Attendance.event_id == self.id)\
+            .filter(FacebookContact.belongs_to_user == False)\
             .filter(Attendance.invitation_sent == False)
 
     @property

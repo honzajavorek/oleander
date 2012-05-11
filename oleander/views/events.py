@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
 from oleander import app, db, facebook
 from oleander.ajax import ajax_only, template_to_html
-from oleander.models import Event
+from oleander.models import Event, Attendance, FacebookContact
 from oleander.forms import EventForm
 import operator
 import datetime
@@ -97,6 +97,31 @@ def revive_event(id):
 def event(id):
     """Public event page."""
     event = Event.fetch_or_404(id)
+
+    if event.facebook_id and current_user.is_authenticated():
+        try:
+            api = facebook.create_api()
+            data = api.get(path='/' + event.facebook_id + '/invited')['data']
+
+            for friend in data:
+                contact = current_user.find_facebook_contact(friend['id'])
+                if not contact:
+                    with db.transaction as session:
+                        contact = FacebookContact()
+                        contact.user = current_user
+                        contact.facebook_id = friend['id']
+                        contact.name = friend['name']
+                        session.add(contact)
+                with db.transaction:
+                    event.set_attendance(contact, Attendance.types_mapping[friend['rsvp_status']])
+
+        except facebook.OAuthError:
+            this_url = url_for('event', id=event.id)
+            return redirect(facebook.create_authorize_url(
+                action_url=this_url,
+                error_url=this_url,
+            ))
+
     return render_template('event.html', event=event)
 
 
@@ -133,15 +158,23 @@ def facebook_event(id):
 
         if event.facebook_id:
             api.post(path='/' + event.facebook_id, **payload)
-
         else:
             data = api.post(path='/events', **payload)
             with db.transaction:
                 event.facebook_id = data['id']
 
+        contacts_to_invite = list(event.contacts_facebook_to_invite)
+        print contacts_to_invite
+        if contacts_to_invite:
+            ids = ','.join([c.facebook_id for c in contacts_to_invite])
+            api.post(path='/' + event.facebook_id + '/invited?users=' + ids)
+            with db.transaction:
+                for contact in contacts_to_invite:
+                    event.set_invitation_sent(contact)
+
         return redirect(url_for('event', id=event.id))
 
-    except facebook.OAuthError:
+    except facebook.OAuthError as e:
         return redirect(facebook.create_authorize_url(
             action_url=url_for('facebook_event', id=event.id),
             error_url=url_for('edit_event', id=event.id),

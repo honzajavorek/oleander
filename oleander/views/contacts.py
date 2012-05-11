@@ -52,9 +52,12 @@ def delete_contact(id):
 def import_facebook_friends():
     try:
         api = facebook.create_api()
-        data = api.get('me/friends')['data']
+        me = api.get('me')
 
-        for friend in data:
+        friends = api.get('me/friends')['data']
+        friends.append(me)
+
+        for friend in friends:
             with db.transaction as session:
                 contact = current_user.find_facebook_contact(friend['id'])
                 if not contact:
@@ -62,6 +65,7 @@ def import_facebook_friends():
                     contact.name = friend['name']
                     contact.facebook_id = friend['id']
                     contact.user = current_user
+                    contact.belongs_to_user = friend['id'] == me['id']
                     session.add(contact)
                 else:
                     contact.name = friend['name']
