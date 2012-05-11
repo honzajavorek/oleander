@@ -44,7 +44,7 @@ def create_event():
             session.add(event)
         with db.transaction:
             event.contacts_invited_ids_str = form.contacts_invited_ids_str.data
-        if event.contacts_facebook_to_invite:
+        if event.is_facebook_involved():
             return redirect(url_for('facebook_event', id=event.id))
 
         return redirect(url_for('event', id=event.id))
@@ -57,31 +57,6 @@ def create_event():
         form.starts_at.data = dt
 
     return render_template('create_event.html', form=form)
-
-
-@app.route('/events/facebook/<int:id>')
-@login_required
-def facebook_event(id):
-    event = current_user.event_or_404(id)
-    try:
-        graph = facebook.create_api()
-        data = graph.post(
-            path='/events',
-            name=event.name,
-            description=event.description or '',
-            location=event.venue or '',
-            start_time=times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S')
-        )
-        with db.transaction:
-            event.facebook_id = data['id']
-        return redirect(url_for('event', id=event.id))
-
-    except facebook.OAuthError:
-        return redirect(facebook.create_authorize_url(
-            action_url=url_for('facebook_event', id=event.id),
-            error_url=url_for('edit_event', id=event.id),
-            scope='create_event'
-        ))
 
 
 @app.route('/events/search-contacts/<string:term>')
@@ -136,8 +111,39 @@ def edit_event(id):
         with db.transaction as session:
             form.populate_obj(event)
             event.starts_at = times.to_universal(form.starts_at.data, current_user.timezone)
+        if event.is_facebook_involved():
+            return redirect(url_for('facebook_event', id=event.id))
         return redirect(url_for('event', id=event.id))
 
     return render_template('edit_event.html', event=event, action='edit', form=form)
 
 
+@app.route('/events/facebook/<int:id>')
+@login_required
+def facebook_event(id):
+    event = current_user.event_or_404(id)
+    try:
+        api = facebook.create_api()
+        payload = {
+            'name': event.name,
+            'description': event.description or '',
+            'location': event.venue or '',
+            'start_time': times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S'),
+        }
+
+        if event.facebook_id:
+            api.post(path='/' + event.facebook_id, **payload)
+
+        else:
+            data = api.post(path='/events', **payload)
+            with db.transaction:
+                event.facebook_id = data['id']
+
+        return redirect(url_for('event', id=event.id))
+
+    except facebook.OAuthError:
+        return redirect(facebook.create_authorize_url(
+            action_url=url_for('facebook_event', id=event.id),
+            error_url=url_for('edit_event', id=event.id),
+            scope='create_event'
+        ))

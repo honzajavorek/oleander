@@ -418,6 +418,11 @@ class Event(db.Model):
         return Contact.query.join(Attendance)\
             .filter(Attendance.event_id == self.id)
 
+    def is_facebook_involved(self):
+        fb_contacts = list(FacebookContact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id))
+        return fb_contacts or self.facebook_id
+
     @property
     def contacts_facebook_to_invite(self):
         return FacebookContact.query.join(Attendance)\

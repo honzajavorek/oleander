@@ -51,8 +51,8 @@ def delete_contact(id):
 @login_required
 def import_facebook_friends():
     try:
-        graph = facebook.create_api()
-        data = graph.get('me/friends')['data']
+        api = facebook.create_api()
+        data = api.get('me/friends')['data']
 
         for friend in data:
             with db.transaction as session:
