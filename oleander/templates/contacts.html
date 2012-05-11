@@ -1,5 +1,5 @@
 {% extends '_layout.html' %}
-{% from '_macros.html' import form_errors, contact_box, form_help %}
+{% from '_macros.html' import form_errors, contact_box, form_help, button_link %}
 
 
 {% block content %}
@@ -18,7 +18,7 @@
 </ul>
 
 <form method="post" action="" class="main_form">
-    <h2 class="legend">Add contact</h2>
+    <h2 class="legend">Add contact manually&hellip;</h2>
     {{ form_errors(form) }}
     <table>
         <tr>
@@ -33,6 +33,9 @@
 
     {{ form.csrf_token }}
     <p><button type="submit">Add contact</button></p>
+
+    <h2 class="legend">Import contacts</h2>
+    <p>{{ button_link(url_for('import_facebook_friends'), 'Facebook friends') }}</p>
 </form>
 
 <ul class="contacts_directory">

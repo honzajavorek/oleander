@@ -182,6 +182,11 @@ class User(db.Model, UserMixin, GravatarMixin):
             .filter(Contact.is_primary == False)\
             .delete()
 
+    def find_facebook_contact(self, facebook_id):
+        return FacebookContact.query.filter(FacebookContact.facebook_id == facebook_id)\
+            .filter(FacebookContact.user == self)\
+            .first()
+
     @classmethod
     def fetch_by_email(self, email):
         contact = Contact.query.filter(
@@ -319,7 +324,7 @@ class FacebookContact(Contact):
     slug = 'facebook'
 
     id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='cascade'), primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    facebook_id = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=True)
 
     __tablename__ = 'contact_' + slug
@@ -330,11 +335,11 @@ class FacebookContact(Contact):
 
     @property
     def identifier(self):
-        return 'facebook.com/' + (self.username or self.user_id)
+        return 'facebook.com/' + (self.username or self.facebook_id)
 
     @property
     def avatar(self):
-        return 'https://graph.facebook.com/%s/picture?type=square' % self.user_id
+        return 'https://graph.facebook.com/%s/picture?type=square' % self.facebook_id
 
 
 class GoogleContact(GravatarMixin, Contact):
