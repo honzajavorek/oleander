@@ -385,6 +385,7 @@ class Event(db.Model):
     default_end_time_offset = 2 # in hours
 
     id = db.Column(db.Integer, primary_key=True)
+    facebook_id = db.Column(db.String(100), nullable=True)
     name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text())
     venue = db.Column(db.String(200))

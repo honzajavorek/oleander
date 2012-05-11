@@ -72,7 +72,8 @@ def facebook_event(id):
             location=event.venue or '',
             start_time=times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S')
         )
-        print data
+        with db.transaction:
+            event.facebook_id = data['id']
         return redirect(url_for('event', id=event.id))
 
     except facebook.OAuthError:
