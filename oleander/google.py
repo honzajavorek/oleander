@@ -9,6 +9,8 @@ from gdata.calendar.client import CalendarClient
 
 
 # https://developers.google.com/gdata/faq#AuthScopes
+# http://googleappsdeveloper.blogspot.com/2011/09/python-oauth-20-google-data-apis.html
+# http://stackoverflow.com/questions/10188768/google-contacts-import-using-oauth2-0
 
 
 ConnectionError = OAuthError

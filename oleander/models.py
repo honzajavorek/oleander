@@ -31,11 +31,13 @@ class User(db.Model, UserMixin, GravatarMixin):
     timezone = db.Column(db.String(100), nullable=False, default=app.config['DEFAULT_TIMEZONE'])
 
     def _get_contact(self, type):
+        return self._get_contacts(type).first()
+
+    def _get_contacts(self, type):
         try:
             return self.contacts.filter(Contact.type == type)\
                 .filter(Contact.belongs_to_user == True)\
-                .order_by(db.desc(Contact.is_primary))\
-                .first()
+                .order_by(db.desc(Contact.is_primary))
         except sqlalchemy.orm.exc.DetachedInstanceError:
             return None
 
@@ -69,6 +71,10 @@ class User(db.Model, UserMixin, GravatarMixin):
     @property
     def email(self):
         return getattr(self._get_contact('email'), 'email', None)
+
+    @property
+    def emails(self):
+        return [contact.email for contact in self._get_contacts('email')]
 
     @email.setter
     def email(self, value):
@@ -185,6 +191,11 @@ class User(db.Model, UserMixin, GravatarMixin):
         return FacebookContact.query.filter(FacebookContact.facebook_id == facebook_id)\
             .filter(FacebookContact.user == self)\
             .first()
+
+    def find_email_contact(self, email):
+        return self.contacts.filter(
+            db.or_(EmailContact.email == email, GoogleContact.email == email)
+        ).first()
 
     def get_contact_or_404(self, id):
         return self.contacts.filter(Contact.id == id).first_or_404()

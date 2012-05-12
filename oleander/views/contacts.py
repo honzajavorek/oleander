@@ -6,6 +6,7 @@ from flask.ext.login import login_required, current_user
 from oleander import app, db, facebook, google
 from oleander.forms import EmailContactForm
 from oleander.models import Contact, FacebookContact, GoogleContact, EmailContact
+from gdata.contacts.client import ContactsQuery
 
 
 def create_email_contact(email):
@@ -84,7 +85,36 @@ def import_facebook_friends():
 def import_google_contacts():
     try:
         api = google.create_api(google.ContactsClient)
-        print api.GetContacts()
+
+        group_id = None
+        feed = api.GetGroups()
+        for entry in feed.entry:
+            if entry.title.text == 'System Group: My Contacts':
+                group_id = entry.id.text
+
+        query = ContactsQuery()
+        query.max_results = 10000
+        if group_id:
+            query.group = group_id
+        feed = api.GetContacts(q=query)
+
+        my_emails = current_user.emails
+
+        for entry in feed.entry:
+            with db.transaction as session:
+                for email in entry.email:
+                    if not entry.name or not entry.name.full_name:
+                        continue
+                    contact = current_user.find_email_contact(email.address)
+                    if not contact:
+                        contact = create_email_contact(email.address)
+                        contact.name = entry.name.full_name.text
+                        contact.email = email.address
+                        contact.user = current_user
+                        contact.belongs_to_user = email.address in my_emails
+                        session.add(contact)
+                    else:
+                        contact.name = entry.name.full_name.text
 
         return redirect(url_for('contacts'))
 
