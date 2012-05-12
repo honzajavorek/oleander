@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
 from oleander import app, db, facebook, google
 from oleander.ajax import ajax_only, template_to_html
-from oleander.models import Event, Attendance, FacebookContact
+from oleander.models import Event, Attendance, FacebookContact, GoogleContact
 from oleander.forms import EventForm
 from gdata.calendar.data import CalendarEventEntry, CalendarWhere, When, EventWho, SendEventNotificationsProperty
 from atom.data import Title, Content
@@ -115,7 +115,32 @@ def event(id):
             this_url = url_for('event', id=event.id)
             return redirect(facebook.create_authorize_url(
                 action_url=this_url,
+                error_url=this_url
+            ))
+
+    if event.google_id and current_user.is_authenticated():
+        try:
+            api = google.create_api(google.CalendarClient)
+            entry = api.GetEventEntry(event.google_id)
+
+            print entry
+
+            for participant in entry.who:
+                contact = current_user.find_email_contact(participant.email)
+                if not contact:
+                    continue
+                with db.transaction:
+                    if not participant.attendee_status and participant.rel == 'http://schemas.google.com/g/2005#event.organizer':
+                        event.set_attendance(contact, 'going')
+                    else:
+                        event.set_attendance(contact, Attendance.types_mapping[participant.attendee_status.value])
+
+        except (google.ConnectionError, google.UnauthorizedError) as e:
+            this_url = url_for('event', id=event.id)
+            return redirect(google.create_authorize_url(
+                action_url=this_url,
                 error_url=this_url,
+                scope='https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds/'
             ))
 
     return render_template('event.html', event=event)
@@ -183,17 +208,6 @@ def google_event(id):
     if event.is_google_involved():
         try:
             api = google.create_api(google.CalendarClient)
-            # feed = api.GetCalendarEventFeed()
-
-            # for event in feed.entry:
-            #     print event.title.text
-            #     for participant in event.who:
-            #         print '\t\t%s' % participant.email
-            #         print '\t\t\t' % participant.attendee_status.value
-
-            # payload = {
-            #     'start_time': times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S'),
-            # }
 
             if event.google_id:
                 entry = api.GetEventEntry(event.google_id)

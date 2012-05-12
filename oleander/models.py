@@ -136,8 +136,18 @@ class User(db.Model, UserMixin, GravatarMixin):
         by_name = self.contacts.filter(Contact.name.ilike(pattern))
 
         # by special attributes
-        by_email = self.contacts.filter(db.or_(EmailContact.email.ilike(pattern), GoogleContact.email.ilike(pattern)))
-        by_id_or_username = self.contacts.filter(db.or_(db.cast(FacebookContact.user_id, db.String).ilike(pattern), FacebookContact.username.ilike(pattern)))
+        by_email = self.contacts.filter(
+            db.or_(
+                EmailContact.email.ilike(pattern),
+                GoogleContact.email.ilike(pattern)
+            )
+        )
+        by_id_or_username = self.contacts.filter(
+            db.or_(
+                db.cast(FacebookContact.user_id, db.String).ilike(pattern),
+                FacebookContact.username.ilike(pattern)
+            )
+        )
 
         # union of results
         return by_name.union(by_email, by_id_or_username).order_by(Contact.name).limit(limit)
@@ -379,8 +389,17 @@ class Attendance(db.Model):
 
     types = ['going', 'maybe', 'declined', 'invited']
     types_mapping = {
-        'going': 'going', 'maybe': 'maybe', 'declined': 'declined', 'invited': 'invited', # original
-        'attending': 'going', 'unsure': 'maybe', 'not_replied': 'invited', # fb
+        # original types
+        'going': 'going', 'maybe': 'maybe', 'declined': 'declined', 'invited': 'invited',
+
+        # facebook
+        'attending': 'going', 'unsure': 'maybe', 'not_replied': 'invited',
+
+        # google:
+        'http://schemas.google.com/g/2005#event.accepted': 'going',
+        'http://schemas.google.com/g/2005#event.declined': 'declined',
+        'http://schemas.google.com/g/2005#event.invited': 'invited',
+        'http://schemas.google.com/g/2005#event.tentative': 'maybe',
     }
 
     event_id = db.Column(db.Integer, db.ForeignKey('event.id', ondelete='cascade'), primary_key=True)
