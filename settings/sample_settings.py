@@ -18,4 +18,7 @@ MAIL_PASSWORD = '********'
 
 FACEBOOK_APP_ID = '145571488891413'
 FACEBOOK_APP_SECRET = '**************'
-FACEBOOK_SCOPE = ''
+
+
+GOOGLE_APP_ID = '1036906674713.apps.googleusercontent.com'
+GOOGLE_APP_SECRET = '**************'

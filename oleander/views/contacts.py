@@ -72,9 +72,25 @@ def import_facebook_friends():
 
         return redirect(url_for('contacts'))
 
-    except facebook.OAuthError:
+    except facebook.ConnectionError:
         return redirect(facebook.create_authorize_url(
             action_url=url_for('import_facebook_friends'),
             error_url=url_for('contacts')
         ))
 
+
+@app.route('/contacts/import/google')
+@login_required
+def import_google_friends():
+    try:
+        api = google.create_api('calendar')
+        print api.events().list().execute()
+
+        return redirect(url_for('contacts'))
+
+    except google.ConnectionError:
+        return redirect(google.create_authorize_url(
+            action_url=url_for('import_google_friends'),
+            error_url=url_for('contacts'),
+            scope='https://www.googleapis.com/auth/calendar'
+        ))

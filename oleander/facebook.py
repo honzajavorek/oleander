@@ -7,7 +7,7 @@ from oauth2 import OAuth2
 from facepy import GraphAPI
 
 
-OAuthError = GraphAPI.OAuthError
+ConnectionError = GraphAPI.OAuthError
 
 
 def create_oauth_handler(site, action_url, error_url):
@@ -36,5 +36,5 @@ def create_authorize_url(action_url, error_url, scope=''):
 def create_api():
     access_token = session.get('facebook_access_token', None)
     if not access_token:
-        raise OAuthError('No access token.')
+        raise ConnectionError('No access token.')
     return GraphAPI(access_token)

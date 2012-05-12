@@ -7,6 +7,7 @@ modules = [
     'events',
     'settings',
     'facebook',
+    'google',
 ]
 
 
