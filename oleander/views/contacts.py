@@ -3,7 +3,7 @@
 
 from flask import render_template, redirect, url_for, request, flash, session
 from flask.ext.login import login_required, current_user
-from oleander import app, db, facebook
+from oleander import app, db, facebook, google
 from oleander.forms import EmailContactForm
 from oleander.models import Contact, FacebookContact, GoogleContact, EmailContact
 
@@ -81,16 +81,16 @@ def import_facebook_friends():
 
 @app.route('/contacts/import/google')
 @login_required
-def import_google_friends():
+def import_google_contacts():
     try:
-        api = google.create_api('calendar')
-        print api.events().list().execute()
+        api = google.create_api(google.ContactsClient)
+        print api.GetContacts()
 
         return redirect(url_for('contacts'))
 
     except google.ConnectionError:
         return redirect(google.create_authorize_url(
-            action_url=url_for('import_google_friends'),
+            action_url=url_for('import_google_contacts'),
             error_url=url_for('contacts'),
-            scope='https://www.googleapis.com/auth/calendar'
+            scope='https://www.google.com/m8/feeds/'
         ))

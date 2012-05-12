@@ -10,4 +10,4 @@ times
 fixture
 -e git://github.com/honzajavorek/facepy.git#egg=facepy
 requests-oauth2
-google-api-python-client
+gdata

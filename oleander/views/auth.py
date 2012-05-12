@@ -54,7 +54,7 @@ def sign_in():
         elif not user.check_password(form.password.data):
             form.add_error('password', 'Password is invalid.')
         elif login_user(user, remember=True):
-            return redirect(request.args.get('next') or url_for('index'))
+            return redirect(request.args.get('next') or url_for('events'))
 
     return render_template('sign_in.html', form=form)
 

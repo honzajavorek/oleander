@@ -35,7 +35,10 @@
     <p><button type="submit">Add contact</button></p>
 
     <h2 class="legend">Import contacts</h2>
-    <p>{{ button_link(url_for('import_facebook_friends'), 'Facebook friends') }}</p>
+    <p>
+        {{ button_link(url_for('import_facebook_friends'), 'Facebook friends') }}
+        {{ button_link(url_for('import_google_contacts'), 'Google contacts') }}
+    </p>
 </form>
 
 <ul class="contacts_directory">
