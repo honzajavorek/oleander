@@ -111,7 +111,7 @@ def event(id):
                 with db.transaction:
                     event.set_attendance(contact, Attendance.types_mapping[friend['rsvp_status']])
 
-        except facebook.ConnectionError:
+        except (facebook.ConnectionError, facebook.OAuthError):
             this_url = url_for('event', id=event.id)
             return redirect(facebook.create_authorize_url(
                 action_url=this_url,
@@ -191,7 +191,7 @@ def facebook_event(id):
                     for contact in contacts_to_invite:
                         event.set_invitation_sent(contact)
 
-        except facebook.ConnectionError:
+        except (facebook.ConnectionError, facebook.OAuthError):
             return redirect(facebook.create_authorize_url(
                 action_url=url_for('facebook_event', id=event.id),
                 error_url=url_for('edit_event', id=event.id),

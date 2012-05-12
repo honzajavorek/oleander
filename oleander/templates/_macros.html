@@ -137,8 +137,8 @@
                 <td title="Attendees">
                     <strong>
                     {% with going_count = event.contacts_going|list|length, maybe_count = event.contacts_maybe|list|length %}
-                        {% if going_count != maybe_count %}
-                            {{ going_count }}&ndash;{{ maybe_count }}
+                        {% if going_count != going_count + maybe_count %}
+                            {{ going_count }}&ndash;{{ going_count + maybe_count }}
                         {% else %}
                             {{ going_count }}
                         {% endif %}

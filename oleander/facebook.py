@@ -7,7 +7,11 @@ from oauth2 import OAuth2
 from facepy import GraphAPI
 
 
-ConnectionError = GraphAPI.OAuthError
+OAuthError = GraphAPI.OAuthError
+
+
+class ConnectionError(Exception):
+    pass
 
 
 def create_oauth_handler(site, action_url, error_url):

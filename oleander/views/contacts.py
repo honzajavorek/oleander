@@ -73,7 +73,7 @@ def import_facebook_friends():
 
         return redirect(url_for('contacts'))
 
-    except facebook.ConnectionError:
+    except (facebook.ConnectionError, facebook.OAuthError):
         return redirect(facebook.create_authorize_url(
             action_url=url_for('import_facebook_friends'),
             error_url=url_for('contacts')
