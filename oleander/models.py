@@ -401,6 +401,7 @@ class Event(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     facebook_id = db.Column(db.String(100), nullable=True)
+    google_id = db.Column(db.String(100), nullable=True)
     name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text())
     venue = db.Column(db.String(200))
@@ -445,11 +446,23 @@ class Event(db.Model):
             .filter(Attendance.event_id == self.id))
         return fb_contacts or self.facebook_id
 
+    def is_google_involved(self):
+        g_contacts = list(GoogleContact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id))
+        return g_contacts or self.google_id
+
     @property
     def contacts_facebook_to_invite(self):
         return FacebookContact.query.join(Attendance)\
             .filter(Attendance.event_id == self.id)\
             .filter(FacebookContact.belongs_to_user == False)\
+            .filter(Attendance.invitation_sent == False)
+
+    @property
+    def contacts_google_to_invite(self):
+        return GoogleContact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id)\
+            .filter(GoogleContact.belongs_to_user == False)\
             .filter(Attendance.invitation_sent == False)
 
     @property

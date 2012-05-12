@@ -118,9 +118,9 @@ def import_google_contacts():
 
         return redirect(url_for('contacts'))
 
-    except google.ConnectionError:
+    except (google.ConnectionError, google.UnauthorizedError):
         return redirect(google.create_authorize_url(
             action_url=url_for('import_google_contacts'),
             error_url=url_for('contacts'),
-            scope='https://www.google.com/m8/feeds/'
+            scope='https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds/'
         ))

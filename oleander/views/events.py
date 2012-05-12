@@ -3,18 +3,18 @@
 
 from flask import render_template, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
-from oleander import app, db, facebook
+from oleander import app, db, facebook, google
 from oleander.ajax import ajax_only, template_to_html
 from oleander.models import Event, Attendance, FacebookContact
 from oleander.forms import EventForm
+from gdata.calendar.data import CalendarEventEntry, CalendarWhere, When, EventWho, SendEventNotificationsProperty
+from atom.data import Title, Content
 import operator
 import datetime
 import times
 
 
 @app.route('/')
-# @app.route('/events/<any(new):action>/', methods=('GET', 'POST'))
-# @app.route('/events/<any(edit):action>/<int:id>', methods=('GET', 'POST'))
 @login_required
 def events():
     """Events index."""
@@ -44,10 +44,7 @@ def create_event():
             session.add(event)
         with db.transaction:
             event.contacts_invited_ids_str = form.contacts_invited_ids_str.data
-        if event.is_facebook_involved():
-            return redirect(url_for('facebook_event', id=event.id))
-
-        return redirect(url_for('event', id=event.id))
+        return redirect(url_for('facebook_event', id=event.id))
 
     else:
         # default starts_at
@@ -70,7 +67,6 @@ def search_contacts(term):
         contact_dict['html'] = template_to_html('_contact_box.html', contact=contact)
         contacts.append(contact_dict)
     return jsonify(term=term, contacts=contacts)
-
 
 
 @app.route('/events/cancel/<int:id>')
@@ -136,9 +132,7 @@ def edit_event(id):
         with db.transaction as session:
             form.populate_obj(event)
             event.starts_at = times.to_universal(form.starts_at.data, current_user.timezone)
-        if event.is_facebook_involved():
-            return redirect(url_for('facebook_event', id=event.id))
-        return redirect(url_for('event', id=event.id))
+        return redirect(url_for('facebook_event', id=event.id))
 
     return render_template('edit_event.html', event=event, action='edit', form=form)
 
@@ -147,36 +141,100 @@ def edit_event(id):
 @login_required
 def facebook_event(id):
     event = current_user.event_or_404(id)
-    try:
-        api = facebook.create_api()
-        payload = {
-            'name': event.name,
-            'description': event.description or '',
-            'location': event.venue or '',
-            'start_time': times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S'),
-        }
+    if event.is_facebook_involved():
+        try:
+            api = facebook.create_api()
+            payload = {
+                'name': event.name,
+                'description': event.description or '',
+                'location': event.venue or '',
+                'start_time': times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S'),
+            }
 
-        if event.facebook_id:
-            api.post(path='/' + event.facebook_id, **payload)
-        else:
-            data = api.post(path='/events', **payload)
-            with db.transaction:
-                event.facebook_id = data['id']
+            if event.facebook_id:
+                api.post(path='/' + event.facebook_id, **payload)
+            else:
+                data = api.post(path='/events', **payload)
+                with db.transaction:
+                    event.facebook_id = data['id']
 
-        contacts_to_invite = list(event.contacts_facebook_to_invite)
-        print contacts_to_invite
-        if contacts_to_invite:
-            ids = ','.join([c.facebook_id for c in contacts_to_invite])
-            api.post(path='/' + event.facebook_id + '/invited?users=' + ids)
+            contacts_to_invite = list(event.contacts_facebook_to_invite)
+            if contacts_to_invite:
+                ids = ','.join([c.facebook_id for c in contacts_to_invite])
+                api.post(path='/' + event.facebook_id + '/invited?users=' + ids)
+                with db.transaction:
+                    for contact in contacts_to_invite:
+                        event.set_invitation_sent(contact)
+
+        except facebook.ConnectionError:
+            return redirect(facebook.create_authorize_url(
+                action_url=url_for('facebook_event', id=event.id),
+                error_url=url_for('edit_event', id=event.id),
+                scope='create_event'
+            ))
+    return redirect(url_for('google_event', id=event.id))
+
+
+
+@app.route('/events/google/<int:id>')
+@login_required
+def google_event(id):
+    event = current_user.event_or_404(id)
+    if event.is_google_involved():
+        try:
+            api = google.create_api(google.CalendarClient)
+            # feed = api.GetCalendarEventFeed()
+
+            # for event in feed.entry:
+            #     print event.title.text
+            #     for participant in event.who:
+            #         print '\t\t%s' % participant.email
+            #         print '\t\t\t' % participant.attendee_status.value
+
+            # payload = {
+            #     'start_time': times.format(event.starts_at, current_user.timezone, '%Y-%m-%dT%H:%M:%S'),
+            # }
+
+            if event.google_id:
+                entry = api.GetEventEntry(event.google_id)
+            else:
+                entry = CalendarEventEntry()
+
+            entry.title = Title(text=event.name)
+            if event.description:
+                entry.content = Content(text=event.description)
+            if event.venue:
+                entry.where.append(CalendarWhere(value=event.venue))
+            if event.starts_at:
+                entry.when.append(When(
+                    start=event.starts_at.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                    end=event.ends_at.strftime('%Y-%m-%dT%H:%M:%SZ')
+                ))
+
+            contacts_to_invite = list(event.contacts_google_to_invite)
+            if contacts_to_invite:
+                for contact in contacts_to_invite:
+                    entry.who.append(EventWho(email=contact.email, rel='http://schemas.google.com/g/2005#event.attendee'))
+                    # event.who.append(EventWho(email=contact.email, rel='http://schemas.google.com/g/2005#event.organizer'))
+                entry.send_event_notifications = SendEventNotificationsProperty(value='true')
+
+            if event.google_id:
+                entry = api.Update(entry)
+            else:
+                entry = api.InsertEvent(entry)
+                with db.transaction:
+                    event.google_id = entry.GetSelfLink().href # entry.id.text
+
             with db.transaction:
                 for contact in contacts_to_invite:
                     event.set_invitation_sent(contact)
 
-        return redirect(url_for('event', id=event.id))
+        except (google.ConnectionError, google.UnauthorizedError) as e:
+            return redirect(google.create_authorize_url(
+                action_url=url_for('google_event', id=event.id),
+                error_url=url_for('edit_event', id=event.id),
+                scope='https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds/'
+            ))
+    return redirect(url_for('event', id=event.id))
 
-    except facebook.ConnectionError as e:
-        return redirect(facebook.create_authorize_url(
-            action_url=url_for('facebook_event', id=event.id),
-            error_url=url_for('edit_event', id=event.id),
-            scope='create_event'
-        ))
+

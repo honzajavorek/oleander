@@ -3,7 +3,8 @@
 
 from flask import url_for, request, session
 from oleander import app
-from gdata.gauth import OAuth2Token, Error as OAuthError, token_to_blob, token_from_blob
+from gdata.client import Unauthorized as UnauthorizedError
+from gdata.gauth import OAuth2Token, Error as ConnectionError, token_to_blob, token_from_blob
 from gdata.contacts.client import ContactsClient
 from gdata.calendar.client import CalendarClient
 
@@ -11,9 +12,6 @@ from gdata.calendar.client import CalendarClient
 # https://developers.google.com/gdata/faq#AuthScopes
 # http://googleappsdeveloper.blogspot.com/2011/09/python-oauth-20-google-data-apis.html
 # http://stackoverflow.com/questions/10188768/google-contacts-import-using-oauth2-0
-
-
-ConnectionError = OAuthError
 
 
 def create_oauth_handler(scope=''):
@@ -37,8 +35,12 @@ def create_authorize_url(action_url, error_url, scope=''):
     oauth2_handler = create_oauth_handler(scope)
     session['action_url'] = action_url
     session['error_url'] = error_url
+    web_hook_url = url_for(
+        'google_connected',
+        _external=True
+    )
     return oauth2_handler.generate_authorize_url(
-        redirect_uri=oauth_callback
+        redirect_uri=web_hook_url
     )
 
 
