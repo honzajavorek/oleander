@@ -1,5 +1,7 @@
 
-<strong style="font-size: 150%;">{{ current_user.name }} invites you to {{ event.name }}</strong>
+<strong style="font-size: 150%;">{{ current_user.name }} invites you to
+    <a href="{{ url_for('event', id=event.id, _external=True) }}">{{ event.name }}</a>
+</strong>
 
 <br><br><br>
 

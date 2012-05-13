@@ -103,6 +103,31 @@ def event_invitation(hash, answer):
 def cancel_event(id):
     """Canceles event by ID."""
     event = current_user.event_or_404(id)
+    this_url = url_for('cancel_event', id=event.id)
+
+    if event.facebook_id:
+        try:
+            api = facebook.create_api()
+            api.delete(path='/' + event.facebook_id)
+        except (facebook.ConnectionError, facebook.OAuthError):
+            return redirect(facebook.create_authorize_url(
+                action_url=this_url,
+                error_url=this_url
+            ))
+
+    if event.google_id:
+        try:
+            api = google.create_api(google.CalendarClient)
+            entry = api.GetEventEntry(event.google_id)
+            api.Delete(entry)
+
+        except (google.ConnectionError, google.UnauthorizedError) as e:
+            return redirect(google.create_authorize_url(
+                action_url=this_url,
+                error_url=this_url,
+                scope='https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds/'
+            ))
+
     with db.transaction as session:
         session.delete(event)
     return redirect(url_for('events'))
@@ -122,6 +147,7 @@ def revive_event(id):
 def event(id):
     """Public event page."""
     event = Event.fetch_or_404(id)
+    this_url = url_for('event', id=event.id)
 
     if event.facebook_id and current_user.is_authenticated():
         try:
@@ -141,7 +167,6 @@ def event(id):
                     event.set_attendance(contact, Attendance.types_mapping[friend['rsvp_status']])
 
         except (facebook.ConnectionError, facebook.OAuthError):
-            this_url = url_for('event', id=event.id)
             return redirect(facebook.create_authorize_url(
                 action_url=this_url,
                 error_url=this_url
@@ -151,8 +176,6 @@ def event(id):
         try:
             api = google.create_api(google.CalendarClient)
             entry = api.GetEventEntry(event.google_id)
-
-            print entry
 
             for participant in entry.who:
                 contact = current_user.find_email_contact(participant.email)
@@ -165,7 +188,6 @@ def event(id):
                         event.set_attendance(contact, Attendance.types_mapping[participant.attendee_status.value])
 
         except (google.ConnectionError, google.UnauthorizedError) as e:
-            this_url = url_for('event', id=event.id)
             return redirect(google.create_authorize_url(
                 action_url=this_url,
                 error_url=this_url,

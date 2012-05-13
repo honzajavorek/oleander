@@ -17,7 +17,7 @@
 
 {% else %}
     <div class="action_area">
-        <p>{{ button_link(url_for('events', action='new'), 'Create new event') }} <span class="separator">or</span> {{ button_link(url_for('contacts'), 'Manage contacts') }}</p>
+        <p>{{ button_link(url_for('create_event'), 'Create new event') }} <span class="separator">or</span> {{ button_link(url_for('contacts'), 'Manage contacts') }}</p>
     </div>
 {% endif %}
 {% endblock %}
