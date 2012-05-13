@@ -18,5 +18,5 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - <del>Na základě průzkumu navrhněte řešení, jak propojit používané služby tak, aby mezi sebou lidé mohli komunikovat a sdílet organizační informace i bez toho, že by používali stejné komunikační platformy.</del>
 - <del>Podrobně rozpracujte každý z těchto případů a snažte se o nalezení takového, které bude brát největší ohledy na přirozenost a zřejmost používaní (zvažte např. možnosti udržovaní vláken diskusí napříč všemi systémy apod.).</del>
 - <del>Vysvětlete, proč jsou některé tyto problémy nerealizovatelné, narazíte-li na nějaké takové.</del>
-- Realizujte ukázkovou webovou aplikaci uvedených vlastností.
+- <del>Realizujte ukázkovou webovou aplikaci uvedených vlastností.</del>
 - Na závěr zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
