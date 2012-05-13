@@ -2,6 +2,7 @@
 
 # Simple BASH script to begin work on project.
 # - launches Flask development server
+# - opens SASS/CSS compiler
 # - opens terminal at project directory with virtualenv activated
 
 

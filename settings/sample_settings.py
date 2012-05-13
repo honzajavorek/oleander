@@ -3,7 +3,7 @@
 
 
 DEBUG = False
-SECRET_KEY = 'see http://flask.pocoo.org/docs/quickstart/#sessions'
+SECRET_KEY = '+5ek\xdf\xd5|;\xf1\xe1'
 
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///'
@@ -20,5 +20,7 @@ FACEBOOK_APP_ID = '145571488891413'
 FACEBOOK_APP_SECRET = '**************'
 
 
-GOOGLE_APP_ID = '1036906674713.apps.googleusercontent.com'
+GOOGLE_APP_ID =\
+    '1036906674713.apps.googleusercontent.com'
 GOOGLE_APP_SECRET = '**************'
+

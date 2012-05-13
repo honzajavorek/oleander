@@ -3,14 +3,49 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{subfig}
+\usepackage{color}
 \usepackage{graphicx}
 \usepackage{sidecap}
+\usepackage{listings}
 \usepackage[hyphens]{url}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
 
 
 
 \DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>}\urlstyle{tt}}
+
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+
+\lstset{
+    language=Python,                % the language of the code
+    basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+    %numbers=left,                   % where to put the line-numbers
+    %numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+    %stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+    %numbersep=5pt,                  % how far the line-numbers are from the code
+    backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+    showspaces=false,               % show spaces adding particular underscores
+    showstringspaces=false,         % underline spaces within strings
+    showtabs=false,                 % show tabs within strings adding particular underscores
+    %frame=single,                   % adds a frame around the code
+    %rulecolor=\color{gray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+    tabsize=2,                      % sets default tabsize to 2 spaces
+    captionpos=b,                   % sets the caption-position to bottom
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+    %title=\lstname,                 % show the filename of files included with \lstinputlisting; also try caption instead of title
+    keywordstyle=\color{blue},      % keyword style
+    commentstyle=\color{dkgreen},   % comment style
+    stringstyle=\color{mauve},      % string literal style
+    %escapeinside={\%*}{*)},         % if you want to add a comment within your code
+    %morekeywords={*,...}            % if you want to add more keywords to the set
+}
 
 
 
@@ -932,6 +967,89 @@ počítač je můj denní chléb (student IT, administrátor, programátor, milo
 \subsection*{Pohlaví: Když si potřebuji v restauraci odskočit, většinou mířím na...}
 pány 54~\%,
 dámy 46~\%.
+
+
+
+\chapter{Návod na instalaci ukázkové aplikace}
+Aplikace byla vyvíjena na Pythonu verze 2.6.6. Její spuštění na vlastním počítači nevyžaduje webový server -- využije se vyvojářského serveru zabudovaného do frameworku Flask (pro ostré nasazení by však tato konfigurace nebyla vhodná). Dále je potřeba databáze. Vyvoj probíhal na PostgreSQL ve verzi 8.4.11, ale mělo by být možné využít i všudypřítomné SQLite. Návod na instalaci předpokládá operační systém unixového typu a může při něm být zapotřebí verzovací systém Git.
+
+\begin{enumerate}
+    \item Zřiďte si Facebook účet a pomocí kreditní karty nebo telefonního čísla jej ověřte, pokud jste tak již neudělali. Na stránce \url{https://developers.facebook.com/apps} vytvořte novou aplikaci s libovolným názvem a jmenným prostorem. Aplikaci nastavte doménu {\tt localhost}. Zaškrtněte typ \emph{website} a vyplňte URL {\tt http://localhost:5000}. Uložte si kódy označené jako \emph{App ID} a \emph{App Secret} ze záhlaví stránky.
+
+    \item Zřiďte si Google účet a na stránce \url{http://code.google.com/apis/console} založte projekt. Pro něj na záložce se službami povolte \emph{Google Calendar API}. Na záložce \emph{API Access} vyhledejte oddíl zabývající se \emph{Client ID}. V nastavení vložte {\tt http://localhost:5000/connect/google/done} do pole pro autorizovaná URI k přesměrování. Uložte si kódy označené jako \emph{Client ID} a \emph{Client Secret}.
+
+    \item Aplikace potřebuje k odesílání e-mailů SMTP server. Můžete použít jakýkoliv máte k dispozici, popřípadě si nějaký zdarma zřídit na službě \url{http://sendgrid.com/}. Pro omezené počty e-mailů denně lze využít také službu Gmail -- její konfigurace SMTP je následující:
+
+        \begin{itemize}
+            \item Server: {\tt smtp.gmail.com}
+            \item Autentikace: ano
+            \item Port pro TLS/STARTTLS: 587
+            \item Port pro SSL: 465
+        \end{itemize}
+
+    \item Připravte si složku s kódem aplikace a přesuňte se do ní. Chcete-li, můžete si pomocí Gitu stáhnout aktuální verzi kódu z veřejného úložiště:
+
+        \begin{lstlisting}[language=bash]
+$ git clone git://github.com/honzajavorek/oleander.git
+        \end{lstlisting}
+
+    \item Nainstalujte správce Python balíčků a následně stáhněte závislosti aplikace v kořenovém adresáři:
+
+        \begin{lstlisting}[language=bash]
+$ curl http://python-distribute.org/distribute_setup.py | python
+$ make install
+        \end{lstlisting}
+
+    \item Vytvořte ve složce {\tt settings} soubor s nastavením. Pojmenujte jej libovolně (např. podle názvu svého počítače) a připojte koncovku {\tt .py}. Do tohoto souboru zapíšete konfiguraci aplikace. Ve složce je připravena šablona takového souboru, takže je možné i jen změnit její obsah či vytvořit kopii pod jiným názvem a tu změnit.
+
+    \item Soubor vyplňte následovně:
+
+        \begin{itemize}
+            \item {\tt SECRET\_KEY}: Tajný náhodný řetězec. Používá se pro zabezpečení přihlášení.
+            \item {\tt SQLALCHEMY\_DATABASE\_URI}: Připojení k databázi. Pro PostgreSQL může vypadat jako {\tt post\-gresql://uživa\-tel:hes\-lo@ser\-ver/ná\-zev\_data\-báze}. Lze využít i SQLite s úložištěm v dočasném souboru, potom má řetězec podobu {\tt sqlite:///}.
+            \item {\tt MAIL\_SERVER}, {\tt MAIL\_PORT}, {\tt MAIL\_USER\-NAME}, {\tt MAIL\_PASS\-WORD}, atd.: Nastavení SMTP serveru.
+            \item {\tt FACEBOOK\_APP\_ID}, {\tt FACEBOOK\_APP\_SECRET}: Zde vyplňte údaje, které jste zjistili v prvním kroku tohoto návodu.
+            \item {\tt GOOGLE\_APP\_ID}, {\tt GOOGLE\_APP\_SECRET}: Zde vyplňte údaje, které jste zjistili v druhém kroku tohoto návodu.
+        \end{itemize}
+
+    Příklad souboru s nastavením:
+
+        \lstinputlisting[language=Python]{../../settings/sample_settings.py}
+
+    \item Pokud se ve složce {\tt oleander/static/css} nenachází soubor {\tt main.css}, ale pouze {\tt main.scss}, je nutné ještě tento přeložit do CSS. Nainstalujte SASS kompilátor -- na Ubuntu např. takto:
+
+        \begin{lstlisting}[language=bash]
+$ apt-get install ruby rubygems
+$ gem install sass
+        \end{lstlisting}
+
+    Překládejte v kořenové složce projektu:
+
+        \begin{lstlisting}[language=bash]
+$ make sass
+        \end{lstlisting}
+
+    \item Připravte si terminál pro spuštění serveru. Pomocí
+
+        \begin{lstlisting}[language=bash]
+$ export OLEANDER_SETTINGS=\
+    ./settings/nazev_souboru_s_nastavenim.py
+        \end{lstlisting}
+
+        vytvořte v prostředí terminálu systémovou proměnnou, jež odkazuje na vámi vytvořený soubor s nastavením. Vytvořte tabulky v databázi:
+
+        \begin{lstlisting}[language=bash]
+$ export python manage.py createdb
+        \end{lstlisting}
+
+    \item Spusťte server:
+
+    \begin{lstlisting}[language=bash]
+$ export python manage.py runserver
+    \end{lstlisting}
+
+    Následně by mělo být možné načíst aplikaci na adrese \url{http://localhost:5000} v běžném webovém prohlížeči.
+\end{enumerate}
 
 
 

@@ -24,6 +24,12 @@ def runtests():
 
 
 @manager.command
+def createdb():
+    """Creates all tables from scratch."""
+    db.create_all()
+
+
+@manager.command
 def resetdb():
     """Drops all tables and recreates them from scratch including fixtures."""
     if not (app.debug or app.config['TESTING']):
