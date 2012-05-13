@@ -26,6 +26,8 @@ $avatar-size: 50px;
 $google-color: #D14836;
 $facebook-color: #133783;
 $email-color: #1F273E;
+$error-background-color: #FBEBC9;
+$flash-background-color: #FDFCAB;
 
 
 /* Links */
@@ -105,6 +107,28 @@ form table {
         vertical-align: top;
         padding-right: 0.5em; padding-top: 0.15em;
         min-width: 5em;
+    }
+}
+
+.flashes {
+    @include operational-list();
+    background: $flash-background-color;
+    margin-bottom: $spacing;
+    padding: $spacing / 2; padding-bottom: 0;
+    border-radius: 3px;
+
+    li { padding-bottom: $spacing / 2; }
+}
+
+.errors {
+    text-align: left;
+    background: $error-background-color;
+    margin-bottom: $spacing;
+    padding: ($spacing / 2) $spacing;
+    border-radius: 3px;
+
+    h3 {
+        margin: 0; margin-top: $spacing / 4;
     }
 }
 
