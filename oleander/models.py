@@ -10,6 +10,7 @@ import operator
 import sqlalchemy
 import datetime
 import times
+import uuid
 
 
 class GravatarMixin(object):
@@ -286,7 +287,7 @@ class Contact(db.Model, ContactMixin):
     user = db.relationship('User', backref=db.backref('contacts', cascade='all', lazy='dynamic'))
     belongs_to_user = db.Column(db.Boolean(), nullable=False, default=False)
     is_primary = db.Column(db.Boolean(), nullable=False, default=False)
-    attendance = db.relationship('Attendance')
+    attendance = db.relationship('Attendance', cascade='all')
 
     __mapper_args__ = {
         'polymorphic_on': type,
@@ -335,6 +336,17 @@ class EmailContact(GravatarMixin, Contact):
     __mapper_args__ = {
         'polymorphic_identity': slug,
     }
+
+    def invitation_hash(self, event):
+        attendances = [a for a in self.attendance if a.event == event]
+        if not attendances:
+            return None
+
+        attendance = attendances[0]
+        if not attendance.hash:
+            attendance.generate_hash()
+
+        return attendance.hash
 
     @property
     def identifier(self):
@@ -408,6 +420,16 @@ class Attendance(db.Model):
     contact = db.relationship('Contact')
     type = db.Column(db.Enum(*types, name='attendance_types'), nullable=False)
     invitation_sent = db.Column(db.Boolean, nullable=False, default=False)
+    hash = db.Column(db.String(40), nullable=True)
+
+    def generate_hash(self):
+        hash = hashlib.sha1(str(self.event_id) + str(self.contact_id) + str(uuid.uuid1())).hexdigest()
+        self.hash = hash
+        return hash
+
+    @classmethod
+    def fetch_by_hash_or_404(self, hash):
+        return Attendance.query.filter(Attendance.hash == hash).first_or_404()
 
     def __repr__(self):
         return '<Attendance %r @ %r (%s)>' % (self.contact, self.event, self.type)
@@ -426,7 +448,7 @@ class Event(db.Model):
     venue = db.Column(db.String(200))
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='cascade'), nullable=False)
     user = db.relationship('User', backref=db.backref('events', cascade='all', lazy='dynamic'))
-    attendance = db.relationship('Attendance')
+    attendance = db.relationship('Attendance', cascade='all')
     created_at = db.Column(db.DateTime(), nullable=False, default=lambda: times.now())
     updated_at = db.Column(db.DateTime(), nullable=False, default=lambda: times.now(), onupdate=lambda: times.now())
     cancelled_at = db.Column(db.DateTime())
@@ -463,12 +485,16 @@ class Event(db.Model):
     def is_facebook_involved(self):
         fb_contacts = list(FacebookContact.query.join(Attendance)\
             .filter(Attendance.event_id == self.id))
-        return fb_contacts or self.facebook_id
+        return bool(fb_contacts or self.facebook_id)
 
     def is_google_involved(self):
         g_contacts = list(GoogleContact.query.join(Attendance)\
             .filter(Attendance.event_id == self.id))
-        return g_contacts or self.google_id
+        return bool(g_contacts or self.google_id)
+
+    def is_email_involved(self):
+        return bool(list(EmailContact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id)))
 
     @property
     def contacts_facebook_to_invite(self):
@@ -482,6 +508,13 @@ class Event(db.Model):
         return GoogleContact.query.join(Attendance)\
             .filter(Attendance.event_id == self.id)\
             .filter(GoogleContact.belongs_to_user == False)\
+            .filter(Attendance.invitation_sent == False)
+
+    @property
+    def contacts_email_to_invite(self):
+        return EmailContact.query.join(Attendance)\
+            .filter(Attendance.event_id == self.id)\
+            .filter(EmailContact.belongs_to_user == False)\
             .filter(Attendance.invitation_sent == False)
 
     @property

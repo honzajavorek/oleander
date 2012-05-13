@@ -1,0 +1,43 @@
+
+<strong style="font-size: 150%;">{{ current_user.name }} invites you to {{ event.name }}</strong>
+
+<br><br><br>
+
+<table>
+    <tr>
+        <th><label>When</label></th>
+        <td>
+            {% if event.starts_at %}
+                {{ event.starts_at|datetime }}
+            {% else %}
+                unknown (yet)
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th><label>Where</label></th>
+        <td>
+            {% if event.venue %}
+                {{ event.venue }} <small><a href="{{ event.venue|map_link }}" target="_blank">on map</a></small>
+            {% else %}
+                unknown (yet)
+            {% endif %}
+        </td>
+    </tr>
+    {% if event.description %}
+    <tr>
+        <th><label>What</label></th>
+        <td>
+            {{ event.description }}
+        </td>
+    </tr>
+    {% endif %}
+</table>
+
+<br><br><br>
+
+<strong style="font-size: 150%;">Are you in?
+    <a href="{{ url_for('event_invitation', hash=hash, answer='going', _external=True) }}">Yes</a>
+    <a href="{{ url_for('event_invitation', hash=hash, answer='maybe', _external=True) }}">Maybe</a>
+    <a href="{{ url_for('event_invitation', hash=hash, answer='declined', _external=True) }}">No</a>
+</strong>

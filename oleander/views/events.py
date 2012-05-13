@@ -3,15 +3,35 @@
 
 from flask import render_template, redirect, url_for, abort, jsonify
 from flask.ext.login import login_required, current_user
+from flask.ext.mail import Mail, Message
 from oleander import app, db, facebook, google
 from oleander.ajax import ajax_only, template_to_html
-from oleander.models import Event, Attendance, FacebookContact, GoogleContact
+from oleander.models import Event, Attendance, FacebookContact, GoogleContact, Attendance
 from oleander.forms import EventForm
 from gdata.calendar.data import CalendarEventEntry, CalendarWhere, When, EventWho, SendEventNotificationsProperty
 from atom.data import Title, Content
 import operator
 import datetime
 import times
+
+
+def send_email_invites(event):
+    if event.is_email_involved():
+        contacts_to_invite = list(event.contacts_email_to_invite)
+        mail = Mail(app)
+
+        if contacts_to_invite:
+            with db.transaction:
+                for contact in contacts_to_invite:
+                    hash = contact.invitation_hash(event)
+
+                    msg = Message('Inviation to %s' % event.name)
+                    msg.sender = '%s <%s>' % (current_user.name, current_user.email)
+                    msg.add_recipient('%s <%s>' % (contact.name, contact.email))
+                    msg.html = render_template('_invitation.html', event=event, hash=hash)
+                    mail.send(msg)
+
+                    event.set_invitation_sent(contact)
 
 
 @app.route('/')
@@ -44,6 +64,7 @@ def create_event():
             session.add(event)
         with db.transaction:
             event.contacts_invited_ids_str = form.contacts_invited_ids_str.data
+        send_email_invites(event)
         return redirect(url_for('facebook_event', id=event.id))
 
     else:
@@ -69,13 +90,21 @@ def search_contacts(term):
     return jsonify(term=term, contacts=contacts)
 
 
+@app.route('/events/invitation/<string:hash>/<any(going,maybe,declined):answer>')
+def event_invitation(hash, answer):
+    attendance = Attendance.fetch_by_hash_or_404(hash)
+    with db.transaction:
+        attendance.type = answer
+    return redirect(url_for('event', id=attendance.event.id))
+
+
 @app.route('/events/cancel/<int:id>')
 @login_required
 def cancel_event(id):
     """Canceles event by ID."""
     event = current_user.event_or_404(id)
     with db.transaction as session:
-        event.cancelled_at = times.now()
+        session.delete(event)
     return redirect(url_for('events'))
 
 
@@ -157,6 +186,7 @@ def edit_event(id):
         with db.transaction as session:
             form.populate_obj(event)
             event.starts_at = times.to_universal(form.starts_at.data, current_user.timezone)
+        send_email_invites(event)
         return redirect(url_for('facebook_event', id=event.id))
 
     return render_template('edit_event.html', event=event, action='edit', form=form)
