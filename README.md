@@ -22,3 +22,4 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - abstrakt a další povinné části v úvodu práce
 - doplnění obrázků
 - doplnění citací (uvádění ověřitelných údajů)
+- kontrola opakování výrazů
