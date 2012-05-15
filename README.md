@@ -21,5 +21,6 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - kontrola pravopisu
 - abstrakt a další povinné části v úvodu práce
 - doplnění obrázků
-- doplnění citací (uvádění ověřitelných údajů)
+- doplnění citací (uvádění ověřitelných údajů), hlavně v druhé polovině práce
+- doplnění seznamu zkratek, pojmů, doplnění poznámek pod čarou v druhé polovině práce
 - kontrola opakování výrazů
