@@ -1,6 +1,7 @@
 \documentclass[12pt,oneside,final]{fithesis2}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{cmap}
 \usepackage[T1]{fontenc}
 \usepackage{subfig}
 \usepackage{color}
@@ -92,6 +93,7 @@
 
 
 \tableofcontents
+\listoffigures
 
 
 
@@ -213,7 +215,7 @@ Klasické programy pro tvorbu dokumentů se většinou omezují v rámci spolupr
 \subsubsection*{Google+}
 Sociální síť, kterou Google otevřel světu v roce 2011, přišla hned se dvěma \uv{novými} prostředky k dorozumívání mezi uživateli. Zavedla skupinový chat s názvem \emph{Huddle} (dnes již oficiálně \emph{Messenger}) a videokonference \emph{Hangouts} \cite{gundotra2010introducing}. První jmenovaný spojuje zasílání zpráv z telefonů (Android, iPhone, nebo jakýkoliv s podporou pro SMS) s instant messagingem. V podstatě se ovšem jedná o Google Talk integrovaný do webového rozhraní Google+. Kromě standardních funkcí sdílení obsahu, které se dnes již příliš neliší od konceptů známých z Facebooku, Google+ nepřináší žádné zásadní nástroje podporující organizaci skupin. Nejpřínosnější jsou v tomto ohledu skupinové videokonference Hangouts, jež však se samotnou sociální sítí nemají mnoho společného a mohly by existovat i samostatně jako vylepšení služby Google Talk.
 
-\subsubsection*{Google Apps}
+\subsubsection*{Google Apps}\label{googleApps}
 Balík Google Apps je určen především pro firmy, pro které představuje možnost provozovat většinu výše uvedených Google služeb na své vlastní internetové doméně (namísto standardní {\tt google.com}) a pod vlastním logem. Funkce takto využívaných aplikací bývají v zásadě stejné jako u jejich standardních verzí. Jelikož by mohly Google Apps budit dojem samostatné služby usnadňující práci v kolektivu, pro úplnost zde uvádím jejich pravý význam.
 
 \subsection{Groupware společnosti 37signals}\label{37signals}
@@ -481,7 +483,7 @@ Následující části této kapitoly se zabývají návrhy na ověření těcht
 \section{Realizovatelnost sjednocujícího systému}\label{realizability}
 Abychom mohli sjednocovat různé způsoby CMC nebo funkce software podporujícího organizaci skupin, potřebujeme mezi nimi najít společné rysy. Je zapotřebí identifikovat elementární prvky komunikace a organizace, které se v určitých formách opakují napříč spektrem nástrojů a služeb, a jež bude možné vzájemně propojit.
 
-Jestliže takovéto elementární prvky existují a jejich integrace by byla teoreticky možná, je nutné následně ověřit, zda existují také praktické cesty jak toho docílit. V případě klasických způsobů počítačem zprostředkované komunikace se jedná o existenci a propojitelnost standardizovaných protokolů. U webových služeb je zapotřebí prozkoumat možnosti jejich API\footnote{API, zkratka pro \emph{Application Programming Interface}, označuje rozhraní k programování aplikací. V podstatě se jedná o protipól uživatelského rozhraní, jež je určeno běžnému člověku -- toto rozhraní je určeno strojům, tedy jiným programům a jejich tvůrcům. Jako API lze nazvat např. soubor funkcí, které poskytuje knihovna vývojářům k použití bez toho, že by museli znát interní implementaci (zapouzdření). V kontextu této práce je jako API označováno speciální programové rozhraní webů, přes něž může vzdáleně jiná aplikace číst data, měnit je, nebo vytvářet nová.}.
+Jestliže takovéto elementární prvky existují a jejich integrace by byla teoreticky možná, je nutné následně ověřit, zda existují také praktické cesty jak toho docílit. V případě klasických způsobů počítačem zprostředkované komunikace se jedná o existenci a propojitelnost standardizovaných protokolů. U webových služeb je zapotřebí prozkoumat možnosti jejich~API\footnote{API, zkratka pro \emph{Application Programming Interface}, označuje rozhraní k programování aplikací. V podstatě se jedná o protipól uživatelského rozhraní, jež je určeno běžnému člověku -- toto rozhraní je určeno strojům, tedy jiným programům a jejich tvůrcům. Jako~API lze nazvat např. soubor funkcí, které poskytuje knihovna vývojářům k použití bez toho, že by museli znát interní implementaci (zapouzdření). V kontextu této práce je jako~API označováno speciální programové rozhraní webů, přes něž může vzdáleně jiná aplikace číst data, měnit je, nebo vytvářet nová.}.
 
 Ani v případě existence takových rozhraní však nemusí být požadované propojení realizovatelné. Mohou se vyskytnout nejrůznější další překážky, které je potřeba odhalit -- v cestě mohou stát licenční podmínky, obtížná pochopitelnost uživatelského rozhraní, aj.
 
@@ -551,7 +553,7 @@ Při návrhu sjednocujícího systému vyvstává problém při integraci se slu
 Úkolem této části je odpovědět na otázku, zda je možné všechny výše zmíněné prvky komunikace propojit i v praxi a do jaké míry. Jednotlivé oddíly podrobně rozpracovávají každý z případů vzájemné integrace a hledají řešení, které bere největší ohledy na přirozenost a zřejmost používání. Jsou odhalovány a osvětlovány případné obstrukce, pro které nelze propojení realizovat.
 
 \subsection{Asynchronní zpráva jednomu člověku}
-Pro člověka, který nepoužívá žádnou z moderních webových aplikací, je tato zpráva de facto ztotožnitelná s e-mailem. Je-li tedy úkolem oslovit co nejširší uživatelskou základnu, musíme ostatní služby integrovat s touto tradiční formou CMC. Mnohé z nich to již dělají (např. Facebook dokáže za určitého nastavení e-mailové zprávy odesílat i přijímat) a e-maily chápou jako \uv{prodlouženou ruku} svých interních zpráv mezi uživateli. Přes tato e-mailová upozornění ovšem nelze moc dobře integrovat zprávy plošně, takže je zapotřebí mít k nim přímý přístup přes API.
+Pro člověka, který nepoužívá žádnou z moderních webových aplikací, je tato zpráva de facto ztotožnitelná s e-mailem. Je-li tedy úkolem oslovit co nejširší uživatelskou základnu, musíme ostatní služby integrovat s touto tradiční formou CMC. Mnohé z nich to již dělají (např. Facebook dokáže za určitého nastavení e-mailové zprávy odesílat i přijímat) a e-maily chápou jako \uv{prodlouženou ruku} svých interních zpráv mezi uživateli. Přes tato e-mailová upozornění ovšem nelze moc dobře integrovat zprávy plošně, takže je zapotřebí mít k nim přímý přístup přes~API.
 
 \subsubsection*{Funkce jednotlivých služeb}
 \begin{description}
@@ -569,11 +571,11 @@ Pro člověka, který nepoužívá žádnou z moderních webových aplikací, je
 \end{description}
 
 \subsubsection*{Reálné možnosti propojení}
-Facebook chrání své uživatele proti automatickým, většinou nevyžádaným zprávám ze strany aplikací -- v API existuje oprávnění na čtení schránky, ale ne na zapisování. To situaci velice komplikuje. Obejít by to šlo snad díky propojení Facebook Messages s Chatem, tedy zasíláním zpráv na XMPP bránu, takto zaslané zprávy ale nepodporují přílohy.
+Facebook chrání své uživatele proti automatickým, většinou nevyžádaným zprávám ze strany aplikací -- v~API existuje oprávnění na čtení schránky, ale ne na zapisování. To situaci velice komplikuje. Obejít by to šlo snad díky propojení Facebook Messages s Chatem, tedy zasíláním zpráv na XMPP bránu, takto zaslané zprávy ale nepodporují přílohy.
 
-LinkedIn má ve svém API vše potřebné k zasílání i čtení zpráv, ale má mnoho formálních omezení formulovaných v podobě pravidel a povolení. Ty ztěžují provoz jakékoliv automatizované služby -- stejně jako v případě Facebooku míří proti možnému spamování uživatelů.
+LinkedIn má ve svém~API vše potřebné k zasílání i čtení zpráv, ale má mnoho formálních omezení formulovaných v podobě pravidel a povolení. Ty ztěžují provoz jakékoliv automatizované služby -- stejně jako v případě Facebooku míří proti možnému spamování uživatelů.
 
-Zpráva na Twitteru je krátká, to by ovšem šlo obejít externím odkazem na zbytek textu. API poskytuje k jejich čtení a zasílání vše potřebné.
+Zpráva na Twitteru je krátká, to by ovšem šlo obejít externím odkazem na zbytek textu.~API poskytuje k jejich čtení a zasílání vše potřebné.
 
 Chybějící podpora pro přílohy u jednotlivých služeb by šla rovněž řešit externím odkazem. Systém by soubor přijal např. z e-mailu, uložil jej na svém serveru a do ostatních kanálů by poslal text s odkazem na tento soubor.
 
@@ -609,7 +611,7 @@ Tento druh zprávy plynně navazuje na předchozí a pro skupinovou organizaci m
 \end{description}
 
 \subsubsection*{Reálné možnosti propojení}
-Jak již bylo naznačeno v úvodu této části, skupinové asynchronní zprávy trpí podobnými překážkami jako zprávy mezi jednotlivci a přinášejí si k nim další. Twitter je v tomto směru zcela nepropojitelný, způsob dorozumívání je veden velice roztříštěně a nezapadá do žádného z ostatních vzorců diskuse. Na Facebooku komunikace opět splývá v jedno vlákno, takže by nebylo možné určit témata zpráv a seskupovat je. Google Groups a Usenet jsou de facto groupware aplikací nad e-mailovým protokolem. Webová fóra lze považovat za jejich nástupce, ovšem již odloučeného od původní technologie. Jsou nejčastěji provozována na systému phpBB, který však žádné API pro čtení nebo zapisování příspěvků nenabízí.
+Jak již bylo naznačeno v úvodu této části, skupinové asynchronní zprávy trpí podobnými překážkami jako zprávy mezi jednotlivci a přinášejí si k nim další. Twitter je v tomto směru zcela nepropojitelný, způsob dorozumívání je veden velice roztříštěně a nezapadá do žádného z ostatních vzorců diskuse. Na Facebooku komunikace opět splývá v jedno vlákno, takže by nebylo možné určit témata zpráv a seskupovat je. Google Groups a Usenet jsou de facto groupware aplikací nad e-mailovým protokolem. Webová fóra lze považovat za jejich nástupce, ovšem již odloučeného od původní technologie. Jsou nejčastěji provozována na systému phpBB, který však žádné~API pro čtení nebo zapisování příspěvků nenabízí.
 
 \subsection{Synchronní zpráva jednomu člověku}
 Všechny instant messaging sítě mají v podstatě stejnou sadu funkcí, případ od případu obohacenou o různá specifická rozšíření, jako jsou například možnost hrát s protějškem během konverzace hry. Tato rozšíření lze integrovat jen velice obtížně, byť například pro šachy existuje dokonce návrh na XMPP standard\footnote{XMPP Chess game, \url{http://xmpp.org/extensions/inbox/chess.html}}. Z dalších služeb to mohou být předpověď počasí, televizní program, RSS/Atom čtečka, SMS brány, překladové slovníky, a další.
@@ -652,7 +654,7 @@ XMPP brána Facebooku nepodporuje skupinový chat, což je přinejmenším obstr
 
 V případě webových služeb je propojování komplikovanější, ale ani zde se nejedná o \emph{pole nezorané}. Vynecháme-li webové IRC klienty a brány do Jabber konferencí, jež fungují na existujících standardech, lze nalézt i neoficiální brány např. pro zmiňovaný chat na Lidé.cz\footnote{pLBOT, \url{http://plbot.midian.cz/} nebo Lidegw, \url{http://sourceforge.net/projects/lidegw/}}. Takový software většinou programově \emph{parsuje} uživatelské rozhraní služby a spoléhá se na jeho neměnnost. Brány umožňují především spojení chatu s IRC.
 
-Campfire vývojářům přímo poskytuje API, takže není překvapující, že i zde existují projekty\footnote{IRCamp, \url{https://github.com/defunkt/ircamp}}, jež se snaží o jeho začlenění do ekosystému IRC.
+Campfire vývojářům přímo poskytuje~API, takže není překvapující, že i zde existují projekty\footnote{IRCamp, \url{https://github.com/defunkt/ircamp}}, jež se snaží o jeho začlenění do ekosystému IRC.
 
 \subsection{Obecná anketa}\label{genericPoll}
 Samostatně má obecnou anketu z běžně používaných nástrojů pouze Facebook, takže by šlo přistoupit pouze k integraci s e-mailem. Smysl však může dostat integrace této funkce v rámci stránky události. Facebook své Questions na stránce události nabízí a podobně na tom jsou české Srazy.info.
@@ -667,7 +669,7 @@ Samostatně má obecnou anketu z běžně používaných nástrojů pouze Facebo
 \end{description}
 
 \subsubsection*{Reálné možnosti propojení}
-Facebook má Questions přístupné pro čtení i zápis ve svém API, ne však ty, jež jsou vytvářeny v rámci stránky události. I kdyby však tyto ankety do API zahrnul, nešlo by k integraci přistoupit z toho důvodu, že veřejné API služby Srazy.info je výhradně pro čtení.
+Facebook má Questions přístupné pro čtení i zápis ve svém~API, ne však ty, jež jsou vytvářeny v rámci stránky události. I kdyby však tyto ankety do~API zahrnul, nešlo by k integraci přistoupit z toho důvodu, že veřejné~API služby Srazy.info je výhradně pro čtení.
 
 Jistým způsobem by bylo možné provádět ankety e-mailem -- systém by si pamatoval, na které adresy rozeslal HTML zprávu s odkazy pro jednotlivé odpovědi. Ty by byly opatřeny speciálními kódy unikátními pro daného uživatele a odpověď. Jakmile by uživatel kliknul na některý z nich, otevřela by se stránka, jež by tomuto uživateli započetla hlas a zobrazila mu výsledky ankety.
 
@@ -676,11 +678,11 @@ Nastíněný mechanismus je však náchylný k omylům -- jestliže příjemce t
 \subsection{Anketa na termín}\label{datePoll}
 Tento typ hlasování je specifický tím, že není tak triviální ani v osobní komunikaci a přitom jej provádíme poměrně často. Dva lidé se dohodnou snadno, ale najít společný termín v kalendářích skupiny několika lidí je pro organizátora někdy až nadlidský úkol. Anketa pro výběr termínu toto usnadňuje.
 
-Funkce Doodle.com pokrývají většinu celé problematiky a nabízí poměrně dobře pochopitelné rozhraní pro vedení zmíněného rozhodování, a to jak z pozice hlasujícího, tak pořadatele. Sám umožňuje integraci s nejrůznějšími kalendáři, včetně toho od Google. Nabízí také vytvoření \emph{stránky osobního kalendáře}, což je podobná funkčnost, jakou nabízí Google Calendar v podobě \emph{appointment slots} a koncepcí připomíná stránku události\footnote{Například vzorová \url{http://doodle.com/msbusy}.}. Přitom ale appointment slots (tedy označená místa v kalendáři, kam si mohou kolegové sami vepisovat schůzky s vlastníkem kalendáře) Google nenabízí vůbec ve svém API\footnote{Nahlášený požadavek na začlenění této funkce do API lze nalézt na \url{http://code.google.com/a/google.com/p/apps-api-issues/issues/detail?id=2615}.}, takže o propojení zde uvažovat nelze.
+Funkce Doodle.com pokrývají většinu celé problematiky a nabízí poměrně dobře pochopitelné rozhraní pro vedení zmíněného rozhodování, a to jak z pozice hlasujícího, tak pořadatele. Sám umožňuje integraci s nejrůznějšími kalendáři, včetně toho od Google. Nabízí také vytvoření \emph{stránky osobního kalendáře}, což je podobná funkčnost, jakou nabízí Google Calendar v podobě \emph{appointment slots} a koncepcí připomíná stránku události\footnote{Například vzorová \url{http://doodle.com/msbusy}.}. Přitom ale appointment slots (tedy označená místa v kalendáři, kam si mohou kolegové sami vepisovat schůzky s vlastníkem kalendáře) Google nenabízí vůbec ve svém~API\footnote{Nahlášený požadavek na začlenění této funkce do~API lze nalézt na \url{http://code.google.com/a/google.com/p/apps-api-issues/issues/detail?id=2615}.}, takže o propojení zde uvažovat nelze.
 
-Vzhledem k tomu, že Doodle.com nevyžaduje registraci, lze na něj odkázat i v běžném e-mailu a tak zřejmě nezbývá žádný kanál, s nímž by ještě mělo jít tuto službu propojovat. Snad možná s Facebook Questions, kam by jejich strůjce zadal konkrétní data do možností, ale to je oproti výše zmíněnému poměrně těžkopádné řešení, pomineme-li fakt, že anketa pro výběr termínu by se často hodila na stránku události a tam opět není v tomto směru z API přístup (viz \ref{genericPoll}).
+Vzhledem k tomu, že Doodle.com nevyžaduje registraci, lze na něj odkázat i v běžném e-mailu a tak zřejmě nezbývá žádný kanál, s nímž by ještě mělo jít tuto službu propojovat. Snad možná s Facebook Questions, kam by jejich strůjce zadal konkrétní data do možností, ale to je oproti výše zmíněnému poměrně těžkopádné řešení, pomineme-li fakt, že anketa pro výběr termínu by se často hodila na stránku události a tam opět není v tomto směru z~API přístup (viz \ref{genericPoll}).
 
-\subsection{Událost}
+\subsection{Událost}\label{eventPage}
 Na mnoha službách lze pozorovat koncept stránky události. Většinou slouží k propagaci nějaké akce, takže jejich duplicitní vytváření má potenciální přínos především v rozšiřování povědomí o konané akci. Většina z těchto stránek nabízí i mnoho funkcí k další propagaci -- sdílení, exporty do kalendářů, apod. Často se vyskytuje také možnost sledovat stránku. Tím se uživatel přihlásí v rámci dané služby k odběru všech novinek ohledně události, ale přitom není označen jako účastník.
 
 \subsubsection*{Funkce jednotlivých služeb}
@@ -705,13 +707,13 @@ Na mnoha službách lze pozorovat koncept stránky události. Většinou slouž�
 \end{description}
 
 \subsubsection*{Reálné možnosti propojení}
-Ač dává výčet funkcí jednotlivých služeb velké naděje k propojení tohoto prvku, vše hatí nedostatečná podpora ze stran API jednotlivých služeb. Facebook i Google Calendar sice disponují kompletním rozhraním, ale ostatní služby integrovat nelze.
+Ač dává výčet funkcí jednotlivých služeb velké naděje k propojení tohoto prvku, vše hatí nedostatečná podpora ze stran~API jednotlivých služeb. Facebook i Google Calendar sice disponují kompletním rozhraním, ale ostatní služby integrovat nelze.
 
-LinkedIn provozuje své Events jako zcela oddělenou aplikaci, takže i přesto, že v API otevírá k použití téměř jakýkoliv aspekt své sociální sítě, události zde chybí\footnote{Diskuse o chybějících Events v LinkedIn API je zde: \url{http://developer.linkedin.com/thread/1117}.}. Navíc má tato aplikace problémy s diakritikou -- i ručně založená událost zobrazuje chybně česká slova ve svém názvu. Srazy.info mají API, jak již bylo zmíněno dříve, pouze pro čtení. Last.fm opět nedisponují aplikačním rozhraním pro události, byť má jinak v tomto směru sadu funkcí pro vývojáře vyčerpávající. Podle vedených diskusí\footnote{Dostupné na adrese \url{http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/663219}.} se bojí zanesení svého systému nekontrolovatelným množstvím duplicitních nebo nesmyslných akcí. Lanyrd.com žádné API nemá, ač po něm jeho uživatelé volají a autoři webu jej slíbili\footnote{Článek o tomto je dostupný na \url{http://blog.programmableweb.com/2012/02/03/where-is-the-lanyrd-api/}.}.
+LinkedIn provozuje své Events jako zcela oddělenou aplikaci, takže i přesto, že v~API otevírá k použití téměř jakýkoliv aspekt své sociální sítě, události zde chybí\footnote{Diskuse o chybějících Events v LinkedIn~API je zde: \url{http://developer.linkedin.com/thread/1117}.}. Navíc má tato aplikace problémy s diakritikou -- i ručně založená událost zobrazuje chybně česká slova ve svém názvu. Srazy.info mají~API, jak již bylo zmíněno dříve, pouze pro čtení. Last.fm opět nedisponují aplikačním rozhraním pro události, byť má jinak v tomto směru sadu funkcí pro vývojáře vyčerpávající. Podle vedených diskusí\footnote{Dostupné na adrese \url{http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/663219}.} se bojí zanesení svého systému nekontrolovatelným množstvím duplicitních nebo nesmyslných akcí. Lanyrd.com žádné~API nemá, ač po něm jeho uživatelé volají a autoři webu jej slíbili\footnote{Článek o tomto je dostupný na \url{http://blog.programmableweb.com/2012/02/03/where-is-the-lanyrd-api/}.}.
 
 Stránky událostí by bylo možné propojit snad ještě s e-mailem, a to v podobném smyslu, jak bylo uvažováno v případě anket \ref{genericPoll}. Informace by tedy mohly být rozeslány HTML e-mailem a účast by byla evidována alespoň s důvěrou, že nedochází k jejímu falšování. Zde by ovšem případná zlomyslnost neměla tak velký význam jako u hlasování, jelikož se běžně stává, že účastníci přes internet svůj příchod potvrdí, ale poté na akci stejně nedorazí. Organizátor tedy na základě praxe vždy bere statistiku účastníků s rezervami.
 
-I kdyby však bylo dostupné API k stránkám událostí všech zmíněných služeb, vznikl by problém u integrace diskusí. Jak poukazuje rozbor v předchozích částech tohoto textu, nebylo by snadné rozpravy k akcím nějak sjednotit. Lze si představit, že systém bude jménem organizátora dopisovat do diskusí na ostatních službách, že \uv{uživatel XYZ píše na webu ABC: ...}, nicméně je to způsob mechanického propagování příspěvků a je diskutabilní, zda by byl dobře přijímán uživateli. Navíc, hierarchickou diskusi na Facebooku, kde jsou příspěvky a pod nimi sady komentářů, bude tento přístup zpracovávat jen těžce. Situaci mohou komplikovat také uživatelé e-mailu, jimž by šla zajistit možnost odpovědět na zaslanou pozvánku a tuto zprávu by systém mohl umět zpracovat jako příspěvek do diskuse. Je potom otázkou, jak je vhodné uveřejňovat obsah e-mailů, jenž odesílatel soukromně posílá organizátorovi v reakci na pozvánku.
+I kdyby však bylo dostupné~API k stránkám událostí všech zmíněných služeb, vznikl by problém u integrace diskusí. Jak poukazuje rozbor v předchozích částech tohoto textu, nebylo by snadné rozpravy k akcím nějak sjednotit. Lze si představit, že systém bude jménem organizátora dopisovat do diskusí na ostatních službách, že \uv{uživatel XYZ píše na webu ABC: ...}, nicméně je to způsob mechanického propagování příspěvků a je diskutabilní, zda by byl dobře přijímán uživateli. Navíc, hierarchickou diskusi na Facebooku, kde jsou příspěvky a pod nimi sady komentářů, bude tento přístup zpracovávat jen těžce. Situaci mohou komplikovat také uživatelé e-mailu, jimž by šla zajistit možnost odpovědět na zaslanou pozvánku a tuto zprávu by systém mohl umět zpracovat jako příspěvek do diskuse. Je potom otázkou, jak je vhodné uveřejňovat obsah e-mailů, jenž odesílatel soukromně posílá organizátorovi v reakci na pozvánku.
 
 Řešením, které rezignuje na všeobecnou informovanost účastníků o tom, co kde odpověděl jiný člověk přes jiný kanál, je zahrnutí diskusí pouze v režimu čtení. Systém tedy eviduje diskuse na jednotlivých službách paralelně vedle sebe, nemíchá příspěvky a nepropaguje je, ale poskytuje tímto alespoň pořadateli neveřejný přehled o rozpravách, jež se nad konanou akcí vedou.
 
@@ -737,9 +739,9 @@ Kontakty s organizací uživatelů úzce souvisí. Hodí se jako doplněk ke zpr
 \end{description}
 
 \subsubsection*{Reálné možnosti propojení}
-Přátele z Facebooku můžeme pohodlně získat z API, avšak jako adresář kontaktů příliš neposlouží -- opět z důvodu ochrany před spamováním. Sociální síť totiž v aplikačním rozhraní poskytuje jen jméno člověka a několik málo dalších údajů, nikoliv však e-mail či telefonní číslo.
+Přátele z Facebooku můžeme pohodlně získat z~API, avšak jako adresář kontaktů příliš neposlouží -- opět z důvodu ochrany před spamováním. Sociální síť totiž v aplikačním rozhraní poskytuje jen jméno člověka a několik málo dalších údajů, nikoliv však e-mail či telefonní číslo.
 
-Google přes API nabízí celý adresář kontaktů, takže schválí-li uživatel připojené aplikaci patřičná oprávnění, může jej vzdáleně naplno využívat. Podobně je na tom i LinkedIn. Seznamy následovníků a následovaných lze vyčíst také z Twitter API.
+Google přes~API nabízí celý adresář kontaktů, takže schválí-li uživatel připojené aplikaci patřičná oprávnění, může jej vzdáleně naplno využívat. Podobně je na tom i LinkedIn. Seznamy následovníků a následovaných lze vyčíst také z Twitter~API.
 
 Při nahrávání souborů CSV nebo vCard nemohou vznikat žádné potíže, na oba tyto formáty má většina programovacích jazyků již hotové a odzkoušené knihovny. Zádrhel může být snad jen při interpretaci dat z importu CSV, protože Google dokáže ze svých Contacts exportovat kromě tradičního i svůj vlastní typ, jenž není kompatibilní s ostatními službami a programy.
 
@@ -757,7 +759,7 @@ Tato cílová skupina je poměrně široká, zamyslíme-li se nad faktem, že v�
 \section{Užitečnost jednotlivých funkcí}\label{utility}
 \begin{description}
     \item[Asynchronní zpráva]
-        Vzhledem k rozsahu, v jakém je možná integrace jednotlivých služeb, je nepravděpodobné, že by ve výsledku organizátorovi přinesla větší užitek, než samotné e-maily nebo zprávy na Facebooku. S ohledem na chybějící podporu ze stran API, ale i konceptuální odlišnost (chybějící vlákna diskuse na Facebooku) by jakékoliv řešení nebylo přínosné ani přirozené k používání. Organizátor raději povede dvě konverzace na různých službách.
+        Vzhledem k rozsahu, v jakém je možná integrace jednotlivých služeb, je nepravděpodobné, že by ve výsledku organizátorovi přinesla větší užitek, než samotné e-maily nebo zprávy na Facebooku. S ohledem na chybějící podporu ze stran~API, ale i konceptuální odlišnost (chybějící vlákna diskuse na Facebooku) by jakékoliv řešení nebylo přínosné ani přirozené k používání. Organizátor raději povede dvě konverzace na různých službách.
 
     \item[Synchronní zpráva jednomu člověku]
         O integraci se na tomto poli již snaží technologie založené na XMPP. Organizátor, který hledá sjednocující řešení pro tuto oblast, má na výběr z existujících klientů pro různé IM sítě, nebo transportů pro Jabber.
@@ -779,49 +781,212 @@ Tato cílová skupina je poměrně široká, zamyslíme-li se nad faktem, že v�
 \end{description}
 
 \section{Shrnutí}
-Z vyčerpávajícího ověřování uskutečnitelnosti jednotlivých propojení je zřejmé, že nakonec není mnoho oblastí komunikace a organizace, které by šlo do systému plnohodnotně zahrnout. Často se tvorba nového nástroje nevyplatí, jelikož by pravděpodobně nenašel dostatečné uplatnění u uživatelů, a to z důvodů nízkého přínosu, složité až nemožné implementace, nebo rozsáhlým obstrukcím v oblasti chybějícího API jednotlivých služeb. Obě nastolené hypotézy jsou tedy falzifikovány, aplikujeme-li je na celý rozsah analyzovaných metod dorozumívání a spolupráce.
+Z vyčerpávajícího ověřování uskutečnitelnosti jednotlivých propojení je zřejmé, že nakonec není mnoho oblastí komunikace a organizace, které by šlo do systému plnohodnotně zahrnout. Často se tvorba nového nástroje nevyplatí, jelikož by pravděpodobně nenašel dostatečné uplatnění u uživatelů, a to z důvodů nízkého přínosu, nebo rozsáhlým obstrukcím v oblasti chybějícího~API jednotlivých služeb. Obě nastolené hypotézy jsou tedy falzifikovány, aplikujeme-li je na celý rozsah analyzovaných metod dorozumívání a spolupráce.
 
-Největší potenciál pro částečné potvrzení hypotéz přislibují stránky událostí -- neexistuje služba, jež by jejich integraci už řešila a přitom má systém sjednocující správu takových stránek zjevné využití u pořadatelů akcí. Velké rezervy v aplikačním rozhraní může vyřešit čas, jelikož mnohé weby, kterých se propojení týká, chtějí API pro tuto funkčnost do budoucna zavést.
+Největší potenciál pro částečné potvrzení hypotéz přislibují stránky událostí -- neexistuje služba, jež by jejich integraci už řešila a přitom má systém sjednocující správu takových stránek zjevné využití u pořadatelů akcí. Velké rezervy v aplikačním rozhraní může vyřešit čas, jelikož mnohé weby, kterých se propojení týká, chtějí~API pro tuto funkčnost do budoucna zavést.
 
 
 \chapter{Specifikace požadavků na ukázkovou aplikaci}
-% Cílem této části je shrnout výzkum předešlých dvou kapitol a rámcově navrhnout řešení aplikace. Výsledkem této kapitoly by měla být především specifikace zadání, jeho doplnění, konkretizace toho co přesně bude implementováno v aplikaci a proč právě to (cílení projektu, realizovatelnost, apod.).
+Vyjdeme-li ze závěrů předchozích kapitol, můžeme ukázkovou aplikaci specifikovat jako webový nástroj, jenž uživateli umožní spravovat stránky událostí tak, aby byl odstíněn od nutnosti řešit odlišné komunikační preference účastníků. Taková realizace ověřuje koncept, na němž stojí tato práce, ač se týká pouze omezené oblasti lidské komunikace zprostředkované počítačem, a zároveň má největší potenciál z hlediska užitečnosti v provozu.
+
+Aplikace by při tomto upřesněném zadání měla splňovat následující požadavky:
+
+\begin{itemize}
+    \item Umožnit pořadateli spravovat stránky událostí, aniž by se musel zabývat jednotlivými typy kontaktů.
+    \item Nabídnout import kontaktů z jednotlivých napojených služeb.
+    \item Umožnit vytváření stránek událostí, na něž bude možné pozvat kontakty z libovolné napojené služby.
+    \item Detekovat typ kontaktu a na základě toho provádět práci s ním na patřičné službě.
+    \item Aktualizovat data z jednotlivých služeb.
+    \item Poskytnout organizátorovi jednoduché rozhraní, jenž jej odstíní od problému a umožní mu zacházet s různými kontakty totožně.
+\end{itemize}
+
+Vzhledem k neexistujícím~API pro ostatní služby bude aplikace propojovat pouze Facebook, Google Calendar a e-mail. To by mělo pro demonstraci řešení problému postačit -- pokud by se našel způsob jak přidat další, nijak výrazně to neovlivní smysl programu v podobě ověřování nastolených hypotéz.
 
 
 
 \chapter{Návrh nástroje pro správu událostí}
-% Přesný popis návrhu systému.
-% Zadaný problém by šel řešit tak a nebo tak, já k němu přistoupím tímto způsobem, protože na zvolené platformě je to nejefektivnější. Rozhodl jsem se. Vymyslel jsem. Rozvrhl jsem. Vypočítal jsem. Odvodil jsem. Zjednodušil jsem. Vylepšil jsem. Navrhl jsem. Zjistil jsem. Vyzkoumal jsem.
+Kapitola se zabývá podrobnějším návrhem aplikace. Postupně prochází strukturu systému, specifikaci uživatelského rozhraní a popisuje jednotlivá~API.
 
-\section{Integrované služby}
+\section{Struktura webového rozhraní}
+Tento oddíl se zaměřuje na návrh jednotlivých obrazovek výsledného systému. Cílem je přitom vytvořit jednoduchou a zřejmou organizaci, navigaci a reprezentaci informací na stránce.
 
-\section{Struktura webové aplikace}
+\subsection{Stránky událostí}
+Jádrem stránky události je přehled základních údajů a seznam účastníků. Vše ostatní je možné vynechat a doplnit v dalších verzích aplikace, bude-li to považováno za užitečné. Obrazovka by proto měla přehledně zobrazit především název akce, čas a místo konání, případně delší popis vložený organizátorem. Stranou od těchto údajů by měli být zobrazeni účastníci, a to způsobem, který přehledně odděluje jednotlivé skupiny podle odpovědi na pozvánku. V tomto směru rozlišujeme kontakty na následující:
+
+\begin{description}
+    \item[Nepozvaný] Interní stav, výchozí ohodnocení relace mezi kontaktem a událostí. Uživateli systému není nijak užitečný a proto se ani nikde nezobrazuje.
+    \item[Pozvaný] Na daný kontakt byla odeslána pozvánka, ale příjemce na ni zatím neodpověděl. Stav zamezuje odeslání dalších pozvánek na tento kontakt.
+    \item[Souhlasí] Osoba obdržela pozvánku a potvrdila účast. Pravděpodobně se na akci objeví.
+    \item[Neví] Osoba se zatím nerozmyslela, nechce nebo nemůže jasně říci, zda se dostaví či nikoliv.
+    \item[Odmítá] Na pozvánku tento člověk odpověděl negativně, zcela určitě ví, že na událost nedorazí.
+\end{description}
+
+Jesliže ostatní stránky v systému by měly být chráněny před přístupem kohokoliv jiného než přihlášeného pořadatele, stránka události by oproti tomu měla být veřejná. Jen tak se na ni budou moci dostat uživatelé prostého e-mailu. Měla by proto mít i dobře zapamatovatelnou, permanentní adresu.
+
+\subsection{Správa kontaktů}
+Obrazovka zajišťující správu kontaktů by měla pořadateli umožňovat efektivní pohyb v adresáři a nabízet mu funkce pro přidání nových osob. První z těchto požadavků naplňuje celkový přehled adresáře utřízený podle iniciál jmen kontaktů. Jelikož může být jeho objem rozsáhlý, je zapotřebí posílit navigaci -- k tomu může dobře posloužit abecední výčet písmen, jež odkazují na jednotlivé skupiny lidí začínajících příslušnou iniciálou.
+
+Druhá funkce, přidávání osob, musí uživateli umožňovat především import přátel z Facebooku -- tyto kontakty by se do systému jinak dostat nemohly. Základem je také ruční přidávání podle e-mailové adresy. Systém by měl sám umět rozlišit kontakty, které náleží Google účtům, a zařadit si je pod patřičný typ.
+
+\subsection{Uživatelské nastavení}
+Nastavení umožňuje změnu osobních údajů uživatele aplikace. Je to hlavně jméno a heslo, dále pak například časové pásmo, v němž se nachází a zakládá v něm události (viz \ref{timezone}). Stránka by neměla umožňovat z bezpečnostních důvodů vstup uživatele, který není čerstvě přihlášen (např. tak učinil před pár dny a mezitím několikrát otevřel a zavřel prohlížeč).
+
 
 \section{Uživatelské rozhraní}
-Aby mohlo být dosaženo takovéto plošné integrace, musí také iniciátor diskuse sám určit typ kontaktu při výběru příjemců. Importuje-li tedy přátele z Facebooku a kontakty z e-mailu, nesmí se tyto nijak sloučit v případě, že se v nich vyskytují tytéž osoby. Naopak, měly by být viditelně odděleny a u diskusí musí být organizátorovi jasno, jestli s konkrétním člověkem komunikuje přes Facebook nebo e-mail. Organizátor totiž sám nejlépe ví, na jakém kanále zastihne kolegu -- toto nelze určit žádným algoritmem.
+Sekce zmiňuje vybrané detaily uživatelského rozhraní, které si zaslouží z nějakého důvodu pozornost. Všechny popisují řešení drobného problému, jenž zdánlivě nehraje významnou roli, avšak uživateli může výrazně přispět k orientaci nebo zřejmosti ovládání.
 
-\section{Specifika práce s API}
+\subsection{Práce s kontakty}\label{separateContactTypes}
+Pořadatel by měl sám určit typ kontaktu při výběru pozvánek. Importuje-li tedy přátele z Facebooku a kontakty z e-mailu, nesmí se tyto nijak sloučit v případě, že se v nich vyskytují stejnojmenné osoby. Naopak, měly by být viditelně odděleny a při rozesílání pozvánek musí být organizátorovi jasno, jestli s konkrétním člověkem komunikuje přes Facebook nebo e-mail. Sám totiž nejlépe ví, na jakém kanále zastihne kterého kolegu -- toto nelze určit žádným algoritmem. Zároveň se tím aplikace vyvaruje problematice párování osob, kterou řeší mnohé programy pro integraci více kontaktních adresářů.
 
-\section{Databáze}
+\subsection{Obrázky kontaktů}
+Pro lepší orientaci je vhodné u kontaktů zobrazovat nějaké charakteristické obrázky. Nejlepší by bylo mít k dispozici fotografie, to ovšem není mimo kontakty z Facebooku příliš reálný požadavek. Existuje však služba Gravatar, která svým uživatelům umožňuje zaregistrovat ke své e-mailové adrese nějaký vlastní obrázek. Ten potom mají možnost na základě e-mailové adresy a s pomocí jednoduchého~API zobrazit vedle jména uživatele tvůrci různých internetových fór, komentářových diskusí aj. aplikací, kde hrají osoby významnou roli. Tuto poměrně rozšířenou službu je tedy výhodné implementovat pro kontakty, k nimž nemáme jiným způsobem jak rozlišovací obrázek přiřadit.
 
+\subsection{Čas konání události}\label{timezone}
+Pro tvorbu programu, který vytváří stránky událostí, je důležitá informace o časovém pásmu, v němž se konají. Jednotlivým uživatelům se potom musí vše zobrazit ve správném, tedy jeho čase. Nejjednodušší možností, jak toto řešit, je evidovat časové pásmo uživatelů a vytvořených akcí. Nebo neevidovat nic -- např. Facebook předpokládá, že časy začátku a konce akce mají vždy vztah k místu konání, takže je lze chápat zcela relativně v daném geografickém kontextu. Provozovatelé této sociální sítě tedy ukládají a zobrazují časy tak, jak byly zadány uživatelem.
+
+
+\section{Integrované služby}
+Následující odstavce představují aplikační rozhraní, jež je potřeba využít pro tvorbu zadaného programu, a vystvětluje související pojmy. Výčet nezahrnuje protokol SMTP jakožto rozhraní pro interakci s uživateli prostého e-mailu, protože je jeho problematika po desetiletí neměnná a nepřipravuje pro návrh či implementaci výrazné překážky.
+
+\subsection{OAuth~2.0}
+OAuth označuje otevřený standard pro webovou autorizaci, tedy ověření oprávnění k operacím nad webovými daty. Umožňuje uživateli sdílet jím vybraná soukromá data nebo přístup k nim (zápis, čtení), aniž by musel poskytovat své přihlašovací údaje třetím stranám. Druhá verze standardu se zaměřuje na jednodušší implementaci klientů, ale není ještě zcela hotová a proto je její zavádění zatím oficiálně pouze experimentální. Nicméně i přesto jej lze úspěšně využít k připojení na~API mnoha existujících služeb včetně Facebooku, Google, a dalších.
+
+\subsection{REST~API}
+REST je architektura představená v~roce 2000 jedním z~autorů specifikace protokolu HTTP \cite{fielding2000architectural}.~API v~podobě REST lze zkratkovitě popsat jako technologii, v~níž poskytovatel dat zveřejní webové URI, MIME typ odpovědi a množinu operací, které jsou k~dispozici přes HTTP metody POST, GET, PUT nebo DELETE. Z~formátů odpovědí jsou nej\-využívanější obyčejný text, XML a JSON.
+
+\subsection{Facebook Graph~API}
+Aplikační rozhraní pro práci s Facebookem se nazývá Graph~API\footnote{Facebook Graph~API, \url{http://developers.facebook.com/docs/reference/api/}}. Funguje převážně na bázi REST, odpovědi vrací ve formátu JSON. Pro autorizaci využívá techniku OAuth~2.0. Odpovědi jsou dobře čitelné i lidským okem a většinou obsahují pouze nezbytně nutné množství dat.
+
+\subsection{Google Contacts~API}
+Třetí verze Contacts~API\footnote{Google Contacts~API, \url{http://developers.google.com/google-apps/contacts/v3/}} využívá plně OAuth~2.0. Protože nejsou v současnosti dostupné žádné jiné verze, vychází jeho označení jako třetí nejspíše ze stavu celé platformy aplikačních rozhraní od Google. Stejně jako i většina ostatních~API z této platformy je i toto založeno na autorizovaném REST přístupu k XML exportům s daty, v nichž se hojně využívá standardizovaný formát Atom. Ten je určený pro syndikaci obsahu a původně vznikl jako alternativa ke známějšímu RSS. Je ovšem poměrně komplexní a v kombinaci s několika dalšími jmennými prostory znepřehledňuje a zesložiťuje XML odpovědi z~API natolik, že je pro programátora téměř nutností využít některou z nabízených klientských knihoven, které jej od práce s takovýmito XML výrazně odstiňují.
+
+\subsection{Google Calendar~API}
+Calendar~API\footnote{Google Calendar~API, \url{http://developers.google.com/google-apps/calendar/}} existuje ve třech verzích souběžně, přičemž dvě jsou považovány za zastaralé. Všechny fungují na totožném principu jako výše uvedené Contacts~API, tedy kombinace REST a XML za širokého využití formátu Atom. Starší verze~API jsou primárně autorizovány pomocí OAuth 1.0, ačkoliv i jeho druhá verze do nich byla dodatečně implementována. Opět existují klientské knihovny, jež programátorovi s rozhraním usnadňují práci.
+
+\subsection{Specifika práce s~API}
+Vystavět aplikaci z~větší části na externích zdrojích přináší možnost využít již hotových, profesionálních a ihned funkčních řešení. Samozřejmě to ale přináší také nevýhody, např. skutečnost, že zdroje dat nejsou nijak v moci tvůrce aplikace. Hrozí mu riziko prodlev či nedostupnosti služeb v~případě lepším, v~tom horším potom jejich neaktuálnost, chybovost, nebo dokonce zánik.
+
+Aplikace tedy musí počítat s výpadky nebo nedokonalostmi a umět se s nimi vypořádat -- dát např. uživateli najevo, že interakce s Facebookem není v daný okamžik možná, protože ten zrovna není dostupný. Tímto způsobem odůvodněné omezení uživatel pochopí a zkusí akci vykonat později, jelikož ani on sám by nic na Facebooku v tu chvíli provést nemohl.
 
 
 \chapter{Implementace nástroje pro správu událostí}
-% Pro implementaci jsem zvolil ty a ty nástroje, celý systém rozvrhl do takových modulů. Naprogramoval jsem. Posbíral jsem data. Pustil jsem to. Výsledky jsou takové. Je to tak a tak rychlé.
-% Popis výsledné implementace. Část kapitoly by se měla zaměřit na výběr zajímavých problémů, na které se při implementaci narazilo, spolu s jejich řešeními.
+Kapitola má za úkol čtenáře provést realizací demonstrační aplikace. Činí tak především popisem významných překážek a rozhodování. Osvětluje výběr použitých technologií a pozastavuje se nad jednotlivými problémy, které bylo potřeba při implementaci řešit.
+
+Pro aplikaci bylo vybráno kódové označení Oleander, takže se v roli jejího loga objevuje na obrazových ukázkách. Rovněž je tak pojmenováno i mnoho částí kódu programu (názvy balíčků, aj.).
 
 \section{Použité technologie}
-% Zde by mělo být popsáno a rozebráno jaké nástroje a služby budou použity pro implementaci aplikace. U každého nástroje či služby by mělo být stručně vysvětleno k čemu slouží a z jakého důvodu došlo k výběru.
+Následující popis použitých technologií není vyčerpávající -- odkazuje se v mnohých případech na jiné, které se ve výčtu podrobně rozpracovány neobjevují, jako např. HTML, CSS, JavaScript, MySQL, PostgreSQL nebo SQLite. Tyto jsou totiž zcela fundamentálními technologiemi pro vývoj webové aplikace a bylo by zbytečné prodlužovat rozsah této práce jejich představováním. Výběr se tedy zaměřuje především na nestandardní, ojedinělé, či jinak zajímavé prostředky vedoucí ke zhotovení demonstrační aplikace, a snaží se objasnit, proč byly zvoleny.
+
+\subsection{Python}
+Python je obecný interpretovaný jazyk nezávislý na platformě. Pro zhotovení aplikace jsem jej vybral proto, že v něm lze vyvíjet funkční celky velice rychle a pohodlně. Výsledný kód je snadno čitelný a měnitelný v případě potřeby. Velkou část ukázkové aplikace jsem programoval rychlým prototypováním, abych co nejdříve narazil na fundamentální problémy a mohl tak postupně ověřovat hypotézy této práce. Tento jazyk se pro takový vývoj ukázal jako dobrá volba.
+
+Jazyk existuje ve dvou verzích, Python 2 a Python 3. Ukázková aplikace je napsána ve verzi 2.6, jelikož ta (nebo vyšší) je přítomna ve většině současných unixových operačních systémech a má největší podporu mezi knihovnami.
+
+\subsection{Flask}
+Programování v~Pythonu samotném je na abstraktnější úrovni než např. vývoj v~jazyce C, ale i tak není možné vyhnout se rutinním a problémovým konstrukcím, které je třeba stále znova řešit. U~webových aplikací, které v~podstatě vycházejí všechny ze stejných principů a postupů, to platí v~ještě větší míře. Řešením je použít \emph{framework}, tedy připravenou a odzkoušenou sadu knihoven.
+
+Vybral jsem \uv{mikroframework} Flask, jelikož jeho charakter vycházel vstříc prototypovému způsobu vývoje. Základní použití jeho sady nástrojů se lze i s velice základními znalostmi Pythonu naučit za několik hodin a jeho pojetí vybízí k jednoduchému a čitelnému kódu, jenž lze v případě potřeby snadno upravovat nebo rozšiřovat. Flask usnadňuje tvorbu webové aplikace tím, že poskytuje malé, ale mocné jádro, které zapouzdřuje práci s HTTP a rozděluje program do dvou vrstev -- šablon a tzv. \emph{controlleru}, tedy směrovače požadavků a odpovědí. To odpovídá návrhovému vzoru MVC (model není v tomto případě přítomen přímo ve frameworku) \cite{bernard2009serial}. Samotné jádro je potom snadno rozšiřitelné o jakékoliv funkce, jež programátor potřebuje. Nekříží mu ovšem plány, nevyužije-li je, což je časté u \uv{všeobjímajících} frameworků, jako je například Django.
+
+\subsection{HTML5}
+Na základě současného vývoje webu bylo místo běžného HTML nebo překonaného\footnote{Viz zpráva \url{http://www.w3.org/News/2009\#item119}.} XHTML využito prvků z rodiny technologií pojmenované jako HTML5. Aby fungovaly i v některých starších prohlížečích, využil jsem knihovnu Modernizr napsanou v jazyce JavaScript, která tuto nekompatibilitu částečně stírá, ale především o ní informuje, aby se aplikace mohla patřičně \uv{uskromnit} (techniky \emph{graceful degradation} či \emph{progressive enhancement} \cite{heilmann2009graceful}). HTML5 bylo nakonec využito v menším měřítku, aplikace implementuje de facto jen nové sémantické značky a některé nové direktivy v CSS. Lze si však představit širší použití těchto nových možností při budoucím rozšiřování programu -- zajímavými se jeví především geolokace uživatele, hlubší sémantické značkování (Mikroformáty, Mikrodata, RDFa), nebo využití osobního kalendáře či správce kontaktů přímo z prohlížeče\footnote{Calendar~API, \url{http://www.w3.org/TR/calendar-api/}, a~Contacts~API, \url{http://www.w3.org/TR/contacts-api/}.}.
+
+\subsection{SCSS}
+Při vývoji kaskádových stylů CSS, které definují vzhled webové aplikace, bylo využito \emph{preprocesoru} Sass, resp. jeho varianty SCSS, jež umožňuje psát CSS obohacené o nové syntaktické konstrukce, a následně jej přeložit do tradičního stylopisu. Do deklarativních stylů takto zavádí podporu pro proměnné, jednoduché aritmetické výrazy, vnořování, znovupoužitelné bloky a dědičnost. To usnadňuje a urychluje vývoj, protože tvůrce stylopisu má rozsáhlé možnosti vytvářet generické prvky, jež následně parametrizuje a využívá na mnoha místech. Chce-li něco měnit, činí tak následně obvykle pouze na jednom místě v kódu.
+
+\subsection{SQLAlchemy}
+Knihovna SQLAlchemy abstrahuje práci s SQL databázemi v jazyce Python. Hlavní charakteristikou jeho ORM (objektově relačního mapování) je přenechání zodpovědnosti za spárování tabulek a doménových objektů na samotném programátorovi. Pro dotazování databází poskytuje rozhraní, které se snaží co nejvíce zapadat do zvyklostí samotného jazyka Python a působit tak na vývojáře přirozeně, intuitivně. Navíc zapouzdřuje samotnou komunikaci se SŘBD, takže lze aplikace tvořit nezávisle na zvoleném SQL dialektu. Taková svoboda je výhodná např. při testování, kdy lze rychle vytvořit ad hoc databázi v operační paměti pomocí SQLite, místo aby bylo nutné instalovat a nastavovat komplexní PostgreSQL či MySQL.
+
+\subsection{jQuery}
+Ze stejných důvodů jako Flask jsem zvolil pro vývoj v jazyce JavaScript framework jQuery -- tedy aby pomohl abstrahovat a zapouzdřit některé časté problémy při vývoji webové aplikace, ovšem v tomto případě z hlediska tvorby uživatelského rozhraní. Tato knihovna velice zjednodušuje manipulaci s prvky stránky nebo zasílání asynchronních požadavků na server (tzv. AJAX) a ač nemusí zcela postačovat při programování velkých, komplexních aplikací, pro počáteční rychlý vývoj funkčních prototypů je velice nápomocná.
+
 
 \section{Detaily řešení vybraných problémů}
+V následujících odstavcích je podobně jako v předešlých oddílech popisována jen sada vybraných problémů, tentokrát z oblasti samotné realizace ukázkového programu. Jednotlivě jsou probrány hlavní překážky, které bylo nutné při implementaci překonat a jež někdy nebyly zcela zřejmé ani při návrhu.
+
+\subsection{Facebook~API a Python}
+Facebook dnes neposkytuje žádnou oficiální knihovnu ke svému API pro jazyk Python. Dříve však jednu vyvinul a stejně jako ostatní své nástroje ji poskytnul v podobě open-source, takže komunita se jí před zrušením chopila, udržuje kopie jejího kódu a staví nad nimi některé neoficiální knihovny.
+
+Pro realizaci jsem ale vybral raději malý, ovšem postačující projekt Facepy, jenž je pod aktivním vývojem. Protože jsem při vývoji nad touto knihovnou narazil na několik jejích chyb, zpracoval jsem opravy a zaslal autorovi, Johannesi Gorsetovi. Ten je s povděkem přijal a zapracoval do hlavní větve vývoje. Protože je Facepy založeno na knihovně Requests, která zapouzdřuje práci s HTTP, využil jsem pro autorizaci navazující projekt {\tt requests-oauth2}.
+
+\subsection{Roztříštěnost knihoven pro Google~API}
+Při realizaci napojení aplikace na Google API jsem narazil na mnohé překážky. Dokumentaci k jednotlivým projektům jsem shledal poměrně nepřehlednou a jednotlivá API vzájemně nekonzistentní, hlavně co se klientských knihoven a možností autorizace týče. Nástroje pro vývojáře jsou rovněž mnohdy špatně k nalezení.
+
+Contacts API je podle všeho poměrně nové a jako jedno z prvních nabízí autorizaci přes OAuth~2.0. Není však zahrnuto do souběžně vznikající nové knihovny s názvem {\tt google-api-python-client}. Ta je přitom propagována především v souvislosti s OAuth~2.0, takže by se zdálo logické, že v ní Contacts budou zařazeny. Calendar API v této knihovně přítomno je, ale pokud jsem chtěl v projektu využít jen jednu knihovnu, musel jsem se tak obrátit ke starší a dnes zavrhované {\tt gdata-python-client} (a spolehnout se na její podporu OAuth 2.0, jež do ní byla dodána dodatečně). V Calendar API je označována jako staré API druhé verze, které by vývojář nových aplikací používat neměl, byl jsem k tomuto kroku ovšem donucen výše popsanými okolnostmi.
+
+Použití nové knihovny {\tt google-api-python-client} by navíc ke zmíněnému způsobovalo problém v kolizi názvů balíčků. Google totiž přímo do ní zařadil podporu pro OAuth, na rozdíl od knihoven pro Facebook API, jež toto nechávají na vývojáři a dávají mu volnost výběru. Závislosti potom do globálního prostoru jazyka vkládají stejné názvy, jaké i {\tt requests-oauth2}.
+
+\subsection{Rozpoznání uživatele Google Calendar}
+Automatická detekce uživatele Google z e-mailové adresy není zcela spolehlivá. Google sice pro své účty využívá pouze dvě domény, {\tt gmail.com} a {\tt googlemail.com}, ale jejich rozlišení není postačující pro účel této aplikace. V rámci produktu Apps (viz \ref{googleApps}) totiž Google nabízí firmám zřídit si jeho služby pod vlastní doménou. Google účet pak může být skrytý pod téměř jakýmkoliv e-mailem.
+
+Skutečnost, že člověk využívá Gmail pro svou poštu, také není postačující ve chvíli, kdy se potřebujeme rozhodnout, zda mu poslat pozvánku na událost pomocí služby Google Calendar. Zda je uživatelem kalendáře ovšem nijak zjistit nejde. Do budoucna by tedy bylo zřejmě lepší od takto nespolehlivé detekce upustit a nechat organizátora rozhodnout samotného, zda kontakt považovat za uživatele kalendáře od Google, či nikoliv. Je to sice rezignace na určitou část odstínění pořadatele od problému interoperability, ale podobně jako už v případě samotného rozlišení kontaktů na typy podle služeb, popsaného v \ref{separateContactTypes}, bude tento explicitní přístup lepší.
+
+Detekce podle domény e-mailu by šlo v takovém případě s výhodou využít alespoň jako nápovědu -- nabídnout tyto kontakty organizátorovi přednostně, bude-li rozhodovat o zaslání pozvánek pomocí Google Calendar.
+
+\subsection{Pozvánky uživatelům e-mailu}
+Pozvánky lidem s e-mailovými kontakty jsou realizovány tak, jak byly navrženy v \ref{eventPage}. Na jejich adresu se odešle HTML zpráva, která obsahuje stručné informace o události a o člověku, který je pozval. Následně nabízí tři odkazy, na něž může uživatel kliknout, aby vyjádřil svou vůli účastnit se dané akce. Odkazy míří na jinak tajnou, unikátní webovou adresu v rámci aplikace, která zaznamená zvolené rozhodnutí a přesměruje návštěvníka na veřejnou stránku události. Tuto adresu si může zapamatovat a průběžně na ní sledovat účast ostatních nebo ověřovat údaje ohledně konání události, tak jako jeho kolegové z jiných služeb.
+
+Jak bylo zmíněno i dříve, není zde implementována žádná kontrola totožnosti. Uživatel může přeposlat e-mail někomu jinému a tomu je tím pádem umožněno nastavovat účast cizí osobě. To však není velký problém, jelikož si jej může neopatrným jednáním způsobit pouze sám příjemce pozvánky a i tak není informace o účasti na akci většinou natolik kritická, aby bylo nutné ji ověřovat. Naopak, absence kontroly zvyšuje plynulost odpovědi.
+
+\subsection{Zdržení aplikace interakcemi s API}
+Interakce s jednotlivými API je pro jednoduchost ukázkové aplikace zpracována přímo v procesu, který obsluhuje vytvoření a odeslání HTTP odpovědi do prohlížeče. To není nejlepší přístup, jelikož může odeslání odpovědi zdržovat a snižovat tím uživatelský prožitek -- stránka se v takovém případě načítá dlouho. Řešením tohoto problému je vyčlenit zpracování podobných náročných úkonů do zvláštního procesu, jenž běží na pozadí, obvykle jakési fronty na hromadné odbavování úkolů.
+
+V roli takové fronty se na poli webového vývoje v jazyce Python nejčastěji objevuje komplexní nástroj Celery.
+
+\subsection{Ukládání časových údajů}
+Problematika práce s časovými údaji je poměrně komplexní kvůli převodům časových pásem. Vyvarovat tohoto problému se lze přístupem, kdy údaj získaný od uživatele okamžitě převedeme do UTC, koordinovaného světového času. V tomto formátu jej ukládáme a pracujeme s ním. Jakmile data vypisujeme do uživatelského rozhraní, zjistíme si jeho časové pásmo (např. z nastavení) a až těsně před prezentací jej převedeme do patřičné zóny.
+
+
 
 \section{Vývoj a testování}
-% STRUČNÁ zpráva o tom jak probíhal vývoj aplikace (systém správy verzí, aj.) a jak byla testována (na kterých prohlížečích, platformách, co bylo testováno, co testováno nebylo a proč, unit testy, apod.).
+Systém byl vyvíjen za využití systému pro správu verzí Git a na operačním systému GNU/Linux v distribuci Ubuntu 10.10.
+
+Požadavky na prostředí jsou jazyk Python verze 2.6 nebo 2.7. Při programování bylo využito SŘBD PostgreSQL 8.4, ovšem díky knihovně SQLAlchemy by neměl být problém aplikaci provozovat i nad jinou databází. Další závislosti programu jsou popsány v návodu na instalaci, jenž je součástí práce jako příloha \ref{tutorial}.
+
+Grafické uživatelské rozhraní vyhotoveného prototypu bylo přizpůsobeno především prohlížečům Mozilla Firefox~11 a Google Chrome~17.
+
+Testování aplikace probíhalo pouze uživatelsky. Má úvodní snaha psát jednotkové testy narazila na silné externí závislosti většiny kódu. Nutnost simulovat chování několika různých prostředí nebo napsat testy integrační nakonec vedla k rozhodnutí, že pro účely ukázkové aplikace postačí testování manuálním procházením.
+
+
+
+\section{Dojem z výsledné aplikace}
+Cílem ukázkové aplikace bylo ověřit realizovatelnost systému schopného odstínit uživatele od problematiky interoperability různých způsobů dorozumívání a organizace skupin. Vzhledem k specifikaci zadání, jež se na základě analýz a průzkumu přiklonila k vyhotovení jen malé podmnožiny problému, stránek událostí, lze soudit, že implementace nakonec úspěšně potvrdila hypotézy.
+
+Samotná demonstrační aplikace je koncipována jako prototyp a soustředí se na hlavní aspekty, tedy přemostění různých API a jednotné uživatelské rozhraní pro práci s nimi. Neklade si za úkol být dokonalým a bezchybným ztvárněním programu, který by bylo možné uvést na trh -- spíše vytyčuje směr, jakým by se mohl reálný projekt s důkladným návrhem a profesionálním provedením ubírat.
 
 
 
 \chapter{Závěr}
-% Jak píše docent Adam Herout: \url{http://www.herout.net/blog/2009/01/zase-postreh-ze-cteni-sp/} nebo \url{http://www.herout.net/blog/2012/03/struktura-diplomove-prace/}.
+Cílem práce bylo ověřit myšlenku, že by bylo užitečné a možné propojit současné komunikační nástroje za účelem organizace skupin. Na základě rozsáhlé analýzy a průzkumu s téměř dvěma stovkami respondentů byly identifikovány služby a nástroje, jaké uživatelé dnes běžně používají, ale rovněž i některé vzorce chování, kterými se při komunikaci přes počítač řídí. To bylo dobrým základem pro další rozbor, jenž určil teoretické možnosti integrace služeb a jejich potenciál najít si své uživatele. Došlo k vymezení cílové skupiny na \uv{neorganizované}, např. zájmové kolektivy. Už tyto fáze vedly k určité filtraci možností a po ověření praktické realizovatelnosti zbyly mezi vhodnými kandidáty na propojení de facto jen stránky událostí.
+
+K finálnímu ověření hypotéz po upřesnění zadání slouží ukázková webová aplikace. Její realizace byla úspěšná a naplnila očekávání -- je to funkční prototyp, jenž je možné dále rozvíjet a vystavět na jeho konceptu užitečnou webovou službu.
+
+Práce odpovídá na otázku ze svého úvodu návrhem konceptu a realizací prototypu. Splňuje své zadání.
+
+
+
+
+architektura mashupu, tedy relativně jednoduché aplikace založené na
+práci s~daty od jiných, externích poskytovatelů pomocí jejich API.
+V~tomto konkrétním případě šlo o~nej\-typičtějšího zástupce takové
+architektury, mapový projekt. Zadání se zaměřilo na vývoj aplikace,
+v~níž si, ve stručnosti sděleno, může uživatel pohodlně s~pomocí mapy
+vytvořit trasu svého běhu nebo jízdy na kole, tu si uložit a mít
+následně k~dispozici statistiky trasy či svého výkonu. Jako doplňková
+funkce bylo zmíněno také sdílení těchto dat s~jinými uživateli. Cíl
+této práce byl tedy dosažen a zadání splněno.
+
+Tvorba projektu pro mne měla značný význam, protože jsem
+mohl v~praxi využít nejen vědomosti dlouho nabývané v~oblastech informačních systémů a webových
+aplikací, ale také například znalosti z~jiných oborů jako jsou
+signály a systémy (to když jsem potřeboval snížit počet bodů pro graf
+výškového profilu). Za nej\-cennější však považuji svůj obrovský posun
+ve znalostech jazyka JavaScript, jenž má odpovědnost za jádro celého
+projektu. Jelikož mám s~programováním webových aplikací už praktické
+zkušenosti, byl jsem při tvorbě systému rád, že neřeší příliš mnoho
+rutinních problémů z~vývoje pro web a že naopak do této oblasti
+přináší spíše nové otázky a pro webového vývojáře neotřelou
+problematiku ležící na cestě ke geografickým informačním systémům.
+
 
 % Se závěrem se to má podobně jako s úvodem: má se vejít na 1/2 – 1 stranu, nemá být strukturovaný a má práci shrnout, uzavřít, zhodnotit. U školní práce je rozumné v závěru reagovat na zadání a shrnout bod po bodu, že byl splněn a kterou kapitolou práce (ovšem nenásilně – nikoli například odrážkami). Recenzent čte závěr na konci a závěr tedy z velké části utváří dojem zanechaný prací pro hodnocení – nechte si na něm záležet.
 
@@ -835,8 +1000,15 @@ Aby mohlo být dosaženo takovéto plošné integrace, musí také iniciátor di
 
 
 
+\bibliographystyle{czechiso-v2}
+\begin{flushleft}
+    \bibliography{thesis} % thesis.bib
+\end{flushleft}
+
+
+
 \appendix
-\chapter{Dotazník}
+\chapter{Dotazník}\label{pollAppendix}
 Dotazník vyplnilo a odeslalo celkem 186 respondentů.
 
 \section{Hlavní otázky}
@@ -964,13 +1136,13 @@ dámy 46~\%.
 
 
 
-\chapter{Návod na instalaci ukázkové aplikace}
+\chapter{Návod na instalaci ukázkové aplikace}\label{tutorial}
 Aplikace byla vyvíjena na Pythonu verze 2.6.6. Její spuštění na vlastním počítači nevyžaduje webový server -- využije se vyvojářského serveru zabudovaného do frameworku Flask (pro ostré nasazení by však tato konfigurace nebyla vhodná). Dále je potřeba databáze. Vyvoj probíhal na PostgreSQL ve verzi 8.4.11, ale mělo by být možné využít i všudypřítomné SQLite. Návod na instalaci předpokládá operační systém unixového typu a může při něm být zapotřebí verzovací systém Git.
 
 \begin{enumerate}
     \item Zřiďte si Facebook účet a pomocí kreditní karty nebo telefonního čísla jej ověřte, pokud jste tak již neudělali. Na stránce \url{https://developers.facebook.com/apps} vytvořte novou aplikaci s libovolným názvem a jmenným prostorem. Aplikaci nastavte doménu {\tt localhost}. Zaškrtněte typ \emph{website} a vyplňte URL {\tt http://localhost:5000}. Uložte si kódy označené jako \emph{App ID} a \emph{App Secret} ze záhlaví stránky.
 
-    \item Zřiďte si Google účet a na stránce \url{http://code.google.com/apis/console} založte projekt. Pro něj na záložce se službami povolte \emph{Google Calendar API}. Na záložce \emph{API Access} vyhledejte oddíl zabývající se \emph{Client ID}. V nastavení vložte {\tt http://localhost:5000/connect/google/done} do pole pro autorizovaná URI k přesměrování. Uložte si kódy označené jako \emph{Client ID} a \emph{Client Secret}.
+    \item Zřiďte si Google účet a na stránce \url{http://code.google.com/apis/console} založte projekt. Pro něj na záložce se službami povolte \emph{Google Calendar~API}. Na záložce \emph{API Access} vyhledejte oddíl zabývající se \emph{Client ID}. V nastavení vložte {\tt http://localhost:5000/connect/google/done} do pole pro autorizovaná URI k přesměrování. Uložte si kódy označené jako \emph{Client ID} a \emph{Client Secret}.
 
     \item Aplikace potřebuje k odesílání e-mailů SMTP server. Můžete použít jakýkoliv máte k dispozici, popřípadě si nějaký zdarma zřídit na službě \url{http://sendgrid.com/}. Pro omezené počty e-mailů denně lze využít také službu Gmail -- její konfigurace SMTP je následující:
 
@@ -1044,13 +1216,6 @@ $ export python manage.py runserver
 
     Následně by mělo být možné načíst aplikaci na adrese \url{http://localhost:5000} v běžném webovém prohlížeči. Je důležité použít {\tt localhost} a ne {\tt 127.0.0.1}, protože adresa musí souhlasit s tou, již jsme pro aplikace zaregistrovali na Facebooku a u Google.
 \end{enumerate}
-
-
-
-\bibliographystyle{czechiso-v2}
-\begin{flushleft}
-    \bibliography{thesis} % thesis.bib
-\end{flushleft}
 
 
 

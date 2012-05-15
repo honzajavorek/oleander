@@ -12,11 +12,13 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - Realizujte ukázkovou webovou aplikaci uvedených vlastností.
 - Na závěr zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
 
-## Postup práce
+## Úkoly
 
-- <del>Prostudujte problematiku běžné organizace malých skupin lidí přes internet s důrazem na nástroje a služby, které jsou využívané pro komunikaci a organizaci.</del>
-- <del>Na základě průzkumu navrhněte řešení, jak propojit používané služby tak, aby mezi sebou lidé mohli komunikovat a sdílet organizační informace i bez toho, že by používali stejné komunikační platformy.</del>
-- <del>Podrobně rozpracujte každý z těchto případů a snažte se o nalezení takového, které bude brát největší ohledy na přirozenost a zřejmost používaní (zvažte např. možnosti udržovaní vláken diskusí napříč všemi systémy apod.).</del>
-- <del>Vysvětlete, proč jsou některé tyto problémy nerealizovatelné, narazíte-li na nějaké takové.</del>
-- <del>Realizujte ukázkovou webovou aplikaci uvedených vlastností.</del>
-- Na závěr zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
+- kontrola odborného stylu (přesnost, přehlednost, emocionální neutralita a logická argumentace)
+- uvádění ověřitelných údajů
+- definice zkratek, rejstřík pojmů
+- pevné mezery (LaTeXový program vlna), úpravy konců řádků
+- kontrola pravopisu
+- abstrakt a další povinné části v úvodu práce
+- doplnění obrázků
+- doplnění citací (uvádění ověřitelných údajů)
