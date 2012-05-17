@@ -49,5 +49,15 @@ for ln, line in enumerate(lines):
 print '\n\n'
 
 
-for word, count in sorted(terms.items(), key=lambda x: x[1], reverse=True):
+for word, count in sorted(terms.items(), key=lambda x: x[0]):
     print '%s%d' % (word.encode('utf-8').ljust(20), count)
+
+
+print '\n\n'
+
+
+print '\\begin{description}'
+for word, count in sorted(terms.items(), key=lambda x: x[0]):
+    if word == word.upper() and len(word) > 1:
+        print '    \item[%s] ...' % word.encode('utf-8')
+print '\\end{description}'
