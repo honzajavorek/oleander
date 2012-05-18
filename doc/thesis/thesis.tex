@@ -13,6 +13,7 @@
 \usepackage{tgpagella}
 \usepackage{amssymb}
 \usepackage{bbding}
+\usepackage{float}
 
 
 
@@ -189,11 +190,26 @@ Z hlediska CMC a groupware jsou pro tuto práci zajímavé především následu
 \subsubsection*{Události}
 Events, česky \emph{události}, umožňují vytvoření informační stránky pro libovolnou pořádanou akci. Je na ní typicky prostor pro název akce, datum a místo konání, seznam účastníků (rozdělený podle typu odpovědi na ty, kteří se budou účastnit určitě, možná, nebo vůbec), delší popis události a místo, kde mohou uživatelé nad akcí diskutovat. Pro organizátora mají tyto stránky smysl v tom, že má orientační přehled nad počty účastníků, ví kdo konkrétně nejspíše přijde a může s lidmi se zájmem o akci na místě komunikovat (odpovídat na dotazy, oznamovat nové informace). Uživatelé díky tomu v systému získávají evidenci událostí, kterých se hodlají účastnit a jsou stále informováni o všem potřebném (např. změně místa). Mají rovněž jedno stabilní místo, kde mohou ověřit čas a místo konání -- nemusí tyto údaje složitě hledat např. v archivu své e-mailové schránky. Zde je dobré povšimnout si, že jak \emph{manažer}, tedy pořadatel akce, tak \emph{člen skupiny}, tedy účastník, mají z explicitního vkládání informací do systému Events užitek. To je, jak zmiňuje Johnatan Grudin, velice důležité pro přijetí takové funkce lidmi~\cite{grudin1994groupware}.
 
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, keepaspectratio]{facebook-event-page}
+    \caption{Stránka události na Facebooku.}
+\end{figure}
+
 \subsubsection*{Ankety}
 Facebook umožňuje svým uživatelům v rámci své funkce Questions vytvářet jednoduché anketní otázky~\cite{graham2011the}. Mohou být vytvořeny jen pro konkrétní okruh lidí, nebo i veřejně. Jsou poměrně univerzálně použitelné -- lze je využít k všeobecnému dotazu i ke společnému rozhodování.
 
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, keepaspectratio]{facebook-question}
+    \caption{Zpracování anket v podání Facebooku.}
+\end{figure}
+
 \subsubsection*{Skupiny}
 Facebook navíc ke všemu uvedenému nabízí pro práci skupin celý samostatný produkt -- Groups~\cite{chai2010new}. V podstatě se jedná o univerzální groupware pro skupiny v rámci Facebooku, jenž disponuje např. vlastním chatem pro zasílání zpráv jen mezi členy, nebo i vlastními událostmi a anketami. Lidé se mohou v takovýchto skupinách uzavřít a nedovolit, aby do nich volně přicházeli noví členové, nebo aby byly čitelné komukoliv zvenčí. Facebook tak poskytuje jednoduchý nástroj (navíc ve svém všeobecně známém a uživateli již přijatém prostředí) pro organizaci a sociální interakci malých kolektivů jako jsou rodiny, zájmové kluby, školní třídy, skupiny spolubydlících, a další~\cite{novati2012introducing}. Na druhou stranu Groups nijak nebrání ani růstu skupin a stejně dobře funguje i pro různá společenství se stovkami členů (toto mohu v praxi pozorovat členstvím ve skupině příznivců programovacího jazyka Python\footnote{Skupina je dne 23. 4. 2012 dostupná na adrese \url{http://facebook.com/groups/201628346516017} a má 128 členů.}).
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, keepaspectratio]{facebook-groups}
+    \caption{Upoutávka, která motivuje k používání Facebook Groups. V pravém dolním rohu lze vidět speciální cílení na školy.}
+\end{figure}
 
 \subsection{Twitter}\label{twitter}
 Sociální síť Twitter, kterou nalezneme na \url{http://twitter.com}, je na rozdíl od Facebooku spíše mikroblogovací službou s možností zasílání zpráv mezi uživateli, než komplexním systémem s mnoha agendami zaměřenými na CMC a správu skupin. Uživatelé si zde podobně jako v případě blogu\footnote{Blog je pojem označující webový zápisník. Zpravidla disponuje hlavně chronologicky řazenými příspěvky a komentáři od čtenářů. Bývá psán neformálním stylem, existují však také např. blogy firemní, jež mívají spíše rezervovaný, korporátní projev.} vedou svůj webový zápisník, ale jednotlivé příspěvky, nazývané v jednotném čísle anglickým slovem \emph{tweet}, mohou mít pouze 160 znaků. To nutí autora ke stručnosti a snaha vyjádřit myšlenku co nejméně slovy podněcuje jeho tvořivost.
@@ -216,6 +232,11 @@ Rychlé zprávy jsou reprezentovány značkou Google Talk. Stále častěji je v
 \subsubsection*{Kalendář}
 Kalendář z hlediska skupinové spolupráce nabízí hned několik funkcí. Uživatel může mít ve svém rozhraní několik kalendářů, tedy pojmenovaných sad událostí. Tyto potom může sdílet s jinými uživateli, nebo je poskytnout i zcela veřejně. Vlastník má možnost při sdílení určit, zda může druhá osoba události pouze vidět, nebo může-li je také měnit. Třetí možností je volba, kdy kolega vidí jen informaci o tom, zda člověk má či nemá v daný čas volno (tzv. \emph{free/busy}). Další funkcí podporující kooperaci jsou \emph{Appointment Slots} -- uživatel může označit místo ve svém kalendáři jako volné ke sjednávání schůzek a jeho kolegové si toto místo mohou sami zamluvit pro setkání, pokud potřebují~\cite{chung2010introducing}. Velice zajímavou funkcí jsou potom pozvánky na události. Na jakýkoliv záznam ve svém kalendáři může uživatel přizvat lidi ze svých kontaktů a ti mohou na pozvánku odpovědět -- přijmout ji, odmítnout, či dát najevo nerozhodnost. Tímto se Google Calendar blíží chování Facebook Events~\cite{florescu2010insert}.
 
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, keepaspectratio]{google-calendar}
+    \caption{Náhled na tvorbu události v Google Calendar.}
+\end{figure}
+
 \subsubsection*{Dokumenty}
 Klasické programy pro tvorbu dokumentů se většinou omezují v rámci spolupráce uživatelů na nástroje k připomínkování a poznámkování. Těmito funkcemi disponují webové Google Docs také, navíc ovšem nabízí možnost úprav jednoho dokumentu více lidmi přímo v reálném čase. Uživatel tak vidí, že právě otevřenou tabulku sledují i další dva kolegové a může okamžitě pozorovat i jejich úpravy. Oni samozřejmě stejným způsobem vidí veškerou jeho práci, dokonce i umístění kurzoru. Spolu s diskusí, jež je také v reálném čase\footnote{Tato diskuse ovšem nijak nesouvisí se službou Google Talk -- vztahuje se pouze ke konkrétnímu dokumentu a je přístupná jen z něj.} a kterou lze k dokumentu otevřít, je tento způsob kolaborace nad textem či tabulkou zcela ojedinělý a např. pro kolektivně spravované texty velice nápomocný.
 
@@ -227,6 +248,11 @@ Balík Google Apps je určen především pro firmy, pro které představuje mo�
 
 \subsection{Groupware společnosti 37signals}\label{37signals}
 37signals je firma, jež byla průkopníkem v tvorbě webových groupware aplikací. Namísto tradičního modelu, kdy si klient programy instaloval na své servery, 37signals zavedli software jako placenou službu zákazníkovi~\cite{37signals2008getting}. V mnoha aspektech definovali postupy a zvyklosti, jaké dodnes formují trh webových aplikací, a stali se lídry svého oboru. Dá se říci, že groupware \uv{reformovali}.
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, keepaspectratio]{basecamp}
+    \caption{Aplikace Basecamp určená pro projektový management.}
+\end{figure}
 
 Vlajkovou lodí nabídky 37signals je Basecamp, služba určená pro projektový management. Středem všeho dění je zde komunikace ve skupině v podobě zpráv. Tyto lze zasílat i e-mailem (viz~\ref{emailWebApp}), takže uživatelům nedělá problém začít Basecamp okamžitě používat -- většinou totiž podobnou komunikaci stejně vedou e-mailem (jedná se tedy mimo jiné i o snahu vyhnout se problému kritické většiny popsaného v~\ref{criticalMass}). Program dále nabízí seznamy úkolů, dokumenty, projektové stránky a další funkce, jež podporují organizaci skupiny a její koordinaci směrem k dokončení nějakého projektu.
 
@@ -243,6 +269,8 @@ Na pravidelně se opakující setkávání se zaměřuje česká webová služba
 
 Stránky událostí lze najít také na hudebním serveru specifického internetového rádia Last.fm. Jednou z funkcí webu je adresář událostí -- koncertů a festivalů, jež jsou doporučovány uživatelům na základě jejich hudebních preferencí, lze v nich vyhledávat, apod.
 
+Obrazová příloha \ref{eventPagePictures} této práce obsahuje náhledy na většinu zmíněných stránek událostí.
+
 \subsection{Sdílení úkolů}
 Remember The~Milk je interaktivní seznam úkolů. Jednou z jeho užitečných funkcí je sdílení a přeposílání úkolů. Aby člověk však mohl úkol přeposlat kolegovi, je zapotřebí, aby i on tuto službu využíval. Jelikož je osobní seznam úkolů velice individuální záležitostí, je pravděpodobné, že u této funkce uživatelé naráží na problémy popisované v oddíle~\ref{criticalMass}.
 
@@ -252,6 +280,11 @@ Jistou formu sdílení úkolů můžeme najít i u jiných webových aplikací u
 
 \subsection{Domlouvání schůzek}
 Na adrese \url{http://doodle.com} je švýcarská služba pro domlouvání data konání schůzky či jiné události. Kdokoliv může na web přijít a vytvořit tam specializovanou \uv{anketu} ohledně data a času konání. Její adresu rozešle libovolným způsobem svým kolegům a ti potom bez potřeby jakékoliv registrace (vyplňují pouze jméno, které slouží k odlišení jednotlivých hlasování) zadávají informaci o tom, jaké časy jim přichází vhod a které nikoliv. Rozhraní ankety usnadňuje celý proces a zvýrazňuje dny, v nichž se shoduje většina hlasujících. Velkou výhodou služby je možnost využít ji bez vytváření uživatelského účtu. Pravděpodobně hlavně díky tomu a své jednoduchosti se služba těší velké oblibě\footnote{Podle statistik serveru AppAppeal dostupných na \url{http://www.appappeal.com/maps/doodle/} je Doodle.com 82. nejnavštěvovanější webovou stránkou ve Švýcarsku a do 1000. místa se umisťuje i v dalších osmi zemích Evropy. Významnou návštěvnost má z celé západní Evropy a Severní Ameriky.}.
+
+\begin{figure}[p]
+    \includegraphics[width=\textwidth, keepaspectratio]{doodle}
+    \caption{Doodle.com, služba k domlouvání schůzek.}
+\end{figure}
 
 \subsection{Spolupráce při programování}
 Za názvem GitHub se skrývá server, kde si může programátor zdarma založit veřejný repozitář pro programový kód verzovaný gitem. Jako placenou službu nabízí autoři webu privátní repozitáře nebo sdružování vývojářů do organizací. Z hlediska tématu této práce je ovšem GitHub zajímavý tím, jakým způsobem je možné s repozitáři ve webovém rozhraní pracovat. Přidal totiž možnost komunikace pomocí komentářů a to přímo na úrovni zdrojového kódu -- lze například diskutovat nad kterýmkoliv jeho řádkem. Spolu s dalšími funkcemi, například nástroji pro evidenci chyb, se tak stal de facto obrovským groupware, jenž si pro jeho sociální rozměr oblíbily tisíce programátorů. GitHub implementuje také integraci e-mailu popsanou v~\ref{emailWebApp}.
@@ -292,7 +325,7 @@ Dotazník jsem během února 2012 šířil pomocí e-mailu a sociálních sítí
 
 Přes zkrácený odkaz přišlo podle Bitly na dotazník 235 lidí, přičemž z jeho výsledků na Google Docs vyplývá, že 186~z~nich jej dokončilo. Konverzní poměr je tedy necelých 80~\%. Lidé přicházeli převážně ve dnech 19.~až~27.~února, nejvíce potom druhý den po rozeslání, tedy 20.~února. Dvě ojedinělé návštěvy proběhly v březnu, jedna dokonce vedla i k odeslání odpovědí, takže se dá říci, že průzkum trval měsíc, od 19.~února do~20.~března. Statistika návštěvníků eviduje řadu zemí v čele s Českou republikou, ale vzhledem k tomu, že byly otázky psány česky, dá se mezi odpovídajícími očekávat zřejmě jen Čechy a Slováky. Přicházeli nejčastěji z e-mailových klientů (možná ale i Twitter klientů, programy nelze rozlišit). Weby sociálních sítí se podělily o druhé a třetí místo v podstatě rovnocenně, jak Facebook, tak Twitter přilákali přibližně 15~\% všech návštěvníků.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.9,keepaspectratio]{chart-responses}
     \caption{Počet odpovědí za den.}
@@ -400,7 +433,7 @@ V této otázce se 79~\% účastníků vyslovilo pro Skype konferenci. Potvrdily
 Povědomí o internetové telefonii má 69~\%, kteří vybrali možnost \uv{podívám se po nějakém VoIP poskytovateli}. Ostatní by využili služeb tradičních poskytovatelů telefonního připojení. To je zajímavý posun oproti zjištěním v~\cite{latif2007adoption}, svou roli ovšem může hrát i vzorek respondentů -- většina z nich jsou pokročilí uživatelé počítače a je větší pravděpodobnost, že někdy s VoIP přišli do styku.
 
 \subsubsection*{\textbf{Sociální sítě:} \emph{Jak vám jsou sympatické uvedené sociální sitě?}}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \subfloat[Facebook]{\includegraphics[scale=0.6,keepaspectratio]{chart13a}}
 
@@ -423,7 +456,7 @@ Facebook je tedy mezi svými uživateli vnímán spíše pozitivně a Google+ p�
 \subsubsection*{\textbf{Instant messaging:} \emph{Jaké služby pro rychlé posílání zpráv používám nejčastěji?}}
 Tento průzkum měl za úkol zmapovat situaci na poli rychlých zpráv. Mezi uživateli je nejčastěji využíván Facebook Chat (64~\%) a potom různé uzavřené sítě jako ICQ (52~\%). Podstatná část lidí si píše také přes Google Talk (37~\%) a Skype (34~\%).
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.7,keepaspectratio]{chart14}
     \caption{Výsledky pro otázku ohledně využívání instant messagingu.}
@@ -651,7 +684,7 @@ Neoficiální Jabber transporty narušují neprostupnost jednotlivých sítí a 
         Tlen         & \no  & \no  & \no  & \no  & \no  \\
         Skype        & \no  & \yes & \no  & \no  & \no  \\
     \end{tabular}
-    \caption{Propojitelnost v rámci IM, I.~část}
+    \caption{Propojitelnost v rámci IM, I.~část.}
     \label{imIntegration1}
 \end{table}
 
@@ -671,7 +704,7 @@ Neoficiální Jabber transporty narušují neprostupnost jednotlivých sítí a 
         Tlen         & \no  & \no  & \yes & \yes & \no  \\
         Skype        & \no  & \no  & \no  & \no  & \yes \\
     \end{tabular}
-    \caption{Propojitelnost v rámci IM, II.~část}
+    \caption{Propojitelnost v rámci IM, II.~část.}
     \label{imIntegration2}
 \end{table}
 
@@ -820,7 +853,7 @@ Alespoň některé služby, které lze propojit, ovšem ve většině případů
         Událost                     & \no  & \yes & \yes & \no  \\
         Kontakt                     & \no  & \yes & \yes & \yes \\
     \end{tabular}
-    \caption{Shrnutí reálných možností propojení}
+    \caption{Shrnutí reálných možností propojení.}
     \label{realisticConclusion}
 \end{table}
 
@@ -914,6 +947,12 @@ Sekce zmiňuje vybrané detaily uživatelského rozhraní, které si zaslouží 
 
 \subsection{Práce s kontakty}\label{separateContactTypes}
 Pořadatel by měl sám určit typ kontaktu při výběru pozvánek. Importuje-li tedy přátele z Facebooku a kontakty z e-mailu, nesmí se tyto nijak sloučit v případě, že se v nich vyskytují stejnojmenné osoby. Naopak, měly by být viditelně odděleny a při rozesílání pozvánek musí být organizátorovi jasno, jestli s konkrétním člověkem komunikuje přes Facebook nebo e-mail. Sám totiž nejlépe ví, na jakém kanále zastihne kterého kolegu -- toto nelze určit žádným algoritmem. Zároveň se tím aplikace vyvaruje problematice párování osob, kterou řeší mnohé programy pro integraci více kontaktních adresářů.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5,keepaspectratio]{oleander-contact-types}
+    \caption{Ve výsledné aplikaci jsou typy kontaktů barevně odlišeny.}
+\end{figure}
 
 \subsection{Obrázky kontaktů}
 Pro lepší orientaci je vhodné u kontaktů zobrazovat nějaké charakteristické obrázky. Nejlepší by bylo mít k dispozici fotografie, to ovšem není mimo kontakty z Facebooku příliš reálný požadavek. Existuje však služba Gravatar, která svým uživatelům umožňuje zaregistrovat ke své e-mailové adrese nějaký vlastní obrázek. Ten potom mají možnost na základě e-mailové adresy a s pomocí jednoduchého~API zobrazit vedle jména uživatele tvůrci různých internetových fór, komentářových diskusí aj. aplikací, kde hrají osoby významnou roli. Tuto poměrně rozšířenou službu je tedy výhodné implementovat pro kontakty, k nimž nemáme jiným způsobem jak rozlišovací obrázek přiřadit.
@@ -1098,6 +1137,130 @@ K finálnímu ověření hypotéz po upřesnění zadání slouží ukázková w
     \item[XML] Extensible Markup Language
     \item[XMPP] Extensible Messaging and Presence Protocol
 \end{description}
+
+
+
+\chapter{Ukázky stránek událostí}\label{eventPagePictures}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth, keepaspectratio]{facebook-event-page}
+    \caption{Stránka události na Facebooku.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth, keepaspectratio]{lanyrd}
+    \caption{Ukázka stránky konference RuPy na webu Lanyrd.com.}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth, keepaspectratio]{google-event}
+    \caption{Záznam události v Google Calendar.}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth, keepaspectratio]{lastfm}
+    \caption{Festival Liverpool Sound City 2012 na službě Last.fm.}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth, keepaspectratio]{srazy}
+    \caption{Stránka setkání Python programátorů na Srazy.info.}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth, keepaspectratio]{linkedin}
+    \caption{Konference WebExpo 2010 na LinkedIn.}
+\end{figure}
+
+
+
+\chapter{Ukázky výsledné aplikace}\label{oleanderPictures}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{oleander-empty}
+    \caption{Úvodní obrazovka. Uživatel má na výběr základní akce.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{oleander-settings}
+    \caption{Uživatelské nastavení.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-contacts}
+    \caption{Stránka pro správu kontaktů.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-my-contacts}
+    \caption{Kontakty vlastníka účtu jsou rozpoznány.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-creation}
+    \caption{Vytváření nové události.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-search}
+    \caption{Detail vyhledávání kontaktů.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-event-page}
+    \caption{Výsledná stránka události.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{oleander-facebook-events}
+    \caption{Vytvořená událost je přítomna na Facebooku.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-facebook}
+    \caption{Na Facebooku jsou pozvány odpovídající kontakty. Jeden nezvaný účastník, který si veřejné události všiml, již dokonce stihl označit, že se \uv{možná} zúčastní.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-rsvp}
+    \caption{Stránka události v aplikaci tuto změnu odráží.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-google-calendar-event}
+    \caption{Událost je také v Google Calendar.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-google-calendar}
+    \caption{I na Google jsou pozvány odpovídající kontakty.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-email-invitation}
+    \caption{Také e-mailem přišla odeslaná a funkční pozvánka.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{oleander-rsvp-updated}
+    \caption{Po odpovědi z e-mailu je opět vidět, že stránka události změnu zaznamenala.}
+\end{figure}
 
 
 

@@ -23,10 +23,7 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 ### O čem vím a musím udělat sám
 
-- doplnění obrázků
-- doplnění citací
 - use case diagramy, screen flow, wireframy
-- před cílovou skupinou tabulka se shrnutím (ala Google Docs)
 - bezpečnost, úvaha o tom, že kdo odpovídá, nemusí mít vůbec ponětí, kam a komu to vlastně všechno posílá, odkázat se na to z řádku 717
 - v obrázku s počtem odpovědí za den přemalovat datum (nebo ho přemalovat celý)
 - předělat závěr
