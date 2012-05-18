@@ -105,7 +105,7 @@ Rád bych poděkoval vedoucímu Mgr.~Fedoru Tiršelovi za~vedení práce, rady, 
 \chapter{Úvod}\label{introduction}
 Internet je fragmentovaný a decentralizovaný i dnes, v době velkých sociálních sítí typu Facebook. Málokdy se lidé při společné domluvě sejdou na stejné platformě a proto se následně uchylují k primitivním řešením, jako je e-mail. Tím se však připravují o určité pohodlí, jelikož nejedna internetová služba dnes nabízí bohatší nástroje pro účel organizace skupin, než pouhou výměnu zpráv -- např. speciální stránky událostí, stránky pro sběr anketních odpovědí a další. Bylo by možné vytvořit aplikaci, která pomůže lidi efektivněji a pohodlněji organizovat z pohledu pořadatele, ale přitom nevnucuje žádnou konkrétní službu či nové uživatelské účty samotným členům skupiny?
 
-Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dnešní formy počítačem zprostředkovávané komunikace a existující groupware\footnote{Groupware je druh software, který napomáhá skupině lidí k nějakému cíli, např. práci na projektu, vytvoření díla, apod. Jeho funkce se týkají převážně komunikace, kooperace a koordinace. Viz \ref{groupware}.}, následně pak pomocí průzkumu zjišťuje, jaký k nim mají uživatelé vztah. Ověřuje doměnku, že je potřeba výše nastíněný problém interoperability řešit, zabývá se teoretickou realizovatelností řešení a pokračuje návrhem implementace. V návrhu se věnuje praktickým možnostem propojení různých komunikačních kanálů, z nichž vychází realizace ukázkové aplikace se zaměřením na správu událostí. Práce končí popisem tvorby prototypu této aplikace a jejím zhodnocením.
+Tato práce se snaží na výše položenou otázku odpovědět. Analyzuje dnešní formy počítačem zprostředkovávané komunikace a existující groupware\footnote{Groupware je druh software, který napomáhá skupině lidí k nějakému cíli, např. práci na projektu, vytvoření díla, apod. Jeho funkce se týkají převážně komunikace, kooperace a koordinace. Viz \ref{groupware}.}, následně pak pomocí průzkumu zjišťuje, jaký k nim mají uživatelé vztah. Ověřuje domněnku, že je potřeba výše nastíněný problém interoperability řešit, zabývá se teoretickou realizovatelností řešení a pokračuje návrhem implementace. V návrhu se věnuje praktickým možnostem propojení různých komunikačních kanálů, z nichž vychází realizace ukázkové aplikace se zaměřením na správu událostí. Práce končí popisem tvorby prototypu této aplikace a jejím zhodnocením.
 
 
 
@@ -233,7 +233,7 @@ Sociální síť LinkedIn, v žebříčku stabilně mezi pěti největšími na 
 
 K tomuto účelu ovšem existují i zcela specializované služby, např. Lanyrd.com, jenž se prezentuje jako \uv{sociální adresář konferencí}. Zatímco LinkedIn oproti Facebooku přináší spíše jen několik statistických údajů o účastnících, Lanyrd.com umožňuje na stránce konference prezentovat celý program, videa přednášek nebo uveřejnit materiály z jednotlivých vystoupení.
 
-Na pravidelně se opakující setkávání z se zaměřuje česká webová služba Srazy, dostupná na adrese \url{http://srazy.info}. K základní funkčnosti stránek událostí přidává pořadatelům možnost zahájit mezi účastníky hlasování, poslat jim e-mail, tisknout jmenovky apod. Web se stal oblíbený především v okruhu českých programátorů -- objevují se na něm mnohá pravidelná setkání v různých českých městech, například příznivců jazyka Python nebo vývojářů mobilních aplikací (obojí z Brna).
+Na pravidelně se opakující setkávání se zaměřuje česká webová služba Srazy, dostupná na adrese \url{http://srazy.info}. K základní funkčnosti stránek událostí přidává pořadatelům možnost zahájit mezi účastníky hlasování, poslat jim e-mail, tisknout jmenovky apod. Web se stal oblíbený především v okruhu českých programátorů -- objevují se na něm mnohá pravidelná setkání v různých českých městech, například příznivců jazyka Python nebo vývojářů mobilních aplikací (obojí z Brna).
 
 Stránky událostí lze najít také na hudebním serveru specifického internetového rádia Last.fm. Jednou z funkcí webu je adresář událostí -- koncertů a festivalů, jež jsou doporučovány uživatelům na základě jejich hudebních preferencí, lze v nich vyhledávat, apod.
 
@@ -450,7 +450,7 @@ Taková kategorizace koreluje s výsledky výzkumu rozdílů mezi CMC a komunika
     \item Vnímání a uvědomování si spolupracovníků nebo úkolu je silnější u komunikace vedené osobně.
 \end{itemize}
 
-Lidé podvedomě tyto rozdíly vnímají a vybírají si takový způsob dorozumívání, který z jejich pohledu vede k nejjednoduššímu a nejrychlejšímu splnění cíle. Nikdo nechce trávit komunikací delší dobu než je nutné -- čas věnovaný např. čtení a posílání e-mailů lidé považují za ztracený.
+Lidé podvědomě tyto rozdíly vnímají a vybírají si takový způsob dorozumívání, který z jejich pohledu vede k nejjednoduššímu a nejrychlejšímu splnění cíle. Nikdo nechce trávit komunikací delší dobu než je nutné -- čas věnovaný např. čtení a posílání e-mailů lidé považují za ztracený.
 
 Nakonec celkový propad Basecampu a jiného groupware ve výsledcích zcela koresponduje s neochotou zájmových skupin organizovat se sofistikovaněji (viz~\ref{noOrganization}).
 
@@ -850,7 +850,7 @@ Pro tvorbu programu, který vytváří stránky událostí, je důležitá infor
 Následující odstavce představují aplikační rozhraní, jež je potřeba využít pro tvorbu zadaného programu, a vystvětluje související pojmy. Výčet nezahrnuje protokol SMTP jakožto rozhraní pro interakci s uživateli prostého e-mailu, protože je jeho problematika po desetiletí neměnná a nepřipravuje pro návrh či implementaci výrazné překážky.
 
 \subsection{OAuth~2.0}
-OAuth označuje otevřený standard pro webovou autorizaci, tedy ověření oprávnění k operacím nad webovými daty. Umožňuje uživateli sdílet jím vybraná soukromá data nebo přístup k nim (zápis, čtení), aniž by musel poskytovat své přihlašovací údaje třetím stranám. Druhá verze standardu se zaměřuje na jednodušší implementaci klientů, ale není ještě zcela hotová a proto je její zavádění zatím oficiálně pouze experimentální. Nicméně i přesto jej lze úspěšně využít k připojení na~API mnoha existujících služeb včetně Facebooku, Google, a dalších.
+OAuth označuje otevřený standard pro webovou autorizaci, tedy ověření oprávnění k operacím nad webovými daty. Umožňuje uživateli sdílet jím vybraná soukromá data nebo přístup k nim (zápis, čtení), aniž by musel poskytovat své přihlašovací údaje třetím stranám \cite{maly2008oauth}. Druhá verze standardu se zaměřuje na jednodušší implementaci klientů, ale není ještě zcela hotová a proto je její zavádění zatím oficiálně pouze experimentální. Nicméně i přesto jej lze úspěšně využít k připojení na~API mnoha existujících služeb včetně Facebooku, Google, a dalších.
 
 \subsection{REST~API}
 REST je architektura představená v~roce 2000 jedním z~autorů specifikace protokolu HTTP~\cite{fielding2000architectural}.~API v~podobě REST lze zkratkovitě popsat jako technologii, v~níž poskytovatel dat zveřejní webové URI, MIME typ odpovědi a množinu operací, které jsou k~dispozici přes HTTP metody POST, GET, PUT nebo DELETE. Z~formátů odpovědí jsou nej\-využívanější obyčejný text, XML a JSON.
@@ -895,7 +895,7 @@ Na základě současného vývoje webu bylo místo běžného HTML nebo překona
 Při vývoji kaskádových stylů CSS, které definují vzhled webové aplikace, bylo využito \emph{preprocesoru} Sass, resp. jeho varianty SCSS, jež umožňuje psát CSS obohacené o nové syntaktické konstrukce, a následně jej přeložit do tradičního stylopisu. Do deklarativních stylů takto zavádí podporu pro proměnné, jednoduché aritmetické výrazy, vnořování, znovupoužitelné bloky a dědičnost. To usnadňuje a urychluje vývoj, protože tvůrce stylopisu má rozsáhlé možnosti vytvářet generické prvky, jež následně parametrizuje a využívá na mnoha místech. Chce-li něco měnit, činí tak následně obvykle pouze na jednom místě v kódu.
 
 \subsection{SQLAlchemy}
-Knihovna SQLAlchemy abstrahuje práci s SQL databázemi v jazyce Python. Hlavní charakteristikou jeho ORM (objektově relačního mapování) je přenechání zodpovědnosti za spárování tabulek a doménových objektů na samotném programátorovi. Pro dotazování databází poskytuje rozhraní, které se snaží co nejvíce zapadat do zvyklostí samotného jazyka Python a působit tak na vývojáře přirozeně, intuitivně. Navíc zapouzdřuje samotnou komunikaci se SŘBD, takže lze aplikace tvořit nezávisle na zvoleném SQL dialektu. Taková svoboda je výhodná např. při testování, kdy lze rychle vytvořit ad hoc databázi v operační paměti pomocí SQLite, místo aby bylo nutné instalovat a nastavovat komplexní PostgreSQL či MySQL.
+Knihovna SQLAlchemy abstrahuje práci s SQL databázemi v jazyce Python. Hlavní charakteristikou jeho ORM (objektově relačního mapování) je přenechání zodpovědnosti za spárování tabulek a doménových objektů na samotném programátorovi. Pro dotazování databází poskytuje rozhraní, které se snaží co nejvíce zapadat do zvyklostí samotného jazyka Python a působit tak na vývojáře přirozeně, intuitivně \cite{copeland2008essential}. Navíc zapouzdřuje samotnou komunikaci se SŘBD, takže lze aplikace tvořit nezávisle na zvoleném SQL dialektu. Taková svoboda je výhodná např. při testování, kdy lze rychle vytvořit ad hoc databázi v operační paměti pomocí SQLite, místo aby bylo nutné instalovat a nastavovat komplexní PostgreSQL či MySQL.
 
 \subsection{jQuery}
 Ze stejných důvodů jako Flask jsem zvolil pro vývoj v jazyce JavaScript framework jQuery -- tedy aby pomohl abstrahovat a zapouzdřit některé časté problémy při vývoji webové aplikace, ovšem v tomto případě z hlediska tvorby uživatelského rozhraní. Tato knihovna velice zjednodušuje manipulaci s prvky stránky nebo zasílání asynchronních požadavků na server (tzv. AJAX) a ač nemusí zcela postačovat při programování velkých, komplexních aplikací, pro počáteční rychlý vývoj funkčních prototypů je velice nápomocná.
@@ -961,6 +961,8 @@ Cílem práce bylo ověřit myšlenku, že by bylo užitečné a možné propoji
 
 K finálnímu ověření hypotéz po upřesnění zadání slouží ukázková webová aplikace. Její realizace byla úspěšná a naplnila očekávání -- je to funkční prototyp, jenž je možné dále rozvíjet a vystavět na jeho konceptu užitečnou webovou službu. Práce tím odpovídá na otázku ze svého úvodu.
 
+% PN: Str. 71 "webová aplikace. Její realizace byla úspěšná a naplnila očekávání": to že byla úspěšná bych tam nepsal - tobě nepřísluší hodnotit svoji práci, od toho je oponent (recenzent)
+% FT: Mozno by som sa viac povenoval zaveru, ktory mas na moj vkus strucny. Chcelo by tom tam opat zhrnut povodne hypotezi a zavery, ku ktorym si dospel (strucne samozrejme). Uvod a zaver je to co si pri obhajobe pripadny zaujemcovia stihnu precitat.
 
 
 \bibliographystyle{czechiso-v2}
@@ -1002,8 +1004,8 @@ K finálnímu ověření hypotéz po upřesnění zadání slouží ukázková w
     \item[REST] representational state transfer
     \item[RFC] Request for Comments
     \item[RSS] RDF Site Summary, Really Simple Syndication
-    \item[SASS] Syntactically Awesome Stylesheets
-    \item[SCSS] SASSy CSS
+    \item[Sass] Syntactically Awesome Stylesheets
+    \item[SCSS] Sassy CSS
     \item[SMS] Short Message Service
     \item[SMTP] Simple Mail Transfer Protocol
     \item[SQL] Structured Query Language
@@ -1197,7 +1199,7 @@ $ make install
 
         \lstinputlisting[language=Python]{../../settings/sample_settings.py}
 
-    \item Pokud se ve složce {\tt oleander/static/css} nenachází soubor {\tt main.css}, ale pouze {\tt main.scss}, je nutné ještě tento přeložit do CSS. Nainstalujte SASS kompilátor -- na Ubuntu např. takto:
+    \item Pokud se ve složce {\tt oleander/static/css} nenachází soubor {\tt main.css}, ale pouze {\tt main.scss}, je nutné ještě tento přeložit do CSS. Nainstalujte Sass kompilátor -- na Ubuntu např. takto:
 
         \begin{lstlisting}[language=bash]
 $ apt-get install ruby rubygems

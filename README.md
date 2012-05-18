@@ -14,18 +14,23 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 ## Úkoly
 
-### O čem vím a musím udělat sám
-
-- definice zkratek, rejstřík pojmů
-- pevné mezery (LaTeXový program vlna), úpravy konců řádků
-- abstrakt a další povinné části v úvodu práce
-- doplnění obrázků
-- doplnění citací (uvádění ověřitelných údajů), hlavně v druhé polovině práce
-- doplnění seznamu zkratek, pojmů, doplnění poznámek pod čarou v druhé polovině práce
-
 ### S čím mi mohou pomoct druzí
 
 - kontrola odborného stylu (přesnost, přehlednost, emocionální neutralita a logická argumentace)
 - uvádění ověřitelných údajů
 - kontrola pravopisu
 - kontrola opakování výrazů, stylistiky
+
+### O čem vím a musím udělat sám
+
+- doplnění obrázků
+- doplnění citací
+- use case diagramy, screen flow, wireframy
+- před cílovou skupinou tabulka se shrnutím (ala Google Docs)
+- bezpečnost, úvaha o tom, že kdo odpovídá, nemusí mít vůbec ponětí, kam a komu to vlastně všechno posílá, odkázat se na to z řádku 717
+- v obrázku s počtem odpovědí za den přemalovat datum (nebo ho přemalovat celý)
+
+### Až úplně nakonec
+
+- pevné mezery (LaTeXový program vlna), úpravy konců řádků
+- abstrakt a další povinné části v úvodu práce
