@@ -99,7 +99,7 @@ Rád bych poděkoval vedoucímu Mgr.~Fedoru Tiršelovi za~vedení práce, rady, 
 
 
 \tableofcontents
-\listoftables
+%\listoftables
 \listoffigures
 
 
@@ -797,6 +797,32 @@ Google přes~API nabízí celý adresář kontaktů, takže schválí-li uživat
 Při nahrávání souborů CSV nebo vCard nemohou vznikat žádné potíže, na oba tyto formáty má většina programovacích jazyků již hotové a odzkoušené knihovny. Zádrhel může být snad jen při interpretaci dat z importu CSV, protože Google dokáže ze svých Contacts exportovat kromě tradičního i svůj vlastní typ, jenž není kompatibilní s ostatními službami a programy.
 
 Za takové nepřítomnosti zjevných překážek se nelze divit faktu, že existuje mnoho služeb, jež problém propojení kontaktů řeší. Pravděpodobně nejužívanější z nich se nachází na adrese \url{http://www.plaxo.com}. Systémy pro integraci kontaktů jsou dnes také běžnou výbavou moderních telefonů s operačním systémem.
+
+\subsection{Shrnutí reálných možností propojení}
+Po ověření realizovatelnosti integrace jednotlivých prvků můžeme sestavit tabulku \ref{realisticConclusion}. Setkáváme se s nekompatibilitou z hlediska koncepce (např. různé druhy větvení zpráv v diskusi) a ještě častěji s nepřekonatelnými technickými obtížemi (nedostupná API, proprietární protokoly).
+
+Alespoň některé služby, které lze propojit, ovšem ve většině případů lze najít. Tam, kde si takové propojení našlo uplatnění, se setkáváme i s funkčními realizacemi. Integraci instant messagingu řeší Jabber transporty a vícekanáloví klienti, textové konference spojují různé brány, sjednocující adresáře kontaktů také existují.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ l | c c c c }
+                                    & \rotatebox{90}{\scriptsize{Koncepční problémy}}
+                                    & \rotatebox{90}{\scriptsize{Technické problémy}}
+                                    & \rotatebox{90}{\scriptsize{Lze propojit alespoň některé?}}
+                                    & \rotatebox{90}{\scriptsize{Existuje pro to řešení?}}
+        \\
+        \hline
+        Asyn. zpráva                & \yes & \yes & \yes & \no  \\
+        Syn. zpráva jednomu člověku & \no  & \yes & \yes & \yes \\
+        Syn. zpráva více lidem      & \no  & \no  & \yes & \yes \\
+        Obecná anketa               & \yes & \yes & \no  & \no  \\
+        Anketa na termín            & \yes & \yes & \no  & \no  \\
+        Událost                     & \no  & \yes & \yes & \no  \\
+        Kontakt                     & \no  & \yes & \yes & \yes \\
+    \end{tabular}
+    \caption{Shrnutí reálných možností propojení}
+    \label{realisticConclusion}
+\end{table}
 
 
 \section{Identifikace cílové skupiny}\label{targetAudience}
