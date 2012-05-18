@@ -11,10 +11,15 @@
 \usepackage[hyphens]{url}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
 \usepackage{tgpagella}
+\usepackage{amssymb}
+\usepackage{bbding}
 
 
 
 \DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>}\urlstyle{tt}}
+
+\newcommand{\yes}{\scriptsize{\Checkmark}}
+\newcommand{\no}{\scriptsize{\XSolidBrush}}
 
 
 
@@ -94,6 +99,7 @@ Rád bych poděkoval vedoucímu Mgr.~Fedoru Tiršelovi za~vedení práce, rady, 
 
 
 \tableofcontents
+\listoftables
 \listoffigures
 
 
@@ -366,7 +372,7 @@ V této otázce žádná konkrétní odpověď výrazně nepřevažuje, ale celk
 Zde se celých 60~\% účastníků dotazníku vyjádřilo pro stránku události na Facebooku. 19~\% hlasovalo pro možnost \uv{vylepím plakátky v okolí a pokusím se zajistit, aby o tom řekli v obecním rozhlase}. 6~\% respondentů by pro tento účel využilo českou službu Srazy.info. Ve vlastní odpovědi lidé nejčastěji zmiňovali kombinaci více možností. Snahu organizátora o co největší propagaci popsala jedna odpovídající přímo vyčerpávajícím způsobem:
 
 \begin{quotation}
-    \emph{Dám to na web SU FI a na nástěnku SU FI. Někdo to většinou propaguje na Facebooku SU FI. Dám echo na Twitter (pokud se to hodí), udělám v Google kalendáři akci a případně nechám po FI či celé MU rozvěsit plakáty. Občas obepíšu své kontakty v LeMUr a muni a dalších studentských médiích (e-mailem) a jdu na rozhovor do rádia nebo mailem připravíme článek.}
+    \emph{Dám to na web SU FI a na nástěnku SU FI. Někdo to většinou propaguje na Facebooku SU FI. Dám echo na Twitter (pokud se to hodí), udělám v Google kalendáři akci a případně nechám po FI či celé MU rozvěsit plakáty. Občas obepíšu své kontakty v LeMUr a muni a dalších studentských médiích\footnote{\emph{LeMUr} je studentský portál Masarykovy univerzity. Jeho online vydání je na adrese \url{http://lemur.mu/}. Jako \emph{muni} je označován zpravodajský portál Masarykovy univerzity dostupný na \url{http://www.online.muni.cz/}.} (e-mailem) a jdu na rozhovor do rádia nebo mailem připravíme článek.}
 \end{quotation}
 
 \subsubsection*{\textbf{5. otázka:} \emph{Bydlím spolu s kamarády v podnájmu na společném bytě. Co použiji k domluvě a důležitým oznámením?}}
@@ -627,7 +633,51 @@ Hlasové služby, často i v podobě videohovoru, umožňují sítě Skype, Wind
 \subsubsection*{Reálné možnosti propojení}
 Pro instant messaging existují XMPP standardy, ale využívá je jen málo společností -- z hlediska uživatele lze pouze uvítat, že mezi ně patří Facebook a Google, kteří mají největší část trhu s IM. Jinak však žádná interoperabilita neexistuje -- vše je záležitost dohod mezi poskytovateli, protokoly jsou proprietární a někdy nejsou prolomené ani podomácku operujícími vývojáři Jabber transportů. Přes všechny snahy o sblížení dnes není možné žádným způsobem volat ze Skypu na Jabber a naopak, nebo psát pouze za užití oficiálních nástrojů z ICQ na Facebook. Díky rozšiřování Facebooku a Google+ však většina uživatelů dnes přechází na sítě přístupné přes XMPP.
 
-Neoficiální Jabber transporty narušují neprostupnost jednotlivých sítí a technicky zdatnějším uživatelům nabízí částečnou nebo plnou interoperabilitu, byť někdy značně nespolehlivou\footnote{Na nemožnost garance funkčnosti transportů explicitně upozorňuje např. také prezentace největšího českého XMPP serveru JabbIM, dostupná na \url{http://www.jabbim.cz/services-trans-out.html}.}. Existují transporty mezi XMPP a ICQ, AIM, Windows Live Messenger, Gadu-Gadu, Yahoo!, a celosvětovou raritou je také český transport na Skype. Zajímavými počiny jsou potom napojení na Twitter, e-mail, či možnost psát přes instant messaging články na blog. SMTP transport umožňuje jak příjem, tak odesílání zpráv a lze jej považovat za jakéhosi technologického praotce dnešního trendu slučování asynchronních a synchronních zpráv, popsaného v~\ref{syncAsync}.
+Neoficiální Jabber transporty narušují neprostupnost jednotlivých sítí a technicky zdatnějším uživatelům nabízí částečnou nebo plnou interoperabilitu, byť někdy značně nespolehlivou\footnote{Na nemožnost garance funkčnosti transportů explicitně upozorňuje např. také prezentace největšího českého XMPP serveru JabbIM, dostupná na \url{http://www.jabbim.cz/services-trans-out.html}.}. Existují transporty mezi XMPP a ICQ, AIM, Windows Live, Gadu-Gadu, Yahoo!, a celosvětovou raritou je také český transport na Skype. Zajímavými počiny jsou potom napojení na Twitter, e-mail, či možnost psát přes instant messaging články na blog. SMTP transport umožňuje jak příjem, tak odesílání zpráv a lze jej považovat za jakéhosi technologického praotce dnešního trendu slučování asynchronních a synchronních zpráv, popsaného v~\ref{syncAsync}.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ l | c c c c c }
+        ze~sítě~/~do & XMPP & Facebook & G.~Talk & AIM & ICQ \\
+        \hline
+        XMPP         & \yes & \yes & \yes & \yes & \yes \\
+        Facebook     & \no  & \yes & \no  & \no  & \no  \\
+        Google Talk  & \yes & \yes & \yes & \yes & \yes \\
+        AIM          & \no  & \yes & \yes & \yes & \yes \\
+        ICQ          & \no  & \yes & \yes & \yes & \yes \\
+        Yahoo!       & \no  & \no  & \no  & \no  & \no  \\
+        Windows Live & \no  & \yes & \no  & \no  & \no  \\
+        Gadu-Gadu    & \no  & \yes & \yes & \yes & \yes \\
+        Tlen         & \no  & \no  & \no  & \no  & \no  \\
+        Skype        & \no  & \yes & \no  & \no  & \no  \\
+    \end{tabular}
+    \caption{Propojitelnost v rámci IM, I.~část}
+    \label{imIntegration1}
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ l | c c c c c }
+        ze~sítě~/~do & Yahoo! & Win.~Live & Gadu-Gadu & Tlen & Skype \\
+        \hline
+        XMPP         & \yes & \yes & \yes & \yes & \yes  \\
+        Facebook     & \no  & \no  & \no  & \no  & \no  \\
+        Google Talk  & \yes & \yes & \yes & \yes & \no  \\
+        AIM          & \no  & \no  & \no  & \no  & \no  \\
+        ICQ          & \no  & \no  & \no  & \no  & \no  \\
+        Yahoo!       & \yes & \yes & \no  & \no  & \no  \\
+        Windows Live & \yes & \yes & \no  & \no  & \no  \\
+        Gadu-Gadu    & \yes & \yes & \yes & \yes & \no  \\
+        Tlen         & \no  & \no  & \yes & \yes & \no  \\
+        Skype        & \no  & \no  & \no  & \no  & \yes \\
+    \end{tabular}
+    \caption{Propojitelnost v rámci IM, II.~část}
+    \label{imIntegration2}
+\end{table}
+
+Tabulky \ref{imIntegration1} a \ref{imIntegration2} shrnují možnosti kontaktovat z jedné sítě člověka užívající síť druhou. Berou přitom v úvahu nejrůznější transporty (především v XMPP), kompatibilitu sítí (např. ICQ a AIM), smluvní dohody mezi provozovateli (Google Talk a AIM) nebo triky, jež využívají kombinaci více možností (spojení Google Talk s Facebookem přes externí transport).
+
+Pro organizátora je v případě rychlých zpráv východiskem využití nějakého XMPP serveru s mnoha transporty, nebo klienta, jenž umožňuje připojení na všechny sítě zároveň. A takové už existují i jako webové aplikace bez nutnosti instalace, např. Meebo.
 
 \subsection{Synchronní zpráva více lidem}
 Prakticky všechny služby, jež se zabývají zasíláním synchronních zpráv více lidem, vycházejí z původního konceptu, jenž zavedlo IRC.
@@ -853,7 +903,7 @@ Následující odstavce představují aplikační rozhraní, jež je potřeba vy
 OAuth označuje otevřený standard pro webovou autorizaci, tedy ověření oprávnění k operacím nad webovými daty. Umožňuje uživateli sdílet jím vybraná soukromá data nebo přístup k nim (zápis, čtení), aniž by musel poskytovat své přihlašovací údaje třetím stranám \cite{maly2008oauth}. Druhá verze standardu se zaměřuje na jednodušší implementaci klientů, ale není ještě zcela hotová a proto je její zavádění zatím oficiálně pouze experimentální. Nicméně i přesto jej lze úspěšně využít k připojení na~API mnoha existujících služeb včetně Facebooku, Google, a dalších.
 
 \subsection{REST~API}
-REST je architektura představená v~roce 2000 jedním z~autorů specifikace protokolu HTTP~\cite{fielding2000architectural}.~API v~podobě REST lze zkratkovitě popsat jako technologii, v~níž poskytovatel dat zveřejní webové URI, MIME typ odpovědi a množinu operací, které jsou k~dispozici přes HTTP metody POST, GET, PUT nebo DELETE. Z~formátů odpovědí jsou nej\-využívanější obyčejný text, XML a JSON.
+REST je architektura představená v~roce 2000 jedním z~autorů specifikace protokolu HTTP~\cite{fielding2000architectural}.~API v~podobě REST lze zkratkovitě popsat jako technologii, v~níž poskytovatel dat zveřejní webovou adresu, MIME typ\footnote{MIME typ je internetový standard, jenž rozšiřuje specifikaci e-mailu o podporu přenosu textu v různých kódováních, přikládání příloh, aj. nové možnosti. Stal se ovšem v průběhu let obecným způsobem, jak na internetu určit typ obsahu.} odpovědi (formát dat) a množinu operací, které jsou k~dispozici přes HTTP metody\footnote{Každý požadavek v protokolu HTTP je veden nějakou metodou, nejčastěji jsou to POST, GET, PUT nebo DELETE. Podle toho s nimi server nakládá -- přidává, vypisuje, upravuje nebo maže data.}. Z~formátů odpovědí jsou nej\-využívanější obyčejný text, XML a JSON.
 
 \subsection{Facebook Graph~API}
 Aplikační rozhraní pro práci s Facebookem se nazývá Graph~API\footnote{Facebook Graph~API, \url{http://developers.facebook.com/docs/reference/api/}}. Funguje převážně na bázi REST, odpovědi vrací ve formátu JSON. Pro autorizaci využívá techniku OAuth~2.0. Odpovědi jsou dobře čitelné i lidským okem a většinou obsahují pouze nezbytně nutné množství dat.
@@ -873,7 +923,7 @@ Aplikace tedy musí počítat s výpadky nebo nedokonalostmi a umět se s nimi v
 \chapter{Implementace nástroje pro správu událostí}
 Kapitola má za úkol čtenáře provést realizací demonstrační aplikace. Činí tak především popisem významných překážek a rozhodování. Osvětluje výběr použitých technologií a pozastavuje se nad jednotlivými problémy, které bylo potřeba při implementaci řešit.
 
-Pro aplikaci bylo vybráno kódové označení Oleander, takže se v roli jejího loga objevuje na obrazových ukázkách. Rovněž je tak pojmenováno i mnoho částí kódu programu (názvy balíčků, aj.).
+Pro aplikaci bylo vybráno kódové označení Oleander\footnote{Oleandr obecný (\emph{Nerium oleander}) je dekorativní strom. Je sice považován za jednu z nejjedovatějších rostlin světa, ale program jsem po něm pojmenoval zcela náhodně -- strom jsem spatřil v zahradě jednoho z domů poblíž brněnské vily Tugendhat.}, takže se v roli jejího loga objevuje na obrazových ukázkách. Rovněž je tak pojmenováno i mnoho částí kódu programu (názvy balíčků, aj.).
 
 \section{Použité technologie}
 Následující popis použitých technologií není vyčerpávající -- odkazuje se v mnohých případech na jiné, které se ve výčtu podrobně rozpracovány neobjevují, jako např. HTML, CSS, JavaScript, MySQL, PostgreSQL nebo SQLite. Tyto jsou totiž zcela fundamentálními technologiemi pro vývoj webové aplikace a bylo by zbytečné prodlužovat rozsah této práce jejich představováním. Výběr se tedy zaměřuje především na nestandardní, ojedinělé, či jinak zajímavé prostředky vedoucí ke zhotovení demonstrační aplikace, a snaží se objasnit, proč byly zvoleny.
@@ -889,7 +939,7 @@ Programování v~Pythonu samotném je na abstraktnější úrovni než např. v�
 Vybral jsem \uv{mikroframework} Flask, jelikož jeho charakter vycházel vstříc prototypovému způsobu vývoje. Základní použití jeho sady nástrojů se lze i s velice základními znalostmi Pythonu naučit za několik hodin a jeho pojetí vybízí k jednoduchému a čitelnému kódu, jenž lze v případě potřeby snadno upravovat nebo rozšiřovat. Flask usnadňuje tvorbu webové aplikace tím, že poskytuje malé, ale mocné jádro, které zapouzdřuje práci s HTTP a rozděluje program do dvou vrstev -- šablon a tzv. \emph{controlleru}, tedy směrovače požadavků a odpovědí. To odpovídá návrhovému vzoru MVC (model není v tomto případě přítomen přímo ve frameworku)~\cite{bernard2009serial}. Samotné jádro je potom snadno rozšiřitelné o jakékoliv funkce, jež programátor potřebuje.
 
 \subsection{HTML5}
-Na základě současného vývoje webu bylo místo běžného HTML nebo překonaného\footnote{Viz zpráva \url{http://www.w3.org/News/2009\#item119}.} XHTML využito prvků z rodiny technologií pojmenované jako HTML5. Aby fungovaly i v některých starších prohlížečích, využil jsem knihovnu Modernizr napsanou v jazyce JavaScript, která tuto nekompatibilitu částečně stírá, ale především o ní informuje, aby se aplikace mohla patřičně \uv{uskromnit} (techniky \emph{graceful degradation} či \emph{progressive enhancement}~\cite{heilmann2009graceful}). HTML5 bylo nakonec využito v menším měřítku, aplikace implementuje de facto jen nové sémantické značky a některé nové direktivy v CSS. Lze si však představit širší použití těchto nových možností při budoucím rozšiřování programu -- zajímavými se jeví především geolokace uživatele, hlubší sémantické značkování (Mikroformáty, Mikrodata, RDFa), nebo využití osobního kalendáře či správce kontaktů přímo z prohlížeče\footnote{Calendar~API, \url{http://www.w3.org/TR/calendar-api/}, a~Contacts~API, \url{http://www.w3.org/TR/contacts-api/}.}.
+Na základě současného vývoje webu bylo místo běžného HTML nebo překonaného\footnote{Viz zpráva \url{http://www.w3.org/News/2009\#item119}.} XHTML využito prvků z rodiny technologií pojmenované jako HTML5. Aby fungovaly i v některých starších prohlížečích, využil jsem knihovnu Modernizr napsanou v jazyce JavaScript, která tuto nekompatibilitu částečně stírá, ale především o ní informuje, aby se aplikace mohla patřičně \uv{uskromnit} (techniky \emph{graceful degradation} či \emph{progressive enhancement}~\cite{heilmann2009graceful}). HTML5 bylo nakonec využito v menším měřítku, aplikace implementuje de facto jen nové sémantické značky a některé nové direktivy v CSS. Lze si však představit širší použití těchto nových možností při budoucím rozšiřování programu -- zajímavými se jeví především geolokace uživatele, hlubší sémantické značkování (mikroformáty, mikrodata, RDFa), nebo využití osobního kalendáře či správce kontaktů přímo z prohlížeče\footnote{Calendar~API, \url{http://www.w3.org/TR/calendar-api/}, a~Contacts~API, \url{http://www.w3.org/TR/contacts-api/}.}.
 
 \subsection{SCSS}
 Při vývoji kaskádových stylů CSS, které definují vzhled webové aplikace, bylo využito \emph{preprocesoru} Sass, resp. jeho varianty SCSS, jež umožňuje psát CSS obohacené o nové syntaktické konstrukce, a následně jej přeložit do tradičního stylopisu. Do deklarativních stylů takto zavádí podporu pro proměnné, jednoduché aritmetické výrazy, vnořování, znovupoužitelné bloky a dědičnost. To usnadňuje a urychluje vývoj, protože tvůrce stylopisu má rozsáhlé možnosti vytvářet generické prvky, jež následně parametrizuje a využívá na mnoha místech. Chce-li něco měnit, činí tak následně obvykle pouze na jednom místě v kódu.
@@ -1002,8 +1052,9 @@ K finálnímu ověření hypotéz po upřesnění zadání slouží ukázková w
     \item[ORM] object-relational mapping
     \item[POP] Post Office Protocol
     \item[REST] representational state transfer
+    \item[RDFa] Resource Description Framework in attributes
     \item[RFC] Request for Comments
-    \item[RSS] RDF Site Summary, Really Simple Syndication
+    \item[RSS] RDF Site Summary, nebo také Really Simple Syndication
     \item[Sass] Syntactically Awesome Stylesheets
     \item[SCSS] Sassy CSS
     \item[SMS] Short Message Service
@@ -1015,7 +1066,6 @@ K finálnímu ověření hypotéz po upřesnění zadání slouží ukázková w
     \item[TCP] Transmission Control Protocol
     \item[TLS] Transport Layer Security
     \item[UDP] User Datagram Protocol
-    \item[URI] uniform resource identifier
     \item[URL] uniform resource locator
     \item[UTC] Coordinated Universal Time
     \item[XHTML] eXtensible HyperText Markup Language
