@@ -221,7 +221,7 @@ class User(db.Model, UserMixin, GravatarMixin):
             )\
             .filter(Contact.belongs_to_user == True)\
             .first()
-        return contact.user
+        return contact.user if contact else None
 
     def __repr__(self):
         return '<User %r (%r)>' % (self.name, self.email)
