@@ -23,7 +23,6 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 ### O čem vím a musím udělat sám
 
-- bezpečnost, úvaha o tom, že kdo odpovídá, nemusí mít vůbec ponětí, kam a komu to vlastně všechno posílá, odkázat se na to z řádku 717
 - předělat závěr
 - seznam elektronických příloh
 
