@@ -24,7 +24,6 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 ### O čem vím a musím udělat sám
 
 - předělat závěr
-- seznam elektronických příloh
 
 A úplně nakonec:
 
