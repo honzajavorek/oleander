@@ -25,9 +25,8 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 - bezpečnost, úvaha o tom, že kdo odpovídá, nemusí mít vůbec ponětí, kam a komu to vlastně všechno posílá, odkázat se na to z řádku 717
 - předělat závěr
-
-### Až úplně nakonec
-
-- pevné mezery (LaTeXový program vlna), úpravy konců řádků
 - abstrakt a další povinné části v úvodu práce
 - obsah přiloženého CD
+
+A úplně nakonec:
+- pevné mezery (LaTeXový program vlna), úpravy konců řádků
