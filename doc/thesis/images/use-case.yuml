@@ -1,0 +1,13 @@
+// http://yuml.me/
+[návštěvník]-(zobrazit stránku události)
+[uživatel]-(zaregistrovat se)
+[uživatel]-(přihlásit se)
+[přihlášený uživatel]-(spravovat události)
+[přihlášený uživatel]-(spravovat kontakty)
+[přihlášený uživatel]-(importovat kontakty)
+[přihlášený uživatel]-(zvát kontakty na události)
+[přihlášený uživatel]-(měnit své nastavení)
+[uživatel s pozvánkou]-(oznámit účast)
+[uživatel]^[návštěvník]
+[přihlášený uživatel]^[návštěvník]
+[uživatel s pozvánkou]^[návštěvník]

@@ -915,10 +915,17 @@ Vzhledem k neexistujícím~API pro ostatní služby bude aplikace propojovat pou
 
 
 \chapter{Návrh nástroje pro správu událostí}
-Kapitola se zabývá podrobnějším návrhem aplikace. Postupně prochází strukturu systému, specifikaci uživatelského rozhraní a popisuje jednotlivá~API.
+Kapitola se zabývá podrobnějším návrhem aplikace. Postupně prochází strukturu systému, specifikaci uživatelského rozhraní a popisuje jednotlivá~API. Text doplňují diagram toku obrazovek \ref{screenFlow} a diagram užití \ref{useCase}.
 
 \section{Struktura webového rozhraní}
 Tento oddíl se zaměřuje na návrh jednotlivých obrazovek výsledného systému. Cílem je přitom vytvořit jednoduchou a zřejmou organizaci, navigaci a reprezentaci informací na stránce.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{screen-flow}
+    \caption{Diagram toku obrazovek (\emph{screen flow diagram}).}
+    \label{screenFlow}
+\end{figure}
 
 \subsection{Stránky událostí}
 Jádrem stránky události je přehled základních údajů a seznam účastníků. Vše ostatní je možné vynechat a doplnit v dalších verzích aplikace, bude-li to považováno za užitečné. Obrazovka by proto měla přehledně zobrazit především název akce, čas a místo konání, případně delší popis vložený organizátorem. Stranou od těchto údajů by měli být zobrazeni účastníci, a to způsobem, který přehledně odděluje jednotlivé skupiny podle odpovědi na pozvánku. V tomto směru rozlišujeme kontakty na následující:
@@ -932,6 +939,13 @@ Jádrem stránky události je přehled základních údajů a seznam účastník
 \end{description}
 
 Jesliže ostatní stránky v systému by měly být chráněny před přístupem kohokoliv jiného než přihlášeného pořadatele, stránka události by oproti tomu měla být veřejná. Jen tak se na ni budou moci dostat uživatelé prostého e-mailu. Měla by proto mít i dobře zapamatovatelnou, permanentní adresu.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[height=\textheight, keepaspectratio]{use-case}
+    \caption{Diagram užití (\emph{use case diagram}).}
+    \label{useCase}
+\end{figure}
 
 \subsection{Správa kontaktů}
 Obrazovka zajišťující správu kontaktů by měla pořadateli umožňovat efektivní pohyb v adresáři a nabízet mu funkce pro přidání nových osob. První z těchto požadavků naplňuje celkový přehled adresáře utřízený podle iniciál jmen kontaktů. Jelikož může být jeho objem rozsáhlý, je zapotřebí posílit navigaci -- k tomu může dobře posloužit abecední výčet písmen, jež odkazují na jednotlivé skupiny lidí začínajících příslušnou iniciálou.
