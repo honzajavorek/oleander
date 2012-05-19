@@ -325,7 +325,7 @@ Dotazník jsem během února 2012 šířil pomocí e-mailu a sociálních sítí
 
 Přes zkrácený odkaz přišlo podle Bitly na dotazník 235 lidí, přičemž z jeho výsledků na Google Docs vyplývá, že 186~z~nich jej dokončilo. Konverzní poměr je tedy necelých 80~\%. Lidé přicházeli převážně ve dnech 19.~až~27.~února, nejvíce potom druhý den po rozeslání, tedy 20.~února. Dvě ojedinělé návštěvy proběhly v březnu, jedna dokonce vedla i k odeslání odpovědí, takže se dá říci, že průzkum trval měsíc, od 19.~února do~20.~března. Statistika návštěvníků eviduje řadu zemí v čele s Českou republikou, ale vzhledem k tomu, že byly otázky psány česky, dá se mezi odpovídajícími očekávat zřejmě jen Čechy a Slováky. Přicházeli nejčastěji z e-mailových klientů (možná ale i Twitter klientů, programy nelze rozlišit). Weby sociálních sítí se podělily o druhé a třetí místo v podstatě rovnocenně, jak Facebook, tak Twitter přilákali přibližně 15~\% všech návštěvníků.
 
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[scale=0.9,keepaspectratio]{chart-responses}
     \caption{Počet odpovědí za den.}
@@ -458,7 +458,7 @@ Tento průzkum měl za úkol zmapovat situaci na poli rychlých zpráv. Mezi už
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7,keepaspectratio]{chart14}
+    \includegraphics[scale=0.6,keepaspectratio]{chart14}
     \caption{Výsledky pro otázku ohledně využívání instant messagingu.}
 \end{figure}
 
@@ -946,7 +946,7 @@ Nastavení umožňuje změnu osobních údajů uživatele aplikace. Je to hlavn�
 Sekce zmiňuje vybrané detaily uživatelského rozhraní, které si zaslouží z nějakého důvodu pozornost. Všechny popisují řešení drobného problému, jenž zdánlivě nehraje významnou roli, avšak uživateli může výrazně přispět k orientaci nebo zřejmosti ovládání.
 
 \subsection{Práce s kontakty}\label{separateContactTypes}
-Pořadatel by měl sám určit typ kontaktu při výběru pozvánek. Importuje-li tedy přátele z Facebooku a kontakty z e-mailu, nesmí se tyto nijak sloučit v případě, že se v nich vyskytují stejnojmenné osoby. Naopak, měly by být viditelně odděleny a při rozesílání pozvánek musí být organizátorovi jasno, jestli s konkrétním člověkem komunikuje přes Facebook nebo e-mail. Sám totiž nejlépe ví, na jakém kanále zastihne kterého kolegu -- toto nelze určit žádným algoritmem. Zároveň se tím aplikace vyvaruje problematice párování osob, kterou řeší mnohé programy pro integraci více kontaktních adresářů.
+Pořadatel by měl sám určit typ kontaktu při výběru pozvánek. Im\-por\-tu\-je-li tedy přátele z Facebooku a kontakty z e-mailu, nesmí se tyto nijak sloučit v případě, že se v nich vyskytují stejnojmenné osoby. Naopak, měly by být viditelně odděleny a při rozesílání pozvánek musí být organizátorovi jasno, jestli s konkrétním člověkem komunikuje přes Facebook nebo e-mail. Sám totiž nejlépe ví, na jakém kanále zastihne kterého kolegu -- toto nelze určit žádným algoritmem. Zároveň se tím aplikace vyvaruje problematice párování osob, kterou řeší mnohé programy pro integraci více kontaktních adresářů.
 
 \begin{figure}[H]
     \centering
@@ -988,7 +988,7 @@ Aplikace tedy musí počítat s výpadky nebo nedokonalostmi a umět se s nimi v
 \chapter{Implementace nástroje pro správu událostí}
 Kapitola má za úkol čtenáře provést realizací demonstrační aplikace. Činí tak především popisem významných překážek a rozhodování. Osvětluje výběr použitých technologií a pozastavuje se nad jednotlivými problémy, které bylo potřeba při implementaci řešit.
 
-Pro aplikaci bylo vybráno kódové označení Oleander\footnote{Oleandr obecný (\emph{Nerium oleander}) je dekorativní strom. Je sice považován za jednu z nejjedovatějších rostlin světa, ale program jsem po něm pojmenoval zcela náhodně -- strom jsem spatřil v zahradě jednoho z domů poblíž brněnské vily Tugendhat.}, takže se v roli jejího loga objevuje na obrazových ukázkách. Rovněž je tak pojmenováno i mnoho částí kódu programu (názvy balíčků, aj.).
+Pro aplikaci bylo vybráno kódové označení Oleander\footnote{Oleandr obecný (\emph{Nerium oleander}) je dekorativní strom. Je sice považován za jednu z nejjedovatějších rostlin světa, ale program jsem po něm pojmenoval zcela náhodně -- strom jsem spatřil v zahradě jednoho z domů poblíž brněnské vily Tugendhat.}, takže se v roli jejího loga objevuje na obrazových ukázkách v příloze \ref{oleanderPictures}. Rovněž je tak pojmenováno i mnoho částí kódu programu (názvy balíčků, aj.).
 
 \section{Použité technologie}
 Následující popis použitých technologií není vyčerpávající -- odkazuje se v mnohých případech na jiné, které se ve výčtu podrobně rozpracovány neobjevují, jako např. HTML, CSS, JavaScript, MySQL, PostgreSQL nebo SQLite. Tyto jsou totiž zcela fundamentálními technologiemi pro vývoj webové aplikace a bylo by zbytečné prodlužovat rozsah této práce jejich představováním. Výběr se tedy zaměřuje především na nestandardní, ojedinělé, či jinak zajímavé prostředky vedoucí ke zhotovení demonstrační aplikace, a snaží se objasnit, proč byly zvoleny.
@@ -1396,9 +1396,9 @@ dámy 46~\%.
 Aplikace byla vyvíjena na Pythonu verze 2.6.6. Její spuštění na vlastním počítači nevyžaduje webový server -- využije se vyvojářského serveru zabudovaného do frameworku Flask (pro ostré nasazení by však tato konfigurace nebyla vhodná). Dále je potřeba databáze. Vyvoj probíhal na PostgreSQL ve verzi 8.4.11, ale mělo by být možné využít i SQLite, které je často už přítomno v systému a není nutné jej instalovat. Návod na instalaci předpokládá operační systém unixového typu a může při něm být zapotřebí verzovací systém Git.
 
 \begin{enumerate}
-    \item Zřiďte si Facebook účet a pomocí kreditní karty nebo telefonního čísla jej ověřte, pokud jste tak již neudělali. Na stránce \url{https://developers.facebook.com/apps} vytvořte novou aplikaci s libovolným názvem a jmenným prostorem. Aplikaci nastavte doménu {\tt localhost}. Zaškrtněte typ \emph{website} a vyplňte URL {\tt http://localhost:5000}. Uložte si kódy označené jako \emph{App ID} a \emph{App Secret} ze záhlaví stránky.
+    \item Zřiďte si Facebook účet a pomocí kreditní karty nebo telefonního čísla jej ověřte, pokud jste tak již neudělali. Na stránce \url{http://developers.facebook.com/apps} vytvořte novou aplikaci s libovolným názvem a jmenným prostorem. Aplikaci nastavte doménu {\tt localhost}. Zaškrtněte typ \emph{website} a vyplňte URL {\tt http://localhost:5000}. Uložte si kódy označené jako \emph{App ID} a \emph{App Secret} ze záhlaví stránky.
 
-    \item Zřiďte si Google účet a na stránce \url{http://code.google.com/apis/console} založte projekt. Pro něj na záložce se službami povolte \emph{Google Calendar~API}. Na záložce \emph{API Access} vyhledejte oddíl zabývající se \emph{Client ID}. V nastavení vložte {\tt http://localhost:5000/connect/google/done} do pole pro autorizovaná URI k přesměrování. Uložte si kódy označené jako \emph{Client ID} a \emph{Client Secret}.
+    \item Zřiďte si Google účet a na stránce \url{http://code.google.com/apis/console} založte projekt. Pro něj na záložce se službami povolte \emph{Google Calendar~API}. Na záložce \emph{API Access} vyhledejte oddíl zabývající se \emph{Client ID}. V nastavení vložte adresu \url{http://localhost:5000/connect/google/done} do pole pro autorizovaná URI k přesměrování. Uložte si kódy označené jako \emph{Client ID} a \emph{Client Secret}.
 
     \item Aplikace potřebuje k odesílání e-mailů SMTP server. Můžete použít jakýkoliv máte k dispozici, popřípadě si nějaký zdarma zřídit na službě \url{http://sendgrid.com/}. Pro omezené počty e-mailů denně lze využít také službu Gmail -- její konfigurace SMTP je následující:
 

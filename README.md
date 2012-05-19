@@ -25,7 +25,6 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 - use case diagramy, screen flow, wireframy
 - bezpečnost, úvaha o tom, že kdo odpovídá, nemusí mít vůbec ponětí, kam a komu to vlastně všechno posílá, odkázat se na to z řádku 717
-- v obrázku s počtem odpovědí za den přemalovat datum (nebo ho přemalovat celý)
 - předělat závěr
 
 ### Až úplně nakonec
