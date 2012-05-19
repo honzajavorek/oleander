@@ -29,4 +29,5 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - obsah přiloženého CD
 
 A úplně nakonec:
+
 - pevné mezery (LaTeXový program vlna), úpravy konců řádků
