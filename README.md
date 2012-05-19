@@ -25,8 +25,7 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 - bezpečnost, úvaha o tom, že kdo odpovídá, nemusí mít vůbec ponětí, kam a komu to vlastně všechno posílá, odkázat se na to z řádku 717
 - předělat závěr
-- abstrakt a klíčová slova
-- příloha: obsah přiloženého CD
+- seznam elektronických příloh
 
 A úplně nakonec:
 
