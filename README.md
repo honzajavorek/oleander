@@ -21,6 +21,8 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - kontrola pravopisu
 - kontrola opakování výrazů, stylistiky
 
-### O čem vím a musím udělat sám
+### Co udělám sám až úplně nakonec
 
-- pevné mezery (LaTeXový program vlna), úpravy konců řádků
+- vykopírovat text a projet ho nějakým spell-checkerem
+- doplnit všude pevné mezery (LaTeXový program vlna) a následně úpravit konce řádků
+- po všech těchto úpravách doladit případné díry (mezi obrázky, sekcemi, atd.)
