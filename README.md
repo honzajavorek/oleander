@@ -14,15 +14,5 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 
 ## Úkoly
 
-### S čím mi mohou pomoct druzí
-
-- kontrola odborného stylu (přesnost, přehlednost, emocionální neutralita a logická argumentace)
-- uvádění ověřitelných údajů
-- kontrola pravopisu
-- kontrola opakování výrazů, stylistiky
-
-### Co udělám sám až úplně nakonec
-
-- vykopírovat text a projet ho nějakým spell-checkerem
 - doplnit všude pevné mezery (LaTeXový program vlna) a následně úpravit konce řádků
 - po všech těchto úpravách doladit případné díry (mezi obrázky, sekcemi, atd.)

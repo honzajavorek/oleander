@@ -1,4 +1,4 @@
-\documentclass[12pt,oneside,final]{fithesis2}
+\documentclass[12pt,oneside,draft]{fithesis2}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{cmap}
@@ -15,47 +15,41 @@
 \usepackage{bbding}
 \usepackage{float}
 \usepackage{titlesec}
+\usepackage{etoolbox}
+
+
+
+\setlength{\hoffset}{-0.7cm}
+\setlength{\voffset}{-1.5cm}
+\setlength{\textheight}{23.0cm}
+\setlength{\textwidth}{15.2cm}
 
 
 
 \DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>}\urlstyle{tt}}
 
+
+
 \newcommand{\yes}{\scriptsize{\Checkmark}}
 \newcommand{\no}{\scriptsize{\XSolidBrush}}
 
+
+
 \titleformat*{\subsubsection}{\bfseries}
-
-
-
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
 
 
 
 \lstset{
     language=Python,                % the language of the code
     basicstyle=\footnotesize,       % the size of the fonts that are used for the code
-    %numbers=left,                   % where to put the line-numbers
-    %numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
-    %stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
-    %numbersep=5pt,                  % how far the line-numbers are from the code
     backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
     showspaces=false,               % show spaces adding particular underscores
     showstringspaces=false,         % underline spaces within strings
     showtabs=false,                 % show tabs within strings adding particular underscores
-    %frame=single,                   % adds a frame around the code
-    %rulecolor=\color{gray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
     tabsize=2,                      % sets default tabsize to 2 spaces
     captionpos=b,                   % sets the caption-position to bottom
     breaklines=true,                % sets automatic line breaking
-    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-    %title=\lstname,                 % show the filename of files included with \lstinputlisting; also try caption instead of title
-    keywordstyle=\color{blue},      % keyword style
-    commentstyle=\color{dkgreen},   % comment style
-    stringstyle=\color{mauve},      % string literal style
-    %escapeinside={\%*}{*)},         % if you want to add a comment within your code
-    %morekeywords={*,...}            % if you want to add more keywords to the set
+    breakatwhitespace=false         % sets if automatic breaks should only happen at whitespace
 }
 
 
@@ -90,11 +84,36 @@ Rád bych poděkoval vedoucímu Mgr.~Fedoru Tiršelovi za~vedení práce, rady, 
 
 
 
-\begin{ThesisAbstract}
+\chapter*{\AbstractTitlecs}
 Tato diplomová práce zkoumá možnost vytvoření webového systému, který by umožňoval organizovat malou skupinou lidí nezávisle na tom, jaké preference dorozumívání mají její členové.
 
 Práce analyzuje běžné podoby počítačem zprostředkované komunikace a vztah uživatelů k nim. Na tomto základě formuluje problém interoperability jednotlivých systémů a nastoluje hypotézy o realizovatelnosti a užitečnosti systému. Za svou polovinou se práce zabývá ověřováním těchto hypotéz a dle předchozích zjištění specifikuje zadání pro prototyp -- tím se stává nástroj pro správu událostí. Jeho návrh a implementaci popisují poslední kapitoly.
-\end{ThesisAbstract}
+\vfill
+
+\makeatletter
+\renewcommand\chapter{\par%
+    \thispagestyle{plain}%
+    \global\@topnum\z@
+    \@afterindentfalse
+    \secdef\@chapter\@schapter}
+\makeatother
+
+\chapter*{\AbstractTitleen}
+This thesis explores the possibilities of creating a web system which would help to organize a small group of people, no matter what communication methods its members prefer.
+
+The paper first analyses common forms of computer-mediated communication and relations between these forms and their users. On this basis, the problem of
+interoperability across individual systems is formulated and hypotheses about feasibility and usefulness of the system are raised. The second half of the
+thesis deals with verification of raised hypotheses and specifies the form of a prototype in accordance with previous findings -- an events managing tool. The last chapters describe the design of this tool and the implementation process.
+\vfill
+
+\makeatletter
+\renewcommand\chapter{\par%
+    \clearpage
+    \thispagestyle{plain}%
+    \global\@topnum\z@
+    \@afterindentfalse
+    \secdef\@chapter\@schapter}
+\makeatother
 
 
 
@@ -154,12 +173,12 @@ Protokol navazuje na velké množství dříve velmi populárních\footnote{Stat
 IM, jak jej popisuje XMPP, je dnes pravděpodobně nejtypičtějším zástupcem synchronní textové CMC. Prošel mnohaletým vývojem a dnes se s nimi setkáváme nejen v instalovaných programech, ale také v řadě webových aplikací včetně později zmiňovaných sociálních sítí (viz~\ref{web}). Lidé přes IM vedou neformální konverzace za účelem rychlé a operativní domluvy, ale také se tímto způsobem dorozumívají v případě, že si potřebují sdělit jen něco krátkého a nepříliš důležitého. Nevýhodou IM je nekontrolované vyrušování příjemce, jenž má většinou velmi omezenou možnost zvolit si, zda chce v určitý okamžik nějaké zprávy přijímat, případně od kterých kontaktů.
 
 \subsection{E-mail (SMTP)}\label{email}
-Počátky e-mailu sahají až do internetové prehistorie\footnote{Elektronická pošta existuje od roku 1965, což je ještě před vznikem samotného internetu~\cite{vanvleck2012electronic}.} a dnes tvoří páteř veškeré elektronické komunikace. Popisují jej protokoly SMTP, POP a IMAP, kde poslední dva řeší pouze různé mechanismy vzdáleného čtení přijatých zpráv. Jen málokdo z lidí s přístupem k internetu v současnosti nemá vlastní, aktivně využívanou e-mailovou adresu. Elektronická pošta je hluboce zakořeněna v naší moderní společnosti -- byla v podstatě prvním počítačem zprostředkovaným způsobem komunikace uznáváným a používáným také státní správou a úřady ČR\footnote{Touto problematikou se zabývá zákon č. 227/2000 Sb. o elektronickém podpisu, nařízení vlády č. 495/2004 Sb., kterým se provádí zmíněný zákon, a vyhláška č. 496/2004 Sb. o elektronických podatelnách. Dnes můžeme se státní správou komunikovat nejen e-maily, ale také přes tzv. \emph{datové schránky}.}. Jedná se o tradičního reprezentanta asynchronní textové CMC.
+Počátky e-mailu sahají až do internetové prehistorie\footnote{Elektronická pošta existuje od roku 1965, což je ještě před vznikem samotného internetu~\cite{vanvleck2012electronic}.} a dnes tvoří páteř veškeré elektronické komunikace. Popisují jej protokoly SMTP, POP a IMAP, kde poslední dva řeší pouze různé mechanismy vzdáleného čtení přijatých zpráv. Jen málokdo z lidí s přístupem k internetu v současnosti nemá vlastní, aktivně využívanou e-mailovou adresu. Elektronická pošta je hluboce zakořeněna v naší moderní společnosti -- byla v podstatě prvním počítačem zprostředkovaným způsobem komunikace uznávaným a používaným také státní správou a úřady ČR\footnote{Touto problematikou se zabývá zákon č. 227/2000 Sb. o elektronickém podpisu, nařízení vlády č. 495/2004 Sb., kterým se provádí zmíněný zákon, a vyhláška č. 496/2004 Sb. o elektronických podatelnách. Dnes můžeme se státní správou komunikovat nejen e-maily, ale také přes tzv. \emph{datové schránky}.}. Jedná se o tradičního reprezentanta asynchronní textové CMC.
 
 Lidé e-mailem původně nahrazovali hlavně klasickou poštu, ale dnes je adopce tohoto kanálu natolik samozřejmá, že je jeho využití takřka univerzální. Pravděpodobně díky všem výše zmíněným skutečnostem jsou na elektronické poště dnes dobře patrné různé snahy o integraci s jinými způsoby počítačové komunikace. V následujících dvou odstavcích popíši některé vybrané trendy.
 
 \subsubsection*{Integrace e-mailu do webové aplikace}\label{emailWebApp}
-Aplikace dnes většinou neintegrují e-mailové funkce přímo, ale předpokládají, že je s nimi uživatel dobře seznámen a disponuje svou vlastní e-mailovou schránkou. Hromadně zasílají informace o změnách a novinkách, používají e-mailovou adresu k ověření identity, obnově přihlašovacích údajů, apod. Jedná se tedy spíše o využití e-mailu jen jako kanálu k rutinnímu dorozumívání s uživatelem či ke sdílení obsahu. Někteří tvůrci groupware (viz~\ref{groupware}) však jdou vstříc uživateli tím, že svůj program na elektronickou poštu navazují přímo. Rozšiřují jej o schopnost přijímat e-mailové zprávy a nějakým způsobem jim porozumnět. Např. již zmíněný Facebook umí lidem rozesílat e-mailová upozornění na komentáře z této sociální sítě. Málo známý fakt ovšem je, že na tyto lze přímo odpovědět -- e-mail je doručen na servery Facebooku, ty rozpoznají do jaké konverzace míří a přetvoří jej na komentář, jenž je k nerozeznání od jiných, ručně vepsaných ve webovém uživatelském rozhraní~\cite{whitnah2010replying}. Obdobnou funkčnost nabízí také server pro vývojáře GitHub nebo aplikace pro projektový management Basecamp (zmiňovaná také v~\ref{37signals}).
+Aplikace dnes většinou neintegrují e-mailové funkce přímo, ale předpokládají, že je s nimi uživatel dobře seznámen a disponuje svou vlastní e-mailovou schránkou. Hromadně zasílají informace o změnách a novinkách, používají e-mailovou adresu k ověření identity, obnově přihlašovacích údajů, apod. Jedná se tedy spíše o využití e-mailu jen jako kanálu k rutinnímu dorozumívání s uživatelem či ke sdílení obsahu. Někteří tvůrci groupware (viz~\ref{groupware}) však jdou vstříc uživateli tím, že svůj program na elektronickou poštu navazují přímo. Rozšiřují jej o schopnost přijímat e-mailové zprávy a nějakým způsobem jim porozumět. Např. již zmíněný Facebook umí lidem rozesílat e-mailová upozornění na komentáře z této sociální sítě. Málo známý fakt ovšem je, že na tyto lze přímo odpovědět -- e-mail je doručen na servery Facebooku, ty rozpoznají do jaké konverzace míří a přetvoří jej na komentář, jenž je k nerozeznání od jiných, ručně vepsaných ve webovém uživatelském rozhraní~\cite{whitnah2010replying}. Obdobnou funkčnost nabízí také server pro vývojáře GitHub nebo aplikace pro projektový management Basecamp (zmiňovaná také v~\ref{37signals}).
 
 
 \section{Groupware}\label{groupware}
@@ -390,7 +409,7 @@ Doplňující otázky byly spíše statistického charakteru.
         Statistická otázka mapující současnou situaci na poli IM u nás. Cílem je zjistit jak si stojí dříve oblíbené ICQ, zda se ujal Jabber a zda má na tuto oblast nějaký dopad integrace rychlých zpráv do Gmailu či Facebooku. Účastníci dotazníku mohli vybrat více odpovědí zároveň.
 
     \item \emph{Myslím si, že s počítačem pracuji spíše jako...} --
-        Otázka se snaži zjistit, jak počítačově gramotní jsou odpovídající. K dispozici jsou čtyři stupně -- člověk nezkušený v práci s počítačem, běžný uživatel, potom pokročilý a nakonec člověk, jenž počítač využívá denně k práci.
+        Otázka se snaží zjistit, jak počítačově gramotní jsou odpovídající. K dispozici jsou čtyři stupně -- člověk nezkušený v práci s počítačem, běžný uživatel, potom pokročilý a nakonec člověk, jenž počítač využívá denně k práci.
 
     \item \emph{Když si potřebuji v restauraci odskočit, většinou mířím na...} --
         Účastníci mají na výběr dvě odpovědi (pány a dámy). Účelem je průzkum zasoupení pohlaví ve výsledcích dotazníku.
@@ -433,7 +452,7 @@ Výrazná většina dotazovaných (65~\%) by nevyužila možnosti volat zadarmo 
 Své fotky uživatelé nahrávají z 41~\% na Facebook. Vzájemně srovnatelné výsledky potom mají vlastní řešení (FTP, vlastní webová stránka, úložiště souborů, aj.) a Google+ (dříve Picasa web albums) -- první 18~\% a druhé 19~\%. Vlastní odpovědi obsahovaly ještě českou službu Rajče.net (dnes součást zpravodajského portálu iDNES) nebo osobní předání, obě by ale skončilo v minoritních možnostech spolu se službami Flickr, Dropbox, a jinými. Z výsledků lze tedy vyčíst, že fotky uživatelé sdílet chtějí a mají chuť je nahrávat na web.
 
 \subsubsection*{\textbf{11. otázka:} \emph{Náramně by se mi hodila rozprava s týmem kolegů v reálném čase, ale jsou na různých místech republiky. Jak na to půjdu?}}
-V této otázce se 79~\% účastníků vyslovilo pro Skype konferenci. Potvrdily se tedy doměnky, že na tomto poli převažují výhody multimediální CMC a lidé takovou virtuální operativní schůzku zařídí raději delším hromadným hovorem s mikrofony u počítačů, než aby si psali textové zprávy. Na druhém místě skončily Jabber konference s 11~\%.
+V této otázce se 79~\% účastníků vyslovilo pro Skype konferenci. Potvrdily se tedy domněnky, že na tomto poli převažují výhody multimediální CMC a lidé takovou virtuální operativní schůzku zařídí raději delším hromadným hovorem s mikrofony u počítačů, než aby si psali textové zprávy. Na druhém místě skončily Jabber konference s 11~\%.
 
 \subsubsection*{\textbf{12. otázka:} \emph{Zařizuji kancelář, ve které mají být telefony. Kde se to pokusím domluvit?}}
 Povědomí o internetové telefonii má 69~\%, kteří vybrali možnost \uv{podívám se po nějakém VoIP poskytovateli}. Ostatní by využili služeb tradičních poskytovatelů telefonního připojení. To je zajímavý posun oproti zjištěním v~\cite{latif2007adoption}, svou roli ovšem může hrát i vzorek respondentů -- většina z nich jsou pokročilí uživatelé počítače a je větší pravděpodobnost, že někdy s VoIP přišli do styku.
@@ -601,7 +620,7 @@ Vytvořit přitom takový systém, který by dokázal v distribuci informací od
 Nejlepším řešením se tedy jeví vyhnout se zmíněnému problému buďto podporou pouze pro zcela veřejné aktivity, nebo jednostrannou agregací zpráv na straně rozhraní pro samotného organizátora.
 
 \subsection{Problém vnořené skupiny}\label{innerGroup}
-Při návrhu sjednocujícího systému vyvstává problém při integraci se službou, která je již sama o sobě nějakým uzavřeným groupware. Vezmeme-li v úvahu např. Facebook Groups nebo Google Groups, už samy tyto nástroje jsou jakousi implementací skupinového software pro jasně vymezné kolektivy. Budeme-li chtít takové nástroje napojit na jiné, dojde zřejmě ke konfliktu skupin. Nemůžeme spravovat skupinu, jež je napojena na jinou, odděleně spravovanou, a přitom zachovávat například nastavení soukromí.
+Při návrhu sjednocujícího systému vyvstává problém při integraci se službou, která je již sama o sobě nějakým uzavřeným groupware. Vezmeme-li v úvahu např. Facebook Groups nebo Google Groups, už samy tyto nástroje jsou jakousi implementací skupinového software pro jasně vymezené kolektivy. Budeme-li chtít takové nástroje napojit na jiné, dojde zřejmě ke konfliktu skupin. Nemůžeme spravovat skupinu, jež je napojena na jinou, odděleně spravovanou, a přitom zachovávat například nastavení soukromí.
 
 
 \section{Praktické možnosti propojení jednotlivých prvků}\label{practicalOptions}
@@ -634,7 +653,7 @@ Zpráva na Twitteru je krátká, to by ovšem šlo obejít externím odkazem na 
 
 Chybějící podpora pro přílohy u jednotlivých služeb by šla rovněž řešit externím odkazem. Systém by soubor přijal např. z e-mailu, uložil jej na svém serveru a do ostatních kanálů by poslal text s odkazem na tento soubor.
 
-Co se týče vláken diskusí, e-mail i zprávy z LinkedIn je možné seskupovat do stromů minimálně podle předmětu, na což existují efektivní algoritmy (autorem nejznámnějšího z nich je Jamie Zawinski~\cite{zawinski2002message}). Facebook a Twitter však žádná témata neudržují a neexistuje způsob, jak v takové konverzaci tvořit strom.
+Co se týče vláken diskusí, e-mail i zprávy z LinkedIn je možné seskupovat do stromů minimálně podle předmětu, na což existují efektivní algoritmy (autorem nejznámějšího z nich je Jamie Zawinski~\cite{zawinski2002message}). Facebook a Twitter však žádná témata neudržují a neexistuje způsob, jak v takové konverzaci tvořit strom.
 
 Zprávy by bylo možné do systému přijímat technikou zvanou \emph{polling} -- tedy kontrolovat periodicky všechny schránky, číst příchozí zprávy a zpracovávat je. E-maily by šly přijímat rovnou, pokud by se do hlavičky {\tt Reply-To} dala adresa vlastního e-mailového serveru vygenerovaná pro příslušné téma. Potom by se tyto zprávy daly při příjmu na takovém e-mailovém serveru rozpoznávat. Je však otázkou, nakolik by byla tato odlišná implementace\footnote{Bez zásadních překážek by šlo funkčnost implementovat pravděpodobně se SMTP serverem Lamson, dostupném na adrese \url{http://lamsonproject.org/}, jenž je oproti tradičním řešením spoléhajícím přímo na prostředky operačního systému napsaný v Pythonu a jeho integrace např. s webovou aplikací je poměrně snadná.} přínosná, jestliže u všech ostatních služeb musíme stejně vykonávat polling. V případě e-mailu máme přitom k dispozici protokoly POP nebo IMAP, jež se přímo zabývají pravidelnými kontrolami e-mailové schránky.
 
@@ -953,7 +972,7 @@ Jádrem stránky události je přehled základních údajů a seznam účastník
     \item[Odmítá] Na pozvánku tento člověk odpověděl negativně, zcela určitě ví, že na událost nedorazí.
 \end{description}
 
-Jesliže ostatní stránky v systému by měly být chráněny před přístupem kohokoliv jiného než přihlášeného pořadatele, stránka události by oproti tomu měla být veřejná. Jen tak se na ni budou moci dostat uživatelé prostého e-mailu. Měla by proto mít i dobře zapamatovatelnou, permanentní adresu.
+Jestliže ostatní stránky v systému by měly být chráněny před přístupem kohokoliv jiného než přihlášeného pořadatele, stránka události by oproti tomu měla být veřejná. Jen tak se na ni budou moci dostat uživatelé prostého e-mailu. Měla by proto mít i dobře zapamatovatelnou, permanentní adresu.
 
 \begin{figure}[p]
     \centering
@@ -963,7 +982,7 @@ Jesliže ostatní stránky v systému by měly být chráněny před přístupem
 \end{figure}
 
 \subsection{Správa kontaktů}
-Obrazovka zajišťující správu kontaktů by měla pořadateli umožňovat efektivní pohyb v adresáři a nabízet mu funkce pro přidání nových osob. První z těchto požadavků naplňuje celkový přehled adresáře utřízený podle iniciál jmen kontaktů. Jelikož může být jeho objem rozsáhlý, je zapotřebí posílit navigaci -- k tomu může dobře posloužit abecední výčet písmen, jež odkazují na jednotlivé skupiny lidí začínajících příslušnou iniciálou.
+Obrazovka zajišťující správu kontaktů by měla pořadateli umožňovat efektivní pohyb v adresáři a nabízet mu funkce pro přidání nových osob. První z těchto požadavků naplňuje celkový přehled adresáře setřízený podle iniciál jmen kontaktů. Jelikož může být jeho objem rozsáhlý, je zapotřebí posílit navigaci -- k tomu může dobře posloužit abecední výčet písmen, jež odkazují na jednotlivé skupiny lidí začínajících příslušnou iniciálou.
 
 Druhá funkce, přidávání osob, musí uživateli umožňovat především import přátel z Facebooku -- tyto kontakty by se do systému jinak dostat nemohly. Základem je také ruční přidávání podle e-mailové adresy. Systém by měl sám umět rozlišit kontakty, které náleží Google účtům, a zařadit si je pod patřičný typ.
 
@@ -991,7 +1010,7 @@ Pro tvorbu programu, který vytváří stránky událostí, je důležitá infor
 
 
 \section{Integrované služby}
-Následující odstavce představují aplikační rozhraní, jež je potřeba využít pro tvorbu zadaného programu, a vystvětluje související pojmy. Výčet nezahrnuje protokol SMTP jakožto rozhraní pro interakci s uživateli prostého e-mailu, protože je jeho problematika po desetiletí neměnná a nepřipravuje pro návrh či implementaci výrazné překážky.
+Následující odstavce představují aplikační rozhraní, jež je potřeba využít pro tvorbu zadaného programu, a vysvětluje související pojmy. Výčet nezahrnuje protokol SMTP jakožto rozhraní pro interakci s uživateli prostého e-mailu, protože je jeho problematika po desetiletí neměnná a nepřipravuje pro návrh či implementaci výrazné překážky.
 
 \subsection{OAuth~2.0}
 OAuth označuje otevřený standard pro webovou autorizaci, tedy ověření oprávnění k operacím nad webovými daty. Umožňuje uživateli sdílet jím vybraná soukromá data nebo přístup k nim (zápis, čtení), aniž by musel poskytovat své přihlašovací údaje třetím stranám \cite{maly2008oauth}. Druhá verze standardu se zaměřuje na jednodušší implementaci klientů, ale není ještě zcela hotová a proto je její zavádění zatím oficiálně pouze experimentální. Nicméně i přesto jej lze úspěšně využít k připojení na~API mnoha existujících služeb včetně Facebooku, Google, a dalších.
@@ -1101,11 +1120,13 @@ Samotná demonstrační aplikace je koncipována jako prototyp a soustředí se 
 
 
 \chapter{Závěr}
-Práce je zadána na základě doměnky z reálného prostředí, že by bylo užitečné propojit různé internetové komunikační kanály za účelem snazší organizace malých skupin. Cílem je tedy tuto doměnku ověřit. Hlavním přínosem práce by měla být široká analýza možností integrace jednotlivých druhů dorozumívání a poukázání na takové případy, jež je možné realizovat jako webovou aplikaci s potenciálem najít si své uživatele.
+Práce je zadána na základě domněnky z reálného prostředí, že by bylo užitečné propojit různé internetové komunikační kanály za účelem snazší organizace malých skupin. Cílem je tedy tuto domněnku ověřit. Hlavním přínosem práce by měla být široká analýza možností integrace jednotlivých druhů dorozumívání a poukázání na takové případy, jež je možné realizovat jako webovou aplikaci s potenciálem najít si své uživatele.
 
 Na základě analýzy jsou tedy identifikovány běžně užívané kanály. V přehledu práce shrnuje nejen metody vycházející z klasických internetových protokolů, ale také moderní webové aplikace a sociální sítě. Vzorce chování, kterými se uživatelé při komunikaci řídí, jsou zjišťovány průzkumem s téměř dvěma stovkami respondentů.
 
-Tak vzniká dobrý základ pro doložení existence problému interoperability, na jehož formulaci de facto stojí úvodní doměnka zadání. Nastolení dvou hypotéz a jejich ověřování je páteří dalšího rozboru, který určuje teoretické možnosti integrace služeb a zhodnocuje jejich smysluplnost pro uživatele. Dochází také k vymezení cílové skupiny na \uv{neorganizované}, např. zájmové kolektivy. Už tyto fáze vedou k určité filtraci možností a po ověření praktické realizovatelnosti zbývají mezi vhodnými kandidáty na propojení de facto jen stránky událostí. Ty se stávají zadáním pro funkční prototyp, jenž je možné dále rozvíjet a vystavět na jeho konceptu užitečnou webovou službu.
+Tak vzniká dobrý základ pro doložení existence problému interoperability, na jehož formulaci de facto stojí úvodní teze zadání. Nastolení dvou hypotéz a jejich ověřování je páteří dalšího rozboru, který určuje teoretické možnosti integrace služeb a zhodnocuje jejich smysluplnost pro uživatele. Dochází také k vymezení cílové skupiny na \uv{neorganizované}, např. zájmové kolektivy. Už tyto fáze vedou k určité filtraci možností a po ověření praktické realizovatelnosti zbývají mezi vhodnými kandidáty na propojení de facto jen stránky událostí. Ty se stávají zadáním pro funkční prototyp, jenž je možné dále rozvíjet a vystavět na jeho konceptu užitečnou webovou službu.
+
+Další vývoj aplikace by se mohl zaměřit na vyšší uživatelský komfort a použitelnost rozhraní. Kromě toho by bylo vhodné lepší zachytávání chyb z napojených kanálů nebo přesunutí náročných výpočtů do procesů na pozadí, což by zvýšilo stabilitu a výkon programu. Nejdůležitějším úkolem provozovatele takové aplikace je ovšem sledování změn u napojených služeb a související aktualizace funkčnosti zajišťující propojení. Předmětem dalšího výzkumu by potom mohlo být hledání cest, které by obešly problémy související s chybějícími API (automatizované zpracování webových stránek služeb, aj.).
 
 Závěry práce vzbuzují zklamání -- je totiž nakonec patrné, že není mnoho kanálů, jež by bylo možné či užitečné pohodlně propojovat. Naději lze ale spatřovat v API webových služeb, jelikož u mnohých z nich je již dnes oznamováno, že budou rozšířeny o chybějící funkce. Je tedy dost dobře možné, že i za několik měsíců se potenciál pro tvorbu sjednocujících aplikací významně zvýší.
 
@@ -1425,7 +1446,7 @@ dámy 46~\%.
 
 
 \chapter{Návod na instalaci ukázkové aplikace}\label{tutorial}
-Aplikace byla vyvíjena na Pythonu verze 2.6.6. Její spuštění na vlastním počítači nevyžaduje webový server -- využije se vyvojářského serveru zabudovaného do frameworku Flask (pro ostré nasazení by však tato konfigurace nebyla vhodná). Dále je potřeba databáze. Vyvoj probíhal na PostgreSQL ve verzi 8.4.11, ale mělo by být možné využít i SQLite, které je často už přítomno v systému a není nutné jej instalovat. Návod na instalaci předpokládá operační systém unixového typu a může při něm být zapotřebí verzovací systém Git.
+Aplikace byla vyvíjena na Pythonu verze 2.6.6. Její spuštění na vlastním počítači nevyžaduje webový server -- využije se vývojářského serveru zabudovaného do frameworku Flask (pro ostré nasazení by však tato konfigurace nebyla vhodná). Dále je potřeba databáze. Vývoj probíhal na PostgreSQL ve verzi 8.4.11, ale mělo by být možné využít i SQLite, které je často už přítomno v systému a není nutné jej instalovat. Návod na instalaci předpokládá operační systém unixového typu a může při něm být zapotřebí verzovací systém Git.
 
 \begin{enumerate}
     \item Zřiďte si Facebook účet a pomocí kreditní karty nebo telefonního čísla jej ověřte, pokud jste tak již neudělali. Na stránce \url{http://developers.facebook.com/apps} vytvořte novou aplikaci s libovolným názvem a jmenným prostorem. Aplikaci nastavte doménu {\tt localhost}. Zaškrtněte typ \emph{website} a vyplňte URL {\tt http://localhost:5000}. Uložte si kódy označené jako \emph{App ID} a \emph{App Secret} ze záhlaví stránky.
