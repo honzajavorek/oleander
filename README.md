@@ -12,7 +12,3 @@ Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavo
 - Realizujte ukázkovou webovou aplikaci uvedených vlastností.
 - Na závěr zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
 
-## Úkoly
-
-- doplnit všude pevné mezery (LaTeXový program vlna) a následně úpravit konce řádků
-- po všech těchto úpravách doladit případné díry (mezi obrázky, sekcemi, atd.)
