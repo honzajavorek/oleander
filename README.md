@@ -17,7 +17,7 @@ It's described in _appendix E_ of the document. See PDF link below.
 
 ## Thesis document
 
-You can read my thesis by downloading a [PDF file](https://github.com/downloads/honzajavorek/oleander/thesis.pdf) here from GitHub.
+You can read my thesis by downloading a [PDF file](https://github.com/downloads/honzajavorek/oleander/thesis.pdf) here from GitHub. By the way, it has [it's own page](https://is.muni.cz/th/208013/fi_m?info=1;zpet=%2Fvyhledavani%2F%3Fsearch%3Djavorek%26start%3D1) at Masaryk University's information system.
 
 ### Initial instructions
 
@@ -35,6 +35,10 @@ _(quick & dirty translation)_
 _(copy & paste from document)_
 
 This thesis explores the possibilities of creating a web system which would help to organize a small group of people, no matter what communication methods its members prefer. The paper first analyses common forms of computer-mediated communication and relations between these forms and their users. On this basis, the problem of interoperability across individual systems is formulated and hypotheses about feasibility and usefulness of the system are raised. The second half of the thesis deals with verification of raised hypotheses and specifies the form of a prototype in accordance with previous findings - an events managing tool. The last chapters describe the design of this tool and the implementation process.
+
+## Grade: B
+
+Reader suggested B, supervisor suggested A, I got B.
 
 ## License: ISC
 
