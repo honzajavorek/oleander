@@ -1,4 +1,3 @@
-
 # Oleander
 
 My MSc Thesis called _The online organization of people across multiple communication channels_. It's pretty theoretical, but includes proof of concept - a web app for creating event pages automatically on multiple services.
@@ -46,37 +45,3 @@ Reader suggested B, supervisor suggested A, I got B.
 href="mailto:jan.javorek&#64;gmail.com">jan.javorek&#64;gmail.com</a>&gt;
 
 This work is licensed under [ISC license](https://en.wikipedia.org/wiki/ISC_license).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Projekt Oleander
-
-Projekt Oleander je pracovní název pro [mou](http://is.muni.cz/osoba/honzajavorek) diplomovou práci na téma _Organizace lidí v internetovém prostředí napříč různými komunikačními kanály_, k nalezení [zde](https://is.muni.cz/auth/rozpis/tema.pl?fakulta=1433;obdobi=5364;studium=560309;balik=58;tema=133878) (neveřejné, IS MUNI).
-
-## Zadání
-
-- Prostudujte problematiku běžné organizace malých skupin lidí přes internet s důrazem na nástroje a služby, které jsou využívané pro komunikaci a organizaci.
-- Na základě průzkumu navrhněte řešení, jak propojit používané služby tak, aby mezi sebou lidé mohli komunikovat a sdílet organizační informace i bez toho, že by používali stejné komunikační platformy.
-- Podrobně rozpracujte každý z těchto případů a snažte se o nalezení takového, které bude brát největší ohledy na přirozenost a zřejmost používaní (zvažte např. možnosti udržovaní vláken diskusí napříč všemi systémy apod.).
-- Vysvětlete, proč jsou některé tyto problémy nerealizovatelné, narazíte-li na nějaké takové.
-- Realizujte ukázkovou webovou aplikaci uvedených vlastností.
-- Na závěr zhodnoťte perspektivy a další možné aplikace takového řešení. Zamyslete se nad možnostmi propojení dalších služeb nebo komunikačních kanálů.
-
