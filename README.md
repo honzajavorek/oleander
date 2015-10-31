@@ -2,10 +2,6 @@
 
 My MSc Thesis called _The online organization of people across multiple communication channels_. It's pretty theoretical, but includes proof of concept - a web app for creating event pages automatically on multiple services.
 
-## Status: IDLE
-
-This my [MSc Thesis](http://fi.muni.cz) project is idle since my graduation in 2012. [No future, no future for me!](https://www.youtube.com/watch?v=yqrAPOZxgzU)
-
 ## Why Oleander?
 
 Because of one internal joke from our Tuesday's [sauna](http://www.sauna-drobneho.cz/) sessions.
